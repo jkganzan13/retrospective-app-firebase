@@ -4,7 +4,6 @@ import './app.css';
 
 class AppComponent extends React.Component {
   componentDidMount() {
-    console.log(this.props)
   }
 
   render() {
@@ -19,7 +18,7 @@ class AppComponent extends React.Component {
                {/*setUserName={this.setUserName} setRoomId={this.setRoomId}*/}
                {/*generateRoomId={this.generateRoomId} joinRoom={this.joinRoom}*/}
         {/*/>*/}
-        <AppModal modal={this.props.modal} toggleModal={toggleModal} />
+        <AppModal actions={this.props.actions} modal={this.props.modal} toggleModal={toggleModal} />
 
       </div>
     );

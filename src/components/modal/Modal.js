@@ -14,7 +14,7 @@ class AppModal extends React.Component {
     return (
       <Modal show={this.props.modal.isModalOpen}>
         <Modal.Body>
-          <LoginModal modal={this.props.modal} toggleModal={this.props.toggleModal} />
+          <LoginModal actions={this.props.actions} modal={this.props.modal} toggleModal={this.props.toggleModal} />
         </Modal.Body>
       </Modal>
     );

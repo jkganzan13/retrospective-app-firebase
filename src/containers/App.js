@@ -9,16 +9,39 @@ import React, {
   PropTypes
 } from 'react';
 import {
-  toggleModal
+  toggleModal,
+  updateReviews,
+  updateUsers,
+  updateRoomId,
+  firebaseListen,
+  firebaseGetOnce,
+  firebaseListenThenDispatch,
+  firebaseWrite
 } from '../actions/';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import firebase from 'firebase';
+import config from 'config';
 import Main from '../components/App';
 /* Populated by react-webpack-redux:reducer */
 class App extends Component {
+  constructor(props) {
+    super(props);
+    firebase.initializeApp(config.firebaseCfg);
+  }
+  componentDidMount() {
+    console.log(this.props);
+    firebaseListen('reviews', console.log);
+  }
   render() {
-    const {actions, modal} = this.props;
-    return <Main actions={actions} modal={modal}/>;
+    const {actions, modal, roomDetails, reviews} = this.props;
+    return (
+      <Main
+        actions={actions}
+        modal={modal}
+        roomDetails={roomDetails}
+        reviews={reviews}/>
+    );
   }
 }
 /* Populated by react-webpack-redux:reducer
@@ -28,18 +51,29 @@ class App extends Component {
  */
 App.propTypes = {
   actions: PropTypes.object.isRequired,
-  modal: PropTypes.object.isRequired
+  modal: PropTypes.object.isRequired,
+  roomDetails: PropTypes.object.isRequired,
+  reviews: PropTypes.object.isRequired
 };
 function mapStateToProps(state) {
   // eslint-disable-line no-unused-vars
   /* Populated by react-webpack-redux:reducer */
-  const props = { modal: state.modal };
+  const props = {
+    modal: state.modal,
+    roomDetails: state.roomDetails,
+    reviews: state.reviews
+  };
   return props;
 }
 function mapDispatchToProps(dispatch) {
   /* Populated by react-webpack-redux:action */
   const actions = {
-    toggleModal
+    toggleModal,
+    updateReviews,
+    updateUsers,
+    updateRoomId,
+    firebaseListenThenDispatch,
+    firebaseWrite
   };
   const actionMap = { actions: bindActionCreators(actions, dispatch) };
   return actionMap;

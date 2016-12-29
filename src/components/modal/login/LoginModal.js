@@ -1,8 +1,8 @@
 import React from 'react';
 import cssmodules from 'react-css-modules';
 import styles from './loginmodal.cssmodule.sass';
-
-import { Accordion, Button, Form, FormGroup, FormControl, ControlLabel, Panel, Modal, Col } from 'react-bootstrap'
+import { firebaseWrite } from '../../../actions';
+import { Accordion, Panel } from 'react-bootstrap'
 import JoinForm from './JoinForm'
 import CreateForm from './CreateForm'
 
@@ -35,7 +35,9 @@ class LoginModal extends React.Component {
 
   submitRoomDetails(e) {
     e.preventDefault();
-    console.log(this.state.roomId)
+    const key = firebaseWrite('rooms', { name: 'TEST' })
+    this.props.actions.updateRoomId(key)
+    console.log(key)
   }
 
   getNameValidationState() {
@@ -62,7 +64,7 @@ class LoginModal extends React.Component {
                     roomHandleChange={this.roomHandleChange} submitRoomDetails={this.submitRoomDetails} />
         </Panel>
         <Panel header="CREATE ROOM" eventKey="2" onSelect={this.resetState} onEntered={this.generateRoomId} >
-          <CreateForm {...this.state} getNameValidationState={this.getNameValidationState}
+          <CreateForm name={this.state.name} getNameValidationState={this.getNameValidationState}
                       nameHandleChange={this.nameHandleChange} submitRoomDetails={this.submitRoomDetails} />
         </Panel>
       </Accordion>

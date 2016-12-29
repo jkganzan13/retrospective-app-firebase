@@ -13,12 +13,6 @@ class CreateForm extends React.Component {
 
     return (
       <Form horizontal onSubmit={submitRoomDetails}>
-        <FormGroup>
-          <Col componentClass={ControlLabel} sm={2}>Room Id</Col>
-          <Col sm={10} className="roomId">
-            <span>{roomId}</span>
-          </Col>
-        </FormGroup>
         <FormGroup validationState={getNameValidationState()} >
           <Col componentClass={ControlLabel} sm={2}>Name</Col>
           <Col sm={10}>

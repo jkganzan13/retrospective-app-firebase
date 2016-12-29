@@ -1,2 +1,10 @@
 /* Populated by react-webpack-redux:action */
 export const TOGGLE_MODAL = 'TOGGLE_MODAL';
+export const GET_ROOMS = 'GET_ROOMS';
+export const UPDATE_REVIEWS = 'UPDATE_REVIEWS';
+export const UPDATE_USERS = 'UPDATE_USERS';
+export const UPDATE_ROOM_ID = 'UPDATE_ROOM_ID';
+export const FIREBASE_LISTEN = 'FIREBASE_LISTEN';
+export const FIREBASE_GET_ONCE = 'FIREBASE_GET_ONCE';
+export const FIREBASE_LISTEN_THEN_DISPATCH = 'FIREBASE_LISTEN_THEN_DISPATCH';
+export const FIREBASE_WRITE = 'FIREBASE_WRITE';

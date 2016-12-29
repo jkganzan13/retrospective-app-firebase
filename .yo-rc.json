@@ -1,0 +1,9 @@
+{
+  "generator-react-webpack": {
+    "appName": "retrospective-app-firebase",
+    "style": "sass",
+    "cssmodules": true,
+    "postcss": true,
+    "generatedWithVersion": 4
+  }
+}

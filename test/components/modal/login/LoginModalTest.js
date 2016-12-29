@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import LoginModal from 'components/modal/LoginModal.js';
+import LoginModal from 'components/modal/login/LoginModal.js';
 
 describe('<LoginModal />', () => {
 

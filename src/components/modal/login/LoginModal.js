@@ -1,11 +1,10 @@
 import React from 'react';
 import cssmodules from 'react-css-modules';
 import styles from './loginmodal.cssmodule.sass';
-import { firebaseWrite } from '../../../actions';
-import { Accordion, Panel } from 'react-bootstrap'
+import { Accordion, Button, Panel } from 'react-bootstrap'
 import JoinForm from './JoinForm'
 import CreateForm from './CreateForm'
-
+import { dbWrite } from '../../../helpers/firebase';
 
 @cssmodules(styles)
 class LoginModal extends React.Component {
@@ -35,9 +34,12 @@ class LoginModal extends React.Component {
 
   submitRoomDetails(e) {
     e.preventDefault();
-    const key = firebaseWrite('rooms', { name: 'TEST' })
-    this.props.actions.updateRoomId(key)
-    console.log(key)
+    const key = dbWrite('rooms', { name: 'TEST' });
+    this.props.actions.updateRoomId(key);
+    if (key) {
+      this.props.actions.updateModalContent('review');
+      this.props.actions.toggleModal();
+    }
   }
 
   getNameValidationState() {
@@ -52,8 +54,10 @@ class LoginModal extends React.Component {
   }
 
   generateRoomId() {
-    let key = Math.random().toString(36).substr(2, 5);
-    this.setState({ roomId: key });
+    // let key = Math.random().toString(36).substr(2, 5);
+    // this.setState({ roomId: key });
+    this.props.actions.updateModalContent('review');
+    this.props.actions.toggleModal();
   }
 
   render() {
@@ -63,9 +67,12 @@ class LoginModal extends React.Component {
           <JoinForm {...this.state} getNameValidationState={this.getNameValidationState} nameHandleChange={this.nameHandleChange}
                     roomHandleChange={this.roomHandleChange} submitRoomDetails={this.submitRoomDetails} />
         </Panel>
-        <Panel header="CREATE ROOM" eventKey="2" onSelect={this.resetState} onEntered={this.generateRoomId} >
+        <Panel header="CREATE ROOM" eventKey="2" onSelect={this.resetState} >
           <CreateForm name={this.state.name} getNameValidationState={this.getNameValidationState}
                       nameHandleChange={this.nameHandleChange} submitRoomDetails={this.submitRoomDetails} />
+        </Panel>
+        <Panel>
+          <Button onClick={this.generateRoomId}>Close</Button>
         </Panel>
       </Accordion>
     );

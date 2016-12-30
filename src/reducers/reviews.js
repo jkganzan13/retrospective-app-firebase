@@ -19,6 +19,7 @@ function reducer(state = initialState, action) {
   // const nextState = Object.assign({}, state);
 
   switch (action.type) {
+
     case UPDATE_REVIEWS: {
       return Object.assign({}, state, {
         [action.reviewType]: [...state[action.reviewType], { comment: action.comment, timestamp: new Date().getTime(), user: action.user }]
@@ -26,7 +27,6 @@ function reducer(state = initialState, action) {
     }
 
     default: {
-      /* Return original state if no actions were consumed. */
       return state;
     }
   }

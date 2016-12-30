@@ -5,22 +5,20 @@ Allows to import actions like so:
 import {action1, action2} from '../actions/'
 */
 /* Populated by react-webpack-redux:action */
-import firebaseWrite from '../actions/firebase/firebaseWrite.js';
-import firebaseListenThenDispatch from '../actions/firebase/firebaseListenThenDispatch.js';
-import firebaseGetOnce from '../actions/firebase/firebaseGetOnce.js';
-import firebaseListen from '../actions/firebase/firebaseListen.js';
-import updateRoomId from '../actions/app/updateRoomId.js';
-import updateUsers from '../actions/app/updateUsers.js';
+import updateCurrentUser from '../actions/roomDetails/updateCurrentUser.js';
+import selectReviewType from './modal/selectReviewType.js';
+import updateModalContent from '../actions/modal/updateModalContent.js';
+import updateRoomId from './roomDetails/updateRoomId.js';
+import updateUsers from './roomDetails/updateUsers.js';
 import updateReviews from '../actions/reviews/updateReviews.js';
-import toggleModal from '../actions/app/toggleModal.js';
+import toggleModal from './modal/toggleModal.js';
 const actions = {
   toggleModal,
   updateReviews,
   updateUsers,
   updateRoomId,
-  firebaseListen,
-  firebaseGetOnce,
-  firebaseListenThenDispatch,
-  firebaseWrite
+  updateModalContent,
+  selectReviewType,
+  updateCurrentUser
 };
 module.exports = actions;

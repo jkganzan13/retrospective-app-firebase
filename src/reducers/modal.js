@@ -3,10 +3,12 @@
  * If you change the type from object to something else, do not forget to update
  * src/container/App.js accordingly.
  */
-import { TOGGLE_MODAL } from '../actions/const';
+import { TOGGLE_MODAL, UPDATE_MODAL_CONTENT, SELECT_REVIEW_TYPE } from '../actions/const';
 
 const initialState = {
-  isModalOpen: true
+  isModalOpen: true,
+  modalContent: 'login',
+  selectedReviewType: ''
 };
 
 function reducer(state = initialState, action) {
@@ -14,21 +16,30 @@ function reducer(state = initialState, action) {
   // const nextState = Object.assign({}, state);
 
   switch (action.type) {
-    /*
-    case YOUR_ACTION: {
-      // Modify next state depending on the action and return it
-      return nextState;
+
+    case SELECT_REVIEW_TYPE: {
+      return Object.assign({}, state, {
+        selectedReviewType: action.selectedReviewType
+      })
     }
-    */
+
+    case UPDATE_MODAL_CONTENT: {
+      return Object.assign({}, state, {
+        modalContent: action.modalContent
+      });
+    }
+
     case TOGGLE_MODAL: {
       return Object.assign({}, state, {
         isModalOpen: !state.isModalOpen
       });
     }
+
     default: {
       /* Return original state if no actions were consumed. */
       return state;
     }
+
   }
 }
 

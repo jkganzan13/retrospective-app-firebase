@@ -2,7 +2,7 @@ var reducer = require('../../src/reducers/roomDetails');
 var actions = require('../../src/actions/const');
 var _ = require('lodash');
 
-describe.only('roomDetails', () => {
+describe('roomDetails', () => {
 
   it('should not change the passed state', (done) => {
 

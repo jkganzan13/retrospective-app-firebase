@@ -13,11 +13,11 @@ import {
   updateReviews,
   updateUsers,
   updateRoomId,
-  firebaseListen,
-  firebaseGetOnce,
-  firebaseListenThenDispatch,
-  firebaseWrite
+  updateModalContent,
+  selectReviewType,
+  updateCurrentUser
 } from '../actions/';
+import { dbListen } from '../helpers/firebase';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
@@ -30,8 +30,7 @@ class App extends Component {
     firebase.initializeApp(config.firebaseCfg);
   }
   componentDidMount() {
-    console.log(this.props);
-    firebaseListen('reviews', console.log);
+    dbListen('reviews', console.log);
   }
   render() {
     const {actions, modal, roomDetails, reviews} = this.props;
@@ -63,6 +62,7 @@ function mapStateToProps(state) {
     roomDetails: state.roomDetails,
     reviews: state.reviews
   };
+
   return props;
 }
 function mapDispatchToProps(dispatch) {
@@ -72,8 +72,9 @@ function mapDispatchToProps(dispatch) {
     updateReviews,
     updateUsers,
     updateRoomId,
-    firebaseListenThenDispatch,
-    firebaseWrite
+    updateModalContent,
+    selectReviewType,
+    updateCurrentUser
   };
   const actionMap = { actions: bindActionCreators(actions, dispatch) };
   return actionMap;

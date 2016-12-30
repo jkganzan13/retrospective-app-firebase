@@ -1,6 +1,12 @@
 import firebase from 'firebase';
+import { getTimestamp } from '../helpers/util';
 
-export const dbWrite = (reference, data) => {
+export const dbWrite = (reference, data = {}, key = getTimestamp()) => {
+  const db = firebase.database().ref(reference);
+  db.update({ [key]: data });
+};
+
+export const dbWriteAndReturnKey = (reference, data) => {
   const db = firebase.database().ref(reference);
   const key = db.push().key;
 

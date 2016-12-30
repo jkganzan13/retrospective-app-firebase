@@ -1,7 +1,21 @@
+import _ from 'lodash';
 import { UPDATE_REVIEWS } from './../const';
+import reviewTypes from '../../constants/reviewTypes';
 
-function action(reviewType, comment, user) {
-  return { type: UPDATE_REVIEWS, reviewType, comment, user };
+
+const sortReviewsByType = (reviews) => {
+  let sortedReviews = {};
+
+  _.forEach(reviewTypes, (reviewType) => {
+    sortedReviews[reviewType] = _.filter(reviews, ['reviewType', reviewType])
+  });
+
+  return sortedReviews;
+};
+
+function action(reviews) {
+  let sortedReviews = sortReviewsByType(reviews);
+  return { type: UPDATE_REVIEWS, reviews: sortedReviews };
 }
 
 module.exports = action;

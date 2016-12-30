@@ -52,13 +52,15 @@ describe.only('<LoginModal />', () => {
     beforeEach(() => {
       mockProps = {
         actions: { updateRoomId: key => key },
-        toggleModal: () => {}
+        toggleModal: () => {},
+        updateModalContent: () => {}
       };
       mockEvent = {
         preventDefault: () => {}
       };
       chai.spy.on(mockProps.actions, 'updateRoomId');
       chai.spy.on(mockProps, 'toggleModal');
+      chai.spy.on(mockProps, 'updateModalContent');
       chai.spy.on(mockEvent, 'preventDefault');
       chai.spy.on(helpers, 'dbWrite');
       loginModal = new LoginModal(mockProps);
@@ -75,6 +77,10 @@ describe.only('<LoginModal />', () => {
 
     it('should call this.props.actions.updateRoomId', () => {
       expect(mockProps.actions.updateRoomId).to.have.been.called();
+    });
+
+    it('should call this.props.updateModalContent', () => {
+      expect(mockProps.updateModalContent).to.have.been.called.with('review');
     });
 
     it('should call this.props.toggleModal', () => {

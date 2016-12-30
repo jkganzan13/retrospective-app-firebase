@@ -29,9 +29,6 @@ class App extends Component {
     super(props);
     firebase.initializeApp(config.firebaseCfg);
   }
-  componentDidMount() {
-    dbListen('reviews', console.log);
-  }
   render() {
     const {actions, modal, roomDetails, reviews} = this.props;
     return (

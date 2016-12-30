@@ -1,10 +1,10 @@
 import React from 'react';
 import cssmodules from 'react-css-modules';
 import styles from './loginmodal.cssmodule.sass';
-import { Accordion, Button, Panel } from 'react-bootstrap'
+import { Accordion, Panel } from 'react-bootstrap'
 import JoinForm from './JoinForm'
 import CreateForm from './CreateForm'
-import { dbWrite } from '../../../helpers/firebase';
+import { dbListen, dbWriteAndReturnKey } from '../../../helpers/firebase';
 
 @cssmodules(styles)
 class LoginModal extends React.Component {
@@ -33,12 +33,18 @@ class LoginModal extends React.Component {
   }
 
   submitRoomDetails(e) {
+    const { updateRoomId, updateCurrentUser, updateModalContent, toggleModal } = this.props.actions;
+
     e.preventDefault();
-    const key = dbWrite('rooms', { name: 'TEST' });
-    this.props.actions.updateRoomId(key);
+
+    const key = this.state.roomId || dbWriteAndReturnKey('rooms', { name: this.state.name });
+    dbListen(`reviews/${key}`, this.props.actions.updateReviews);
+
     if (key) {
-      this.props.actions.updateModalContent('review');
-      this.props.actions.toggleModal();
+      updateRoomId(key);
+      updateCurrentUser(this.state.name);
+      updateModalContent('review');
+      toggleModal();
     }
   }
 
@@ -70,9 +76,6 @@ class LoginModal extends React.Component {
         <Panel header="CREATE ROOM" eventKey="2" onSelect={this.resetState} >
           <CreateForm name={this.state.name} getNameValidationState={this.getNameValidationState}
                       nameHandleChange={this.nameHandleChange} submitRoomDetails={this.submitRoomDetails} />
-        </Panel>
-        <Panel>
-          <Button onClick={this.generateRoomId}>Close</Button>
         </Panel>
       </Accordion>
     );

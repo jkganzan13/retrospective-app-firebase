@@ -6,25 +6,28 @@ const getPanelHeader = (header, number) => <span>{_.replace(header, '_', ' ')} <
 
 const ReviewsList = ({ reviews }) => {
   return (
-    <Accordion>
-      {
-        _.keys(reviews).map((reviewType, i) => {
-          return (
-            <Panel header={getPanelHeader(reviewType, _.size(reviews[reviewType]))} eventKey={i} key={i} >
-              {
-                reviews[reviewType].map((reviewObj, i) => {
-                  return (
-                    <div key={i}>
-                      <span>{reviewObj.userName}: {reviewObj.review}</span>
-                    </div>
-                  )
-                })
-              }
-            </Panel>
-          )
-        })
-      }
-    </Accordion>
+    <div>
+      <h4 style={{ color: 'white' }}>Review List:</h4>
+      <Accordion>
+        {
+          _.keys(reviews).map((reviewType, i) => {
+            return (
+              <Panel header={getPanelHeader(reviewType, _.size(reviews[reviewType]))} eventKey={i} key={i} >
+                {
+                  reviews[reviewType].map((reviewItem, i) => {
+                    return (
+                      <div key={i}>
+                        <span>{reviewItem.user}: {reviewItem.comment}</span>
+                      </div>
+                    )
+                  })
+                }
+              </Panel>
+            )
+          })
+        }
+      </Accordion>
+    </div>
   )
 };
 

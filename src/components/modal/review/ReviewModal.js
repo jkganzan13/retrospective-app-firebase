@@ -2,7 +2,8 @@ import React from 'react';
 import cssmodules from 'react-css-modules';
 import styles from './reviewmodal.cssmodule.sass';
 import { Button, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
-import { sanitizeText } from '../../../helpers/util';
+import { sanitizeText, getTimestamp } from '../../../helpers/util';
+import { dbWrite } from '../../../helpers/firebase';
 
 @cssmodules(styles)
 class ReviewModal extends React.Component {
@@ -11,7 +12,7 @@ class ReviewModal extends React.Component {
     super(props);
     this.state = {
       reviewType: '',
-      review: ''
+      comment: ''
     };
     this.onReviewChange = this.onReviewChange.bind(this);
     this.submitReview = this.submitReview.bind(this);
@@ -22,18 +23,21 @@ class ReviewModal extends React.Component {
   }
 
   onReviewChange(e) {
-    this.setState({ review: e.target.value });
+    this.setState({ comment: e.target.value });
   }
 
   submitReview(e) {
+    const { roomId, currentUser } = this.props.roomDetails;
+    const { comment, reviewType } = this.state;
+
     e.preventDefault();
-    const sanitizedText = sanitizeText(this.state.review);
+    const sanitizedText = sanitizeText(this.state.comment);
     if (sanitizedText !== '') {
-      // this.props.submitReview(this.props.reviews.selectedReviewType, this.state.review);
-      console.log(this.state);
+      const timestamp = getTimestamp();
+      dbWrite(`reviews/${roomId}`, { user: currentUser, comment, reviewType, timestamp }, timestamp);
       this.props.actions.toggleModal();
     }
-    this.setState({ review: '' })
+    this.setState({ comment: '' })
   }
 
   render() {
@@ -41,7 +45,7 @@ class ReviewModal extends React.Component {
       <Form onSubmit={this.submitReview}>
         <FormGroup>
           <ControlLabel>{this.state.reviewType}</ControlLabel>
-          <FormControl componentClass="textarea" value={this.state.review} onChange={this.onReviewChange} />
+          <FormControl componentClass="textarea" value={this.state.comment} onChange={this.onReviewChange} />
         </FormGroup>
         <Button onClick={this.props.actions.toggleModal}>Close</Button>{' '}
         <Button type="submit" bsStyle="primary">Save changes</Button>

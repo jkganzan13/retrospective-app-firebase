@@ -3,11 +3,9 @@ body {
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
-  color: #fff;
-  background: #222;
+  height: 100vh;
+  overflow: hidden;
 }
-
-
 
 .panel-heading a:hover {
   cursor: pointer;
@@ -18,29 +16,76 @@ body {
   padding-top: 7px;
 }
 
-.control-label,
-span {
+.control-label {
   color: black;
 }
 
-.sidebar,
-#pie {
-  width: 50%;
-  display: inline-block;
-}
-
 .sidebar {
+  display: inline-block;
   vertical-align: top;
-}
-
-svg path:hover {
-  filter: url(#blur-filter);
 }
 
 li,
 h4,
 h5,
-label,
-span {
+label {
   color: #000;
+}
+
+.wheel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wheel {
+  position: relative;
+  /*border: solid 2px;*/
+  padding: 0;
+  width: 46em;
+  height: 46em;
+  border-radius: 50%;
+  list-style: none;
+  display: inline-block;
+}
+
+.slice {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 50%;
+  transform-origin: 0 100%;
+  box-sizing:border-box;
+}
+
+.slice-contents {
+  position: absolute;
+  left: -100%;
+  width: 200%; height: 200%;
+  border-radius: 50%;
+  opacity: 0.5;
+  text-align: center;
+  transition: opacity .5s;
+}
+
+.slice-contents:hover { opacity: 1; }
+
+.container {
+  margin: 0;
+}
+
+.row, #app, .wheel-container {
+  height: 100%;
+}
+
+.sidebar .row {
+  margin-top: 64px;
+}
+
+@media only screen and (max-width: 992px) {
+  body {
+    overflow: auto;
+  }
 }

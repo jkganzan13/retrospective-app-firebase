@@ -1,24 +1,26 @@
 import React from 'react';
-import cssmodules from 'react-css-modules';
-import styles from './loginmodal.cssmodule.sass';
-import { Accordion, Panel } from 'react-bootstrap'
+import { Tabs, Tab } from 'material-ui/Tabs';
 import JoinForm from './JoinForm'
 import CreateForm from './CreateForm'
+import { validationMsg } from '../../../constants/customMessages';
 import { dbListen, dbWriteAndReturnKey } from '../../../helpers/firebase';
 
-@cssmodules(styles)
+
+
 class LoginModal extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       roomId: '',
-      name: ''
+      name: '',
+      sessionIdFieldErrorMsg: '',
+      nameFieldErrorMsg: ''
     };
 
     this.nameHandleChange = this.nameHandleChange.bind(this);
     this.roomHandleChange = this.roomHandleChange.bind(this);
-    this.getNameValidationState = this.getNameValidationState.bind(this);
+    this.tabHandleChange = this.tabHandleChange.bind(this);
     this.submitRoomDetails = this.submitRoomDetails.bind(this);
     this.generateRoomId = this.generateRoomId.bind(this);
     this.resetState = this.resetState.bind(this);
@@ -32,10 +34,14 @@ class LoginModal extends React.Component {
     this.setState({ roomId: e.target.value });
   }
 
-  submitRoomDetails(e) {
-    const { updateRoomId, updateCurrentUser, updateModalContent, toggleModal } = this.props.actions;
+  tabHandleChange(value) {
+    this.setState({ openedTab: value })
+  }
 
+  submitRoomDetails(e) {
     e.preventDefault();
+
+    const { updateRoomId, updateCurrentUser, updateModalContent, toggleModal } = this.props.actions;
 
     const key = this.state.roomId || dbWriteAndReturnKey('rooms', { name: this.state.name });
     dbListen(`reviews/${key}`, this.props.actions.updateReviews);
@@ -48,14 +54,25 @@ class LoginModal extends React.Component {
     }
   }
 
-  getNameValidationState() {
-    return this.state.name.length ? 'success' : 'error';
+  validateFields({ roomId, name }) {
+    let isValid = true;
+    if (roomId.trim() === '') {
+      this.setState({ sessionIdFieldErrorMsg: validationMsg.ERROR });
+      isValid = false;
+    }
+    if (name.trim() === '') {
+      this.setState({ nameFieldErrorMsg: validationMsg.ERROR });
+      isValid = false;
+    }
+    return isValid;
   }
 
   resetState() {
     this.setState({
       roomId: '',
-      name: ''
+      name: '',
+      sessionIdFieldErrorMsg: '',
+      nameFieldErrorMsg: ''
     });
   }
 
@@ -68,16 +85,16 @@ class LoginModal extends React.Component {
 
   render() {
     return (
-      <Accordion>
-        <Panel header="JOIN ROOM" eventKey="1" onSelect={this.resetState} >
-          <JoinForm {...this.state} getNameValidationState={this.getNameValidationState} nameHandleChange={this.nameHandleChange}
-                    roomHandleChange={this.roomHandleChange} submitRoomDetails={this.submitRoomDetails} />
-        </Panel>
-        <Panel header="CREATE ROOM" eventKey="2" onSelect={this.resetState} >
-          <CreateForm name={this.state.name} getNameValidationState={this.getNameValidationState}
-                      nameHandleChange={this.nameHandleChange} submitRoomDetails={this.submitRoomDetails} />
-        </Panel>
-      </Accordion>
+      <Tabs onChange={this.resetState}>
+        <Tab label="Join">
+          <JoinForm {...this.state} nameHandleChange={this.nameHandleChange}
+            roomHandleChange={this.roomHandleChange} submitRoomDetails={this.submitRoomDetails} />
+        </Tab>
+        <Tab label="Create">
+          <CreateForm name={this.state.name} nameFieldErrorMsg={this.state.nameFieldErrorMsg}
+            nameHandleChange={this.nameHandleChange} submitRoomDetails={this.submitRoomDetails} />
+        </Tab>
+      </Tabs>
     );
   }
 }

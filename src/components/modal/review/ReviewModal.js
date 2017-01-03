@@ -1,55 +1,75 @@
 import React from 'react';
-import cssmodules from 'react-css-modules';
-import styles from './reviewmodal.cssmodule.sass';
-import { Button, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
+import { FlatButton, RaisedButton, TextField } from 'material-ui';
 import { sanitizeText, getTimestamp } from '../../../helpers/util';
 import { dbWrite } from '../../../helpers/firebase';
+import { validationMsg } from '../../../constants/customMessages';
 
-@cssmodules(styles)
 class ReviewModal extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      reviewType: '',
-      comment: ''
+      comment: '',
+      commentFieldErrorMsg: ''
     };
-    this.onReviewChange = this.onReviewChange.bind(this);
+    this.onCommentChange = this.onCommentChange.bind(this);
     this.submitReview = this.submitReview.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ reviewType: nextProps.modal.selectedReviewType });
-  }
-
-  onReviewChange(e) {
+  onCommentChange(e) {
     this.setState({ comment: e.target.value });
   }
 
   submitReview(e) {
-    const { roomId, currentUser } = this.props.roomDetails;
-    const { comment, reviewType } = this.state;
-
     e.preventDefault();
-    const sanitizedText = sanitizeText(this.state.comment);
+
+    const { roomId, currentUser } = this.props.roomDetails;
+    const { selectedReviewType } = this.props.modal;
+    const { comment } = this.state;
+    const sanitizedText = sanitizeText(comment);
+
     if (sanitizedText !== '') {
       const timestamp = getTimestamp();
-      dbWrite(`reviews/${roomId}`, { user: currentUser, comment, reviewType, timestamp }, timestamp);
+      dbWrite(`reviews/${roomId}`, { user: currentUser, comment: sanitizedText, reviewType: selectedReviewType, timestamp }, timestamp);
+      this.resetCommentFieldError();
       this.props.actions.toggleModal();
+      this.props.openSnackbar();
+    } else {
+      this.showCommentFieldError();
     }
-    this.setState({ comment: '' })
+    this.resetComment();
+  }
+
+  resetComment() {
+    this.setState({ comment: '' });
+  }
+
+  resetCommentFieldError() {
+    this.setState({ commentFieldErrorMsg: '' });
+  }
+
+  showCommentFieldError() {
+    this.setState({ commentFieldErrorMsg: validationMsg.ERROR });
   }
 
   render() {
+
+    const { comment, commentFieldErrorMsg } = this.state;
+
     return (
-      <Form onSubmit={this.submitReview}>
-        <FormGroup>
-          <ControlLabel>{this.state.reviewType}</ControlLabel>
-          <FormControl componentClass="textarea" value={this.state.comment} onChange={this.onReviewChange} />
-        </FormGroup>
-        <Button onClick={this.props.actions.toggleModal}>Close</Button>{' '}
-        <Button type="submit" bsStyle="primary">Save changes</Button>
-      </Form>
+      <form onSubmit={this.submitReview}>
+        <TextField
+          errorText={commentFieldErrorMsg}
+          floatingLabelText="Enter comment"
+          value={comment}
+          onChange={this.onCommentChange}
+          multiLine={true}
+          rows={2}
+          fullWidth={true}
+        />
+        <RaisedButton type="submit" label="Submit" primary={true} style={{ marginTop: '14px' }} />
+        <FlatButton label="Close" onTouchTap={this.props.actions.toggleModal} style={{ marginTop: '14px' }} />
+      </form>
     );
   }
 }

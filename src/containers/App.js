@@ -22,6 +22,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
 import config from 'config';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Main from '../components/App';
 /* Populated by react-webpack-redux:reducer */
 class App extends Component {
@@ -32,11 +33,13 @@ class App extends Component {
   render() {
     const {actions, modal, roomDetails, reviews} = this.props;
     return (
-      <Main
-        actions={actions}
-        modal={modal}
-        roomDetails={roomDetails}
-        reviews={reviews}/>
+      <MuiThemeProvider>
+        <Main
+          actions={actions}
+          modal={modal}
+          roomDetails={roomDetails}
+          reviews={reviews}/>
+      </MuiThemeProvider>
     );
   }
 }

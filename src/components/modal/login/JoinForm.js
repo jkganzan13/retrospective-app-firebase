@@ -1,38 +1,31 @@
 import React from 'react';
-import cssmodules from 'react-css-modules';
-import styles from './joinform.cssmodule.sass';
 
-import { Button, Form, FormGroup, FormControl, ControlLabel, Col } from 'react-bootstrap'
+import { RaisedButton, TextField } from 'material-ui';
 
-@cssmodules(styles)
 class JoinForm extends React.Component {
-
-  getRoomIdValidationState() {
-    return this.props.roomId.length ? 'success' : 'error';
-  }
 
   render() {
 
-    const { getNameValidationState, name, nameHandleChange, roomHandleChange, roomId, submitRoomDetails} = this.props;
+    const { name, nameFieldErrorMsg, nameHandleChange, roomHandleChange, roomId, sessionIdFieldErrorMsg, submitRoomDetails} = this.props;
 
     return (
-      <Form horizontal onSubmit={submitRoomDetails} >
-        <FormGroup validationState={this.getRoomIdValidationState()} >
-          <Col componentClass={ControlLabel} sm={2}>Room Id</Col>
-          <Col sm={10}>
-            <FormControl placeholder="Required" type="text" value={roomId} onChange={roomHandleChange} />
-            <FormControl.Feedback />
-          </Col>
-        </FormGroup>
-        <FormGroup validationState={getNameValidationState()}>
-          <Col componentClass={ControlLabel} sm={2}>Name</Col>
-          <Col sm={10}>
-            <FormControl placeholder="Required" type="text" value={name} onChange={nameHandleChange} />
-            <FormControl.Feedback />
-          </Col>
-        </FormGroup>
-        <Button type="submit" bsStyle="success">Join Room</Button>
-      </Form>
+      <form onSubmit={submitRoomDetails}>
+        <TextField
+          errorText={sessionIdFieldErrorMsg}
+          floatingLabelText="Session ID"
+          value={roomId}
+          onChange={roomHandleChange}
+          fullWidth={true}
+        />
+        <TextField
+          errorText={nameFieldErrorMsg}
+          floatingLabelText="Name"
+          value={name}
+          onChange={nameHandleChange}
+          fullWidth={true}
+        />
+        <RaisedButton type="submit" label="Submit" primary={true} style={{ marginTop: '14px' }}/>
+      </form>
     );
   }
 }

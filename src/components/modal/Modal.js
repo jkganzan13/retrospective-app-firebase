@@ -1,26 +1,32 @@
 import React from 'react';
-import cssmodules from 'react-css-modules';
-import styles from './modal.cssmodule.sass';
-
+import _ from 'lodash';
 import LoginModal from './login/LoginModal'
 import ReviewModal from './review/ReviewModal'
+import Dialog from 'material-ui/Dialog';
 
-import { Modal } from 'react-bootstrap'
-
-@cssmodules(styles)
 class AppModal extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      tabValue: "join"
+    }
+  }
+
   render() {
+    const { isModalOpen, modalContent, selectedReviewType } = this.props.modal;
+
     return (
-      <Modal show={this.props.modal.isModalOpen}>
-        <Modal.Body>
-          {
-            this.props.modal.modalContent === 'login' ?
-              <LoginModal {...this.props} />
-              :
-              <ReviewModal {...this.props} />
-          }
-        </Modal.Body>
-      </Modal>
+      <Dialog
+        title={modalContent === 'login' ? "Session Login" : _.replace(selectedReviewType, '_', ' ')}
+        modal={true}
+        open={isModalOpen}
+        contentStyle={{ width: '25%', minWidth: '480px' }}
+      >
+        {
+          modalContent === 'login' ? <LoginModal {...this.props} /> : <ReviewModal {...this.props} />
+        }
+      </Dialog>
     );
   }
 }

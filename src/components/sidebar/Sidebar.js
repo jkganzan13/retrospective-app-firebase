@@ -1,13 +1,18 @@
 import React from 'react';
 import RoomDetails from './RoomDetails';
 import ReviewsList from './ReviewsList';
+import { Col, Row } from 'react-bootstrap';
 
 const Sidebar = (props) => {
   return (
-    <div className="sidebar">
-      <RoomDetails {...props.roomDetails} />
-      <ReviewsList reviews={props.reviews} />
-    </div>
+    <Col md={5} sm={12} className="sidebar">
+      <Row>
+        <RoomDetails {...props.roomDetails} />
+      </Row>
+      <Row>
+        <ReviewsList reviews={props.reviews} />
+      </Row>
+    </Col>
   )
 };
 

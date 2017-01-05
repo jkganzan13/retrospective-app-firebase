@@ -12,39 +12,37 @@ import chai, { should, expect } from 'chai'
 import spies from 'chai-spies'
 chai.use(spies);
 
-describe.only('<LoginModal />', () => {
+describe('<LoginModal />', () => {
 
   let component;
   let loginModal;
   let mockProps;
   let mockEvent;
-  // beforeEach(() => {
-  //   component = shallow(<LoginModal />);
+
+  //redo
+  // describe('when rendering the component', () => {
+  //
+  //   beforeEach(() => {
+  //     component = mount(<LoginModal/>)
+  //   });
+  //
+  //   it('should contain an <Accordion /> component', () => {
+  //     expect(component.find(Accordion)).to.have.length(1);
+  //   });
+  //
+  //   it('should contain 2x <Panel /> components', () => {
+  //     expect(component.find(Panel)).to.have.length(2);
+  //   });
+  //
+  //   it('should contain <JoinForm /> component', () => {
+  //     expect(component.find(JoinForm)).to.have.length(1);
+  //   });
+  //
+  //   it('should contain <CreateForm /> component', () => {
+  //     expect(component.find(CreateForm)).to.have.length(1);
+  //   });
+  //
   // });
-
-  describe('when rendering the component', () => {
-
-    beforeEach(() => {
-      component = mount(<LoginModal/>)
-    });
-
-    it('should contain an <Accordion /> component', () => {
-      expect(component.find(Accordion)).to.have.length(1);
-    });
-
-    it('should contain 2x <Panel /> components', () => {
-      expect(component.find(Panel)).to.have.length(2);
-    });
-
-    it('should contain <JoinForm /> component', () => {
-      expect(component.find(JoinForm)).to.have.length(1);
-    });
-
-    it('should contain <CreateForm /> component', () => {
-      expect(component.find(CreateForm)).to.have.length(1);
-    });
-
-  });
 
   describe('submitRoomDetails', () => {
     firebase.initializeApp(config.firebaseCfg);

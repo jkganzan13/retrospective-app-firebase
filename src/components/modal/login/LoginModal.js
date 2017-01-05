@@ -3,9 +3,8 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import JoinForm from './JoinForm'
 import CreateForm from './CreateForm'
 import { validationMsg } from '../../../constants/customMessages';
-import { dbListen, dbWriteAndReturnKey } from '../../../helpers/firebase';
-
-
+import { dbGetOnce, dbListen, dbWriteAndReturnKey } from '../../../helpers/firebase';
+import { isValidString } from '../../../helpers/util';
 
 class LoginModal extends React.Component {
   constructor(props) {
@@ -24,6 +23,8 @@ class LoginModal extends React.Component {
     this.submitSessionDetails = this.submitSessionDetails.bind(this);
     this.generateSessionId = this.generateSessionId.bind(this);
     this.resetState = this.resetState.bind(this);
+    this.validateNameFieldError = this.validateNameFieldError.bind(this);
+    this.validateSessionIdFieldError = this.validateSessionIdFieldError.bind(this);
   }
 
   nameHandleChange(e) {
@@ -43,28 +44,25 @@ class LoginModal extends React.Component {
 
     const { updateSessionId, updateCurrentUser, updateModalContent, toggleModal } = this.props.actions;
 
-    const key = this.state.sessionId || dbWriteAndReturnKey('sessions', { name: this.state.name });
-    dbListen(`reviews/${key}`, this.props.actions.updateReviews);
+    //validate name
 
-    if (key) {
-      updateSessionId(key);
-      updateCurrentUser(this.state.name);
-      updateModalContent('review');
-      toggleModal();
-    }
-  }
+    dbGetOnce('sessions').then((snapshot) => {
+      let sessions = Object.keys(snapshot.val());
 
-  validateFields({ sessionId, name }) {
-    let isValid = true;
-    if (sessionId.trim() === '') {
-      this.setState({ sessionIdFieldErrorMsg: validationMsg.ERROR });
-      isValid = false;
-    }
-    if (name.trim() === '') {
-      this.setState({ nameFieldErrorMsg: validationMsg.ERROR });
-      isValid = false;
-    }
-    return isValid;
+
+
+    });
+
+
+    // const key = this.state.sessionId || dbWriteAndReturnKey('sessions', { createdBy: this.state.name });
+    // dbListen(`reviews/${key}`, this.props.actions.updateReviews);
+    //
+    // if (key) {
+    //   updateSessionId(key.trim());
+    //   updateCurrentUser(this.state.name.trim());
+    //   updateModalContent('review');
+    //   toggleModal();
+    // }
   }
 
   resetState() {
@@ -74,6 +72,30 @@ class LoginModal extends React.Component {
       sessionIdFieldErrorMsg: '',
       nameFieldErrorMsg: ''
     });
+  }
+
+  validateSessionIdFieldError() {
+    const { sessionId } = this.state;
+    if (isValidString(sessionId)) {
+      this.setState({ sessionIdFieldErrorMsg: '' });
+      return true;
+    }
+    if (!isValidString(sessionId)) {
+      this.setState({ sessionIdFieldErrorMsg: validationMsg.ERROR });
+      return false;
+    }
+  }
+
+  validateNameFieldError() {
+    const { name } = this.state;
+    if (isValidString(name)) {
+      this.setState({ nameFieldErrorMsg: '' });
+      return true;
+    }
+    if (!isValidString(name)) {
+      this.setState({ nameFieldErrorMsg: validationMsg.ERROR });
+      return false;
+    }
   }
 
   generateSessionId() {
@@ -87,12 +109,23 @@ class LoginModal extends React.Component {
     return (
       <Tabs onChange={this.resetState}>
         <Tab label="Join">
-          <JoinForm {...this.state} nameHandleChange={this.nameHandleChange}
-            sessionHandleChange={this.sessionHandleChange} submitSessionDetails={this.submitSessionDetails} />
+          <JoinForm
+            {...this.state}
+            nameHandleChange={this.nameHandleChange}
+            sessionHandleChange={this.sessionHandleChange}
+            submitSessionDetails={this.submitSessionDetails}
+            validateSessionIdFieldError = {this.validateSessionIdFieldError}
+            validateNameFieldError = {this.validateNameFieldError}
+          />
         </Tab>
         <Tab label="Create">
-          <CreateForm name={this.state.name} nameFieldErrorMsg={this.state.nameFieldErrorMsg}
-            nameHandleChange={this.nameHandleChange} submitSessionDetails={this.submitSessionDetails} />
+          <CreateForm
+            name={this.state.name}
+            nameFieldErrorMsg={this.state.nameFieldErrorMsg}
+            nameHandleChange={this.nameHandleChange}
+            submitSessionDetails={this.submitSessionDetails}
+            validateNameFieldError = {this.validateNameFieldError}
+          />
         </Tab>
       </Tabs>
     );

@@ -15,8 +15,8 @@ export const dbWriteAndReturnKey = (reference, data) => {
   return key;
 };
 
-export const dbGetOnce = (reference, itemToUpdate) => {
-  firebase.database().ref(reference).then(data => itemToUpdate = data)
+export const dbGetOnce = (reference) => {
+  return firebase.database().ref(reference).once('value');
 };
 
 export const dbListen = (reference, callback) => {

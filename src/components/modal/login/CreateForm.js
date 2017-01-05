@@ -3,6 +3,18 @@ import { RaisedButton, TextField } from 'material-ui';
 
 class CreateForm extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.validateFields = this.validateFields.bind(this);
+  }
+
+  validateFields(e) {
+    e.preventDefault();
+    if (this.props.validateNameFieldError()) {
+      this.props.submitSessionDetails();
+    }
+  }
+
   render() {
 
     const { nameFieldErrorMsg, name, nameHandleChange, submitSessionDetails} = this.props;
@@ -13,7 +25,7 @@ class CreateForm extends React.Component {
     };
 
     return (
-      <form onSubmit={submitSessionDetails}>
+      <form onSubmit={this.validateFields}>
         <TextField
           errorText={nameFieldErrorMsg}
           floatingLabelText="Name"

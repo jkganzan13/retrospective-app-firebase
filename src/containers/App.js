@@ -12,7 +12,7 @@ import {
   toggleModal,
   updateReviews,
   updateUsers,
-  updateRoomId,
+  updateSessionId,
   updateModalContent,
   selectReviewType,
   updateCurrentUser
@@ -31,13 +31,13 @@ class App extends Component {
     firebase.initializeApp(config.firebaseCfg);
   }
   render() {
-    const {actions, modal, roomDetails, reviews} = this.props;
+    const {actions, modal, sessionDetails, reviews} = this.props;
     return (
       <MuiThemeProvider>
         <Main
           actions={actions}
           modal={modal}
-          roomDetails={roomDetails}
+          sessionDetails={sessionDetails}
           reviews={reviews}/>
       </MuiThemeProvider>
     );
@@ -51,7 +51,7 @@ class App extends Component {
 App.propTypes = {
   actions: PropTypes.object.isRequired,
   modal: PropTypes.object.isRequired,
-  roomDetails: PropTypes.object.isRequired,
+  sessionDetails: PropTypes.object.isRequired,
   reviews: PropTypes.object.isRequired
 };
 function mapStateToProps(state) {
@@ -59,7 +59,7 @@ function mapStateToProps(state) {
   /* Populated by react-webpack-redux:reducer */
   const props = {
     modal: state.modal,
-    roomDetails: state.roomDetails,
+    sessionDetails: state.sessionDetails,
     reviews: state.reviews
   };
 
@@ -71,7 +71,7 @@ function mapDispatchToProps(dispatch) {
     toggleModal,
     updateReviews,
     updateUsers,
-    updateRoomId,
+    updateSessionId,
     updateModalContent,
     selectReviewType,
     updateCurrentUser

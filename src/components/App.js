@@ -32,14 +32,14 @@ class AppComponent extends React.Component {
 
   render() {
 
-    const { modal, roomDetails, reviews, actions } = this.props;
+    const { modal, sessionDetails, reviews, actions } = this.props;
 
     return (
       <Row className="index">
         <AppModal {...this.props} openSnackbar={this.openSnackbar} />
         { modal.modalContent === 'login' && <div className="blackBg"></div> }
         { modal.modalContent !== 'login' && <Wheel actions={actions} /> }
-        { modal.modalContent !== 'login' && <Sidebar roomDetails={roomDetails} reviews={reviews} /> }
+        { modal.modalContent !== 'login' && <Sidebar sessionDetails={sessionDetails} reviews={reviews} /> }
         <Snackbar
           open={this.state.isSnackbarOpen}
           message={snackbarMsg.REVIEW_SUBMIT_ON_SUCCESS}

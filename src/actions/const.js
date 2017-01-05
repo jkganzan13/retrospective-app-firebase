@@ -1,9 +1,9 @@
 /* Populated by react-webpack-redux:action */
 export const TOGGLE_MODAL = 'TOGGLE_MODAL';
-export const GET_ROOMS = 'GET_ROOMS';
+export const GET_SESSIONS = 'GET_SESSIONS';
 export const UPDATE_REVIEWS = 'UPDATE_REVIEWS';
 export const UPDATE_USERS = 'UPDATE_USERS';
-export const UPDATE_ROOM_ID = 'UPDATE_ROOM_ID';
+export const UPDATE_SESSION_ID = 'UPDATE_SESSION_ID';
 export const UPDATE_MODAL_CONTENT = 'UPDATE_MODAL_CONTENT';
 export const SELECT_REVIEW_TYPE = 'SELECT_REVIEW_TYPE';
 export const UPDATE_CURRENT_USER = 'UPDATE_CURRENT_USER';

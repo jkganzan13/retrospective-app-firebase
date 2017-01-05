@@ -6,15 +6,15 @@ class JoinForm extends React.Component {
 
   render() {
 
-    const { name, nameFieldErrorMsg, nameHandleChange, roomHandleChange, roomId, sessionIdFieldErrorMsg, submitRoomDetails} = this.props;
+    const { name, nameFieldErrorMsg, nameHandleChange, sessionHandleChange, sessionId, sessionIdFieldErrorMsg, submitSessionDetails} = this.props;
 
     return (
-      <form onSubmit={submitRoomDetails}>
+      <form onSubmit={submitSessionDetails}>
         <TextField
           errorText={sessionIdFieldErrorMsg}
           floatingLabelText="Session ID"
-          value={roomId}
-          onChange={roomHandleChange}
+          value={sessionId}
+          onChange={sessionHandleChange}
           fullWidth={true}
         />
         <TextField

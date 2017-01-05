@@ -23,14 +23,14 @@ class ReviewModal extends React.Component {
   submitReview(e) {
     e.preventDefault();
 
-    const { roomId, currentUser } = this.props.roomDetails;
+    const { sessionId, currentUser } = this.props.sessionDetails;
     const { selectedReviewType } = this.props.modal;
     const { comment } = this.state;
     const sanitizedText = sanitizeText(comment);
 
     if (sanitizedText !== '') {
       const timestamp = getTimestamp();
-      dbWrite(`reviews/${roomId}`, { user: currentUser, comment: sanitizedText, reviewType: selectedReviewType, timestamp }, timestamp);
+      dbWrite(`reviews/${sessionId}`, { user: currentUser, comment: sanitizedText, reviewType: selectedReviewType, timestamp }, timestamp);
       this.resetCommentFieldError();
       this.props.actions.toggleModal();
       this.props.openSnackbar();

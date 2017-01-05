@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import RoomDetails from 'components/sidebar/RoomDetails.js';
+import SessionDetails from 'components/sidebar/SessionDetails.js';
 
 describe('<RoomDetails />', () => {
 
   let component;
   beforeEach(() => {
-    component = shallow(<RoomDetails />);
+    component = shallow(<SessionDetails />);
   });
 
   describe('when rendering the component', () => {

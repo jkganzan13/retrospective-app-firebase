@@ -9,11 +9,11 @@
 /* Populated by react-webpack-redux:reducer */
 import { combineReducers } from 'redux';
 import reviews from '../reducers/reviews.js';
-import roomDetails from '../reducers/roomDetails.js';
+import sessionDetails from '../reducers/sessionDetails.js';
 import modal from '../reducers/modal.js';
 const reducers = {
   modal,
-  roomDetails,
+  sessionDetails,
   reviews
 };
 const combined = combineReducers(reducers);

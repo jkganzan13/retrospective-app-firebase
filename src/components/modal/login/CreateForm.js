@@ -5,7 +5,7 @@ class CreateForm extends React.Component {
 
   render() {
 
-    const { nameFieldErrorMsg, name, nameHandleChange, submitRoomDetails} = this.props;
+    const { nameFieldErrorMsg, name, nameHandleChange, submitSessionDetails} = this.props;
     const noteStyle = {
       position: 'relative',
       fontSize: '12px',
@@ -13,7 +13,7 @@ class CreateForm extends React.Component {
     };
 
     return (
-      <form onSubmit={submitRoomDetails}>
+      <form onSubmit={submitSessionDetails}>
         <TextField
           errorText={nameFieldErrorMsg}
           floatingLabelText="Name"

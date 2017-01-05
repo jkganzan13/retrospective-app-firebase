@@ -3,11 +3,11 @@
  * If you change the type from object to something else, do not forget to update
  * src/container/App.js accordingly.
  */
-import { UPDATE_CURRENT_USER, UPDATE_ROOM_ID, UPDATE_USERS } from '../actions/const';
+import { UPDATE_CURRENT_USER, UPDATE_SESSION_ID, UPDATE_USERS } from '../actions/const';
 
 const initialState = {
   users: [],
-  roomId: '',
+  sessionId: '',
   currentUser: ''
 };
 
@@ -23,9 +23,9 @@ function reducer(state = initialState, action) {
       })
     }
 
-    case UPDATE_ROOM_ID: {
+    case UPDATE_SESSION_ID: {
       return Object.assign({}, state, {
-        roomId: action.roomId
+        sessionId: action.sessionId
       })
     }
 

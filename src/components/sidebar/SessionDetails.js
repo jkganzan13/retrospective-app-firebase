@@ -12,11 +12,11 @@ const styles = {
   },
 };
 
-const RoomDetails = ({ roomId, currentUser, users }) => {
+const SessionDetails = ({ sessionId, currentUser, users }) => {
   return (
     <Paper>
       <AppBar
-        title="Room Details"
+        title="Session Details"
         style={styles.appBar}
         showMenuIconButton={false}
         zDepth={0}
@@ -24,8 +24,8 @@ const RoomDetails = ({ roomId, currentUser, users }) => {
       </AppBar>
       <List>
         <ListItem
-          primaryText={roomId}
-          secondaryText="Room ID"
+          primaryText={sessionId}
+          secondaryText="Session ID"
         />
         <ListItem
           primaryText={currentUser}
@@ -36,4 +36,4 @@ const RoomDetails = ({ roomId, currentUser, users }) => {
   )
 };
 
-export default RoomDetails;
+export default SessionDetails;

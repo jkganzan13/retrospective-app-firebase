@@ -1,5 +1,5 @@
 import React from 'react';
-import { RaisedButton, TextField } from 'material-ui';
+import { LinearProgress, RaisedButton, TextField } from 'material-ui';
 
 class JoinForm extends React.Component {
 
@@ -22,7 +22,7 @@ class JoinForm extends React.Component {
 
   render() {
 
-    const { name, nameFieldErrorMsg, nameHandleChange, sessionHandleChange, sessionId, sessionIdFieldErrorMsg } = this.props;
+    const { loading, name, nameFieldErrorMsg, nameHandleChange, sessionHandleChange, sessionId, sessionIdFieldErrorMsg } = this.props;
 
     return (
       <form onSubmit={this.validateFields}>
@@ -32,6 +32,7 @@ class JoinForm extends React.Component {
           value={sessionId}
           onChange={sessionHandleChange}
           fullWidth={true}
+          disabled={loading}
         />
         <TextField
           errorText={nameFieldErrorMsg}
@@ -39,8 +40,9 @@ class JoinForm extends React.Component {
           value={name}
           onChange={nameHandleChange}
           fullWidth={true}
+          disabled={loading}
         />
-        <RaisedButton type="submit" label="Submit" primary={true} style={{ marginTop: '14px' }}/>
+        { !loading && <RaisedButton type="submit" label="Submit" primary={true} style={{ marginTop: '14px' }}/> }
       </form>
     );
   }

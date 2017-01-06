@@ -14,7 +14,8 @@ class LoginModal extends React.Component {
       sessionId: '',
       name: '',
       sessionIdFieldErrorMsg: '',
-      nameFieldErrorMsg: ''
+      nameFieldErrorMsg: '',
+      loading: false
     };
 
     this.nameHandleChange = this.nameHandleChange.bind(this);
@@ -39,30 +40,39 @@ class LoginModal extends React.Component {
     this.setState({ openedTab: value })
   }
 
-  submitSessionDetails(e) {
-    e.preventDefault();
+  getKeyFromDb(sessionsList) {
+    const { name, sessionId } = this.state;
+    if (sessionId === '') {
+      return dbWriteAndReturnKey('sessions', { createdBy: name });
+    }
+    return (sessionsList.includes(sessionId)) ? sessionId : false;
+  }
 
-    const { updateSessionId, updateCurrentUser, updateModalContent, toggleModal } = this.props.actions;
+  toggleLoading() {
+    this.setState({ loading: !this.state.loading })
+  }
 
-    //validate name
+  submitSessionDetails() {
+    const { updateSessionId, updateCurrentUser, updateModalContent, updateReviews, toggleModal } = this.props.actions;
+    const { name } = this.state;
 
+    this.toggleLoading();
     dbGetOnce('sessions').then((snapshot) => {
+      this.toggleLoading();
       let sessions = Object.keys(snapshot.val());
 
+      let key = this.getKeyFromDb(sessions);
+      if(!key) {
+        return this.throwFieldErrorMsg('sessionIdFieldErrorMsg', validationMsg.SESSION_ID_NOT_FOUND);
+      }
 
+      dbListen(`reviews/${key}`, updateReviews);
+      updateSessionId(key.trim());
+      updateCurrentUser(name.trim());
+      updateModalContent('review');
+      toggleModal();
 
     });
-
-
-    // const key = this.state.sessionId || dbWriteAndReturnKey('sessions', { createdBy: this.state.name });
-    // dbListen(`reviews/${key}`, this.props.actions.updateReviews);
-    //
-    // if (key) {
-    //   updateSessionId(key.trim());
-    //   updateCurrentUser(this.state.name.trim());
-    //   updateModalContent('review');
-    //   toggleModal();
-    // }
   }
 
   resetState() {
@@ -74,27 +84,30 @@ class LoginModal extends React.Component {
     });
   }
 
-  validateSessionIdFieldError() {
+  throwFieldErrorMsg(key, message) {
+    this.setState({ [key]: message });
+    return false;
+  }
+
+  validateSessionIdFieldError(errorMsg = validationMsg.ERROR) {
     const { sessionId } = this.state;
     if (isValidString(sessionId)) {
       this.setState({ sessionIdFieldErrorMsg: '' });
       return true;
     }
     if (!isValidString(sessionId)) {
-      this.setState({ sessionIdFieldErrorMsg: validationMsg.ERROR });
-      return false;
+      this.throwFieldErrorMsg('sessionIdFieldErrorMsg', errorMsg)
     }
   }
 
-  validateNameFieldError() {
+  validateNameFieldError(errorMsg = validationMsg.ERROR) {
     const { name } = this.state;
     if (isValidString(name)) {
       this.setState({ nameFieldErrorMsg: '' });
       return true;
     }
     if (!isValidString(name)) {
-      this.setState({ nameFieldErrorMsg: validationMsg.ERROR });
-      return false;
+      return this.throwFieldErrorMsg('nameFieldErrorMsg', errorMsg)
     }
   }
 

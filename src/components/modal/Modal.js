@@ -18,7 +18,7 @@ class AppModal extends React.Component {
 
     return (
       <Dialog
-        title={modalContent === 'login' ? "Session Login" : _.replace(selectedReviewType, '_', ' ')}
+        title={modalContent === 'login' ? "Sprint Retro" : _.replace(selectedReviewType, '_', ' ')}
         modal={true}
         open={isModalOpen}
         contentStyle={{ width: '25%', minWidth: '480px' }}

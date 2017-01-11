@@ -1,23 +1,29 @@
 import React from 'react';
-import { Well } from 'react-bootstrap';
-import { AppBar, Badge, Card, CardHeader, CardText, Divider, List, ListItem, Paper, Tab, Tabs} from 'material-ui';
+import { CommunicationVpnKey, ContentContentCopy, SocialPerson } from 'material-ui/svg-icons';
+import { AppBar, Avatar, IconButton, List, ListItem, Paper } from 'material-ui';
+import { snackbarMsg } from '../../constants/customMessages';
+import { grey500 } from 'material-ui/styles/colors';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
-const styles = {
-  appBar: {
-    flexWrap: 'wrap',
-    zIndex: 0
-  },
-  tabs: {
-    width: '100%',
-  },
-};
+const SessionDetails = ({ sessionId, currentUser, openSnackbar, users }) => {
 
-const SessionDetails = ({ sessionId, currentUser, users }) => {
+  const onSessionIdCopy = () => {
+    openSnackbar(snackbarMsg.SESSION_ID_COPIED);
+  };
+
+  const copyIcon = (
+    <CopyToClipboard text={sessionId} onCopy={onSessionIdCopy}>
+      <IconButton tooltip="Click to copy." touch={true} tooltipPosition="bottom-center">
+        <ContentContentCopy color={grey500} />
+      </IconButton>
+    </CopyToClipboard>
+  );
+
   return (
-    <Paper>
+    <Paper zDepth={1}>
       <AppBar
         title="Session Details"
-        style={styles.appBar}
+        className="appbar-on-tabs"
         showMenuIconButton={false}
         zDepth={0}
       >
@@ -26,10 +32,13 @@ const SessionDetails = ({ sessionId, currentUser, users }) => {
         <ListItem
           primaryText={sessionId}
           secondaryText="Session ID"
+          leftAvatar={<Avatar icon={<CommunicationVpnKey />} />}
+          rightIconButton={copyIcon}
         />
         <ListItem
           primaryText={currentUser}
           secondaryText="User Name"
+          leftAvatar={<Avatar icon={<SocialPerson />} />}
         />
       </List>
     </Paper>

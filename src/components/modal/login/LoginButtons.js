@@ -6,10 +6,10 @@ import styles from './loginbuttons.cssmodule.sass';
 
 const LoginButtons = ({ showProgress, createOnClick }) => {
     return (
-      <div style={{ marginTop: '14px', height:'36px' }}>
-        <RaisedButton type="submit" label="Join" primary={true} style={{verticalAlign: 'top'}} disabled={showProgress} />
-        <RaisedButton type="button" label="Create" primary={true} style={{verticalAlign: 'top', marginLeft: '16px'}} disabled={showProgress} onTouchTap={createOnClick} />
-        { showProgress && <CircularProgress size={36} style={{ marginLeft: '16px', verticalAlign:'middle' }} /> }
+      <div className="login-button-container">
+        <RaisedButton type="submit" label="Join" primary={true} disabled={showProgress} className="raised-button" />
+        <RaisedButton type="button" label="Create" primary={true} disabled={showProgress} className="raised-button" onTouchTap={createOnClick} />
+        { showProgress && <CircularProgress size={30} className="circular-progress" /> }
       </div>
     );
 };

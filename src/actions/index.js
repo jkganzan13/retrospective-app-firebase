@@ -7,7 +7,7 @@ import {action1, action2} from '../actions/'
 /* Populated by react-webpack-redux:action */
 import updateCurrentUser from '../actions/sessionDetails/updateCurrentUser.js';
 import selectReviewType from './modal/selectReviewType.js';
-import updateModalContent from '../actions/modal/updateModalContent.js';
+import updateIsLogin from './modal/updateIsLogin.js';
 import updateSessionId from './sessionDetails/updateSessionId.js';
 import updateUsers from './sessionDetails/updateUsers.js';
 import updateReviews from '../actions/reviews/updateReviews.js';
@@ -17,7 +17,7 @@ const actions = {
   updateReviews,
   updateUsers,
   updateSessionId,
-  updateModalContent,
+  updateIsLogin,
   selectReviewType,
   updateCurrentUser
 };

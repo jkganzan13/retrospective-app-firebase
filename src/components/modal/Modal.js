@@ -3,6 +3,7 @@ import _ from 'lodash';
 import LoginModal from './login/LoginModal'
 import ReviewModal from './review/ReviewModal'
 import Dialog from 'material-ui/Dialog';
+import { appTitle } from '../../constants/app';
 
 class AppModal extends React.Component {
   constructor(props) {
@@ -14,17 +15,17 @@ class AppModal extends React.Component {
   }
 
   render() {
-    const { isModalOpen, modalContent, selectedReviewType } = this.props.modal;
+    const { isModalOpen, isLogin, selectedReviewType } = this.props.modal;
 
     return (
       <Dialog
-        title={modalContent === 'login' ? "Sprint Retro" : _.replace(selectedReviewType, '_', ' ')}
+        title={isLogin ? appTitle : _.replace(selectedReviewType, '_', ' ')}
         modal={true}
         open={isModalOpen}
-        contentStyle={{ width: '25%', minWidth: '480px' }}
+        contentClassName={'modal-content'}
       >
         {
-          modalContent === 'login' ? <LoginModal {...this.props} /> : <ReviewModal {...this.props} />
+          isLogin ? <LoginModal {...this.props} /> : <ReviewModal {...this.props} />
         }
       </Dialog>
     );

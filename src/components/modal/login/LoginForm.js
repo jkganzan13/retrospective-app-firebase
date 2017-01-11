@@ -115,11 +115,11 @@ class LoginForm extends React.Component {
   }
 
   updateRoomDetails(name, key) {
-    const { updateSessionId, updateCurrentUser, updateModalContent, toggleModal } = this.props.actions;
+    const { updateSessionId, updateCurrentUser, updateIsLogin, toggleModal } = this.props.actions;
 
     updateSessionId(key);
     updateCurrentUser(name.trim());
-    updateModalContent('review');
+    updateIsLogin(false);
     toggleModal();
   }
 
@@ -127,8 +127,8 @@ class LoginForm extends React.Component {
     this.setState({ loading: !this.state.loading })
   }
 
-  generateRandomKey() {
-    return Math.random().toString(36).substr(2, 5);
+  generateRandomKey(length) {
+    return Math.random().toString(36).substr(2, length);
   }
 
   nameHandleChange(e) {

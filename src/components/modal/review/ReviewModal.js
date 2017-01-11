@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatButton, RaisedButton, TextField } from 'material-ui';
 import { sanitizeText, getTimestamp } from '../../../helpers/util';
 import { dbWrite } from '../../../helpers/firebase';
-import { validationMsg } from '../../../constants/customMessages';
+import { snackbarMsg, validationMsg } from '../../../constants/customMessages';
 
 class ReviewModal extends React.Component {
 
@@ -33,7 +33,7 @@ class ReviewModal extends React.Component {
       dbWrite(`reviews/${sessionId}`, { user: currentUser, comment: sanitizedText, reviewType: selectedReviewType, timestamp }, timestamp);
       this.resetCommentFieldError();
       this.props.actions.toggleModal();
-      this.props.openSnackbar();
+      this.props.openSnackbar(snackbarMsg.REVIEW_SUBMIT_ON_SUCCESS);
     } else {
       this.showCommentFieldError();
     }
@@ -67,8 +67,8 @@ class ReviewModal extends React.Component {
           rows={2}
           fullWidth={true}
         />
-        <RaisedButton type="submit" label="Submit" primary={true} style={{ marginTop: '14px' }} />
-        <FlatButton label="Close" onTouchTap={this.props.actions.toggleModal} style={{ marginTop: '14px' }} />
+        <RaisedButton type="submit" label="Submit" primary={true} className="form-field-margin" />
+        <FlatButton label="Close" onTouchTap={this.props.actions.toggleModal} className="form-field-margin" />
       </form>
     );
   }

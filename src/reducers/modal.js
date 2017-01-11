@@ -3,11 +3,11 @@
  * If you change the type from object to something else, do not forget to update
  * src/container/App.js accordingly.
  */
-import { TOGGLE_MODAL, UPDATE_MODAL_CONTENT, SELECT_REVIEW_TYPE } from '../actions/const';
+import { TOGGLE_MODAL, UPDATE_IS_LOGIN, SELECT_REVIEW_TYPE } from '../actions/const';
 
 const initialState = {
   isModalOpen: true,
-  modalContent: 'login',
+  isLogin: true,
   selectedReviewType: ''
 };
 
@@ -23,9 +23,9 @@ function reducer(state = initialState, action) {
       })
     }
 
-    case UPDATE_MODAL_CONTENT: {
+    case UPDATE_IS_LOGIN: {
       return Object.assign({}, state, {
-        modalContent: action.modalContent
+        isLogin: action.isLogin
       });
     }
 

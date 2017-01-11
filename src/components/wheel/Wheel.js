@@ -3,7 +3,6 @@
 import React from 'react';
 import reviewTypes from '../../constants/reviewTypes';
 import _ from 'lodash';
-import { Col } from 'react-bootstrap';
 import { Paper } from 'material-ui';
 
 class Wheel extends React.Component {
@@ -48,9 +47,8 @@ class Wheel extends React.Component {
 
   render() {
     return (
-      <Col md={6} sm={12} className="wheel-container">
-        <div className="wheel">
-          <ul>
+      <div className="wheel-container">
+          <ul className="wheel">
             {
               this.slices.map((slice, i) => {
                 return (
@@ -61,8 +59,7 @@ class Wheel extends React.Component {
               })
             }
           </ul>
-        </div>
-      </Col>
+      </div>
     );
   }
 }

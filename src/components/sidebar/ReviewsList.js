@@ -8,27 +8,17 @@ const getBadge = (header, number) => (
   </Badge>
 );
 
-const styles = {
-  appBar: {
-    flexWrap: 'wrap',
-    zIndex: 0
-  },
-  tabs: {
-    width: '100%',
-  },
-};
-
 const ReviewsList = ({ reviews }) => {
   return (
-    <Paper style={{height:'480px'}}>
+    <Paper className="reviews-list" zDepth={1}>
       <AppBar
         title="Review List"
-        style={styles.appBar}
+        className="appbar-on-tabs"
         showMenuIconButton={false}
         zDepth={0}
       >
       </AppBar>
-      <Tabs style={styles.tabs} contentContainerStyle={{overflowY:'scroll', height:'368px'}}>
+      <Tabs contentContainerClassName={'tabs'}>
         {
           _.keys(reviews).map((reviewType, i) => {
             return (
@@ -41,7 +31,7 @@ const ReviewsList = ({ reviews }) => {
                         <ListItem
                           primaryText={reviewItem.user}
                           secondaryText={
-                            <p style={{WebkitLineClamp: 0, height: ''}}>
+                            <p className="review-comment">
                               {reviewItem.comment}
                             </p>
                           }

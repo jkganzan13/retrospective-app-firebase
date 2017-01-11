@@ -13,7 +13,7 @@ import {
   updateReviews,
   updateUsers,
   updateSessionId,
-  updateModalContent,
+  updateIsLogin,
   selectReviewType,
   updateCurrentUser
 } from '../actions/';
@@ -72,7 +72,7 @@ function mapDispatchToProps(dispatch) {
     updateReviews,
     updateUsers,
     updateSessionId,
-    updateModalContent,
+    updateIsLogin,
     selectReviewType,
     updateCurrentUser
   };

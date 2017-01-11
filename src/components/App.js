@@ -3,9 +3,8 @@ import AppModal from './modal/Modal';
 import Wheel from './wheel/Wheel';
 import Sidebar from './sidebar/Sidebar';
 import './app.css';
-import { Grid, Row } from 'react-bootstrap';
-import { Snackbar } from 'material-ui';
-import { snackbarMsg } from '../constants/customMessages';
+import { AppBar, FlatButton, Snackbar } from 'material-ui';
+import { appTitle } from '../constants/app';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
@@ -15,7 +14,8 @@ class AppComponent extends React.Component {
     injectTapEventPlugin();
 
     this.state = {
-      isSnackbarOpen: false
+      isSnackbarOpen: false,
+      snackbarMessage: ''
     };
 
     this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
@@ -26,27 +26,45 @@ class AppComponent extends React.Component {
     this.setState({ isSnackbarOpen: false });
   }
 
-  openSnackbar() {
-    this.setState({ isSnackbarOpen: true });
+  openSnackbar(message) {
+    this.setState({
+      isSnackbarOpen: true,
+      snackbarMessage: message
+    });
   }
 
   render() {
 
     const { modal, sessionDetails, reviews, actions } = this.props;
-
+    const { isSnackbarOpen, snackbarMessage } = this.state;
     return (
-      <Row className="index">
+      <div className="index">
+
         <AppModal {...this.props} openSnackbar={this.openSnackbar} />
-        { modal.modalContent === 'login' && <div className="blackBg"></div> }
-        { modal.modalContent !== 'login' && <Wheel actions={actions} /> }
-        { modal.modalContent !== 'login' && <Sidebar sessionDetails={sessionDetails} reviews={reviews} /> }
+
+        { modal.isLogin ?
+
+          <div className="blackBg"></div>
+
+          :
+
+          <div>
+            <AppBar title={appTitle} showMenuIconButton={false} />
+            <Wheel actions={actions} />
+            <Sidebar sessionDetails={sessionDetails} reviews={reviews} openSnackbar={this.openSnackbar} iconElementRight={<FlatButton label="Logout" />} />
+          </div>
+
+        }
+
         <Snackbar
-          open={this.state.isSnackbarOpen}
-          message={snackbarMsg.REVIEW_SUBMIT_ON_SUCCESS}
+          open={isSnackbarOpen}
+          message={snackbarMessage}
           autoHideDuration={5000}
           onRequestClose={this.handleSnackbarClose}
+          className={'snackbar'}
         />
-      </Row>
+
+      </div>
     );
   }
 }

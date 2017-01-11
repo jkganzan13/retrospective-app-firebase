@@ -33,17 +33,27 @@ label {
 }
 
 .wheel-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /*display: flex;*/
+  /*align-items: center;*/
+  /*justify-content: center;*/
+  position: relative;
+  width: 90%;
+  min-width: 360px;
+  max-width: 640px;
+}
+
+.wheel-container:before{
+  content: "";
+  display: block;
+  padding-top: 100%; 	/* initial ratio of 1:1*/
 }
 
 .wheel {
-  position: relative;
-  /*border: solid 2px;*/
-  padding: 0;
-  width: 46em;
-  height: 46em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   border-radius: 50%;
   list-style: none;
   display: inline-block;
@@ -76,7 +86,7 @@ label {
   margin: 0;
 }
 
-.row, #app, .wheel-container {
+.row, #app {
   height: 100%;
 }
 
@@ -84,8 +94,71 @@ label {
   margin-top: 64px;
 }
 
-@media only screen and (max-width: 992px) {
+.modal-content {
+  width: 90% !important;
+  max-width: 480px !important;
+}
+
+.snackbar {
+  text-align: center;
+}
+
+.login-button-container {
+  margin-top: 14px;
+  height: 36px;
+}
+
+.login-button-container .raised-button {
+  vertical-align: top;
+}
+
+.login-button-container div:not(:first-child) {
+  margin-left: 16px;
+}
+
+.login-button-container .circular-progress {
+  margin-top: 3px;
+  margin-bottom:3px;
+}
+
+.form-field-margin {
+  margin-top: 14px;
+}
+
+.reviews-list {
+  height: 480px;
+}
+
+.reviews-list .tabs {
+  overflow-y: scroll;
+  height: 368px;
+}
+
+.reviews-list .review-comment {
+  -webkit-line-clamp: 1000 !important;
+  height: inherit !important;
+}
+
+.appbar-on-tabs {
+  flex-wrap: wrap;
+  z-index: 0 !important;
+}
+
+.tabs {
+  width: 100%;
+}
+
+@media only screen and (max-width: 960px) and (min-height: 422px) {
   body {
     overflow: auto;
   }
 }
+
+@media only screen and (max-height: 422px) {
+
+}
+
+@media only screen and (min-width: 641px) {
+
+}
+

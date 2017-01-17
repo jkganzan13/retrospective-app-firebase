@@ -3,7 +3,7 @@
 import React from 'react';
 import reviewTypes from '../../constants/reviewTypes';
 import _ from 'lodash';
-import { Paper } from 'material-ui';
+import { AppBar, Paper } from 'material-ui';
 
 class Wheel extends React.Component {
 
@@ -47,7 +47,14 @@ class Wheel extends React.Component {
 
   render() {
     return (
-      <div className="wheel-container">
+      <Paper className="wheel-container">
+        <AppBar
+          title="Retro Wheel"
+          showMenuIconButton={false}
+          zDepth={0}
+        >
+        </AppBar>
+        <div className="wheel-content">
           <ul className="wheel">
             {
               this.slices.map((slice, i) => {
@@ -59,7 +66,8 @@ class Wheel extends React.Component {
               })
             }
           </ul>
-      </div>
+        </div>
+      </Paper>
     );
   }
 }

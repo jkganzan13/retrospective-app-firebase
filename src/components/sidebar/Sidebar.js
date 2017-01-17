@@ -4,8 +4,7 @@ import ReviewsList from './ReviewsList';
 
 const Sidebar = (props) => {
   return (
-    <div>
-        <SessionDetails {...props.sessionDetails} openSnackbar={props.openSnackbar} />
+    <div className="sidebar">
         <ReviewsList reviews={props.reviews} />
     </div>
   )

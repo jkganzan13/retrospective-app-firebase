@@ -151,6 +151,7 @@ class LoginForm extends React.Component {
           onChange={this.sessionHandleChange}
           fullWidth={true}
           disabled={loading}
+          autoFocus
         />
         <TextField
           errorText={nameFieldErrorMsg}

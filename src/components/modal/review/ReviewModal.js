@@ -57,7 +57,7 @@ class ReviewModal extends React.Component {
     const { comment, commentFieldErrorMsg } = this.state;
 
     return (
-      <form onSubmit={this.submitReview}>
+      <form className="review-modal" onSubmit={this.submitReview}>
         <TextField
           errorText={commentFieldErrorMsg}
           floatingLabelText="Enter comment"

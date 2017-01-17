@@ -1,10 +1,13 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
+}
+
+ul {
+  margin: 0;
 }
 
 .panel-heading a:hover {
@@ -12,37 +15,52 @@ body {
   text-decoration: none;
 }
 
-.sessionId {
-  padding-top: 7px;
+.main-content {
+  height: 100vh;
 }
 
-.control-label {
-  color: black;
+.content-container {
+  height: calc(100% - 64px);
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }
 
-.sidebar {
-  display: inline-block;
-  vertical-align: top;
+.wheel-container:before,
+.wheel-container:after {
+  content : "";
+  display : table;
+}
+.wheel-container:after {
+  clear : both;
 }
 
-li,
-h4,
-h5,
-label {
-  color: #000;
+.sidebar, .wheel-container {
+  width: 45%;
+}
+
+.sidebar > div:first-child {
+  margin-bottom: 16px;
 }
 
 .wheel-container {
-  /*display: flex;*/
-  /*align-items: center;*/
-  /*justify-content: center;*/
-  position: relative;
-  width: 90%;
-  min-width: 360px;
-  max-width: 640px;
+  min-height: 368px;
+  min-width: 368px;
+  max-height: 744px;
 }
 
-.wheel-container:before{
+.wheel-content {
+  position: relative;
+  margin: 16px auto;
+  min-width: 360px;
+  max-width: 640px;
+  min-height: 360px;
+  max-height: 640px;
+}
+
+.wheel-content:before{
   content: "";
   display: block;
   padding-top: 100%; 	/* initial ratio of 1:1*/
@@ -55,8 +73,13 @@ label {
   bottom: 0;
   right: 0;
   border-radius: 50%;
+  min-width: 360px;
+  max-width: 640px;
+  min-height: 360px;
+  max-height: 640px;
   list-style: none;
-  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .slice {
@@ -81,18 +104,6 @@ label {
 }
 
 .slice-contents:hover { opacity: 1; }
-
-.container {
-  margin: 0;
-}
-
-.row, #app {
-  height: 100%;
-}
-
-.sidebar .row {
-  margin-top: 64px;
-}
 
 .modal-content {
   width: 90% !important;
@@ -139,6 +150,10 @@ label {
   height: inherit !important;
 }
 
+.review-modal .form-field-margin:last-child {
+  margin-left: 16px;
+}
+
 .appbar-on-tabs {
   flex-wrap: wrap;
   z-index: 0 !important;
@@ -148,17 +163,66 @@ label {
   width: 100%;
 }
 
+.appbar-buttons {
+  line-height: 64px;
+}
+
+.appbar-buttons button span {
+  color: white;
+}
+
+.appbar-buttons button svg {
+  fill: white !important;
+}
+
 @media only screen and (max-width: 960px) and (min-height: 422px) {
   body {
     overflow: auto;
   }
 }
 
-@media only screen and (max-height: 422px) {
-
+@media only screen and (max-width: 1510px) {
+  .wheel-content {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
 }
 
-@media only screen and (min-width: 641px) {
-
+@media only screen and (max-width: 1080px) {
+  .main-content {
+    height: 100%;
+  }
+  .content-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .sidebar {
+  }
+  .wheel-container {
+  }
+  .sidebar, .wheel-container {
+    margin-top: 2.5%;
+    width: 95%;
+  }
+  .wheel-content {
+    width: 65%;
+    min-height: 368px;
+    min-width: 368px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
+
+@media only screen and (min-width: 536px) {
+  .appbar-menu {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 535px) {
+  .appbar-buttons {
+    display: none;
+  }
+}
+
 

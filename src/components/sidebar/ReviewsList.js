@@ -18,7 +18,7 @@ const ReviewsList = ({ reviews }) => {
         zDepth={0}
       >
       </AppBar>
-      <Tabs contentContainerClassName={'tabs'}>
+      <Tabs contentContainerClassName={'tabs'} >
         {
           _.keys(reviews).map((reviewType, i) => {
             return (

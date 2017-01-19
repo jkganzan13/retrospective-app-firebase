@@ -47,13 +47,8 @@ class Wheel extends React.Component {
 
   render() {
     return (
-      <Paper className="wheel-container">
-        <AppBar
-          title="Retro Wheel"
-          showMenuIconButton={false}
-          zDepth={0}
-        >
-        </AppBar>
+      <div className="wheel-container">
+
         <div className="wheel-content">
           <ul className="wheel">
             {
@@ -67,18 +62,12 @@ class Wheel extends React.Component {
             }
           </ul>
         </div>
-      </Paper>
+      </div>
     );
   }
 }
 
 Wheel.displayName = 'WheelWheel';
-// Wheel.propTypes = {
-//   slices: PropTypes.arrayOf(PropTypes.shape({
-//     color: PropTypes.string.isRequired, // hex color
-//     value: PropTypes.number.isRequired,
-//   })).isRequired,
-// };
 Wheel.defaultProps = {};
 
 export default Wheel;

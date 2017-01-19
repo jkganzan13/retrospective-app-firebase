@@ -41,6 +41,10 @@ ul {
   width: 45%;
 }
 
+.sidebar {
+  height:95%;
+}
+
 .sidebar > div:first-child {
   margin-bottom: 16px;
 }
@@ -137,12 +141,17 @@ ul {
 }
 
 .reviews-list {
-  height: 480px;
+  height: 100%;
+}
+
+.reviews-list > div:nth-child(2) {
+  height: calc(100% - 64px);
 }
 
 .reviews-list .tabs {
   overflow-y: scroll;
-  height: 368px;
+  height: calc(100% - 48px);
+  min-height: 368px;
 }
 
 .reviews-list .review-comment {

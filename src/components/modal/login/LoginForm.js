@@ -25,49 +25,45 @@ class LoginForm extends React.Component {
     this.joinOnClick = this.joinOnClick.bind(this);
   }
 
-  async createOnClick(){
-    const { updateReviews } = this.props.actions;
+  createOnClick(){
     const { name, sessionId } = this.state;
 
     if(this.areFieldsValid(name, sessionId)) {
 
       let sessionIdTrimmed = sessionId.trim();
-      let nameTrimmed = name.trim();
-      let key = await this.findSessionIdInDb(sessionIdTrimmed);
 
-      if (key) {
-        this.invalidateSessionId(validationMsg.SESSION_ID_NOT_UNIQUE);
-      } else {
-        key = sessionIdTrimmed;
-        dbWrite('sessions', { createdBy: name }, sessionIdTrimmed);
-        dbListen(`reviews/${key}`, updateReviews);
-        this.updateRoomDetails(nameTrimmed, key)
-      }
+      this.findSessionIdInDb(sessionIdTrimmed).then((key) => {
+        if (key) {
+          this.invalidateSessionId(validationMsg.SESSION_ID_NOT_UNIQUE);
+        } else {
+          key = sessionIdTrimmed;
+          dbWrite('sessions', { createdBy: name }, sessionIdTrimmed);
+          this.initializeSession(key, name);
+        }
+      });
+    }
+  }
 
+  joinOnClick(e){
+    e.preventDefault();
+
+    const { name, sessionId } = this.state;
+
+    if(this.areFieldsValid(name, sessionId)) {
+      this.findSessionIdInDb(sessionId.trim()).then((key) => {
+        if (key) {
+          this.initializeSession(key, name);
+        } else {
+          this.invalidateSessionId(validationMsg.SESSION_ID_NOT_FOUND);
+        }
+      });
     }
 
   }
 
-  async joinOnClick(e){
-    e.preventDefault();
-
-    const { updateReviews } = this.props.actions;
-    const { name, sessionId } = this.state;
-
-    if(this.areFieldsValid(name, sessionId)) {
-
-      let key = await this.findSessionIdInDb(sessionId.trim());
-      let nameTrimmed = name.trim();
-
-      if (key) {
-        dbListen(`reviews/${key}`, updateReviews);
-        this.updateRoomDetails(nameTrimmed, key)
-      } else {
-        this.invalidateSessionId(validationMsg.SESSION_ID_NOT_FOUND);
-      }
-
-    }
-
+  initializeSession(sessionKey, name) {
+    dbListen(`reviews/${sessionKey}`, this.props.actions.updateReviews);
+    this.updateRoomDetails(name.trim(), sessionKey);
   }
 
   areFieldsValid(name, sessionId) {
@@ -91,12 +87,13 @@ class LoginForm extends React.Component {
     }
   }
 
-  async findSessionIdInDb(sessionId) {
+  findSessionIdInDb(sessionId) {
     this.toggleLoading();
-    let sessions = await dbGetOnce('sessions');
-    let sessionsList = Object.keys(sessions.val());
-    this.toggleLoading();
-    return (sessionsList.includes(sessionId)) ? sessionId : false;
+    return dbGetOnce('sessions').then((sessions) => {
+      let sessionsList = Object.keys(sessions.val());
+      this.toggleLoading();
+      return (sessionsList.includes(sessionId)) ? sessionId : false;
+    });
   }
 
   invalidateSessionId(message) {

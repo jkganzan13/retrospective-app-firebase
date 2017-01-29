@@ -159,6 +159,12 @@ ul {
   height: inherit !important;
 }
 
+.reviews-list-buttons {
+  position: absolute !important;
+  top: 0;
+  right: 4px;
+}
+
 .review-modal .form-field-margin:last-child {
   margin-left: 16px;
 }

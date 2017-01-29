@@ -1,11 +1,11 @@
 import React from 'react';
 import SessionDetails from './SessionDetails';
-import ReviewsList from './ReviewsList';
+import ReviewsList from './reviewsList/ReviewsList';
 
-const Sidebar = (props) => {
+const Sidebar = ({ reviews, sessionDetails }) => {
   return (
     <div className="sidebar">
-        <ReviewsList reviews={props.reviews} />
+        <ReviewsList reviews={reviews} sessionDetails={sessionDetails} />
     </div>
   )
 };

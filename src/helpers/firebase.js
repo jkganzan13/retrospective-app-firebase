@@ -32,3 +32,8 @@ export const dbListenAndDispatch = (reference, actionToDispatch) => {
     });
   }
 };
+
+export const dbRemove = (reference) => {
+  const db = firebase.database().ref(reference);
+  db.remove();
+};

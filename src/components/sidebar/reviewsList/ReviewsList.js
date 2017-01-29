@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash'
 import { AppBar, Badge, Divider, List, ListItem, Paper, Tab, Tabs} from 'material-ui';
+import ListButtons from './ListButtons';
 
 const getBadge = (header, number) => (
   <Badge  badgeContent={number}  secondary={true}>
@@ -8,7 +9,7 @@ const getBadge = (header, number) => (
   </Badge>
 );
 
-const ReviewsList = ({ reviews }) => {
+const ReviewsList = ({ reviews, sessionDetails }) => {
   return (
     <Paper className="reviews-list" zDepth={1}>
       <AppBar
@@ -36,6 +37,7 @@ const ReviewsList = ({ reviews }) => {
                             </p>
                           }
                           secondaryTextLines={2}
+                          rightIconButton={<ListButtons reviewItem={reviewItem} sessionDetails={sessionDetails} />}
                         />
                         <Divider inset={true} />
                       </div>

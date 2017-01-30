@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatButton, RaisedButton, TextField } from 'material-ui';
 import { sanitizeText, getTimestamp } from '../../../helpers/util';
-import { dbWrite } from '../../../helpers/firebase';
+import { dbUpdate } from '../../../helpers/firebase';
 import { snackbarMsg, validationMsg } from '../../../constants/customMessages';
 
 class ReviewModal extends React.Component {
@@ -9,7 +9,6 @@ class ReviewModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      comment: '',
       commentFieldErrorMsg: ''
     };
     this.onCommentChange = this.onCommentChange.bind(this);
@@ -17,23 +16,23 @@ class ReviewModal extends React.Component {
   }
 
   onCommentChange(e) {
-    this.setState({ comment: e.target.value });
+    this.props.actions.updateComment(e.target.value);
   }
 
   submitReview(e) {
     e.preventDefault();
 
     const { sessionId, currentUser } = this.props.sessionDetails;
-    const { selectedReviewType } = this.props.modal;
-    const { comment } = this.state;
+    const { comment, keyToEdit, selectedReviewType } = this.props.modal;
     const sanitizedText = sanitizeText(comment);
 
     if (sanitizedText !== '') {
-      const timestamp = getTimestamp();
-      dbWrite(`reviews/${sessionId}`, { user: currentUser, comment: sanitizedText, reviewType: selectedReviewType, timestamp }, timestamp);
+      let key = keyToEdit || getTimestamp();
+      dbUpdate(`reviews/${sessionId}`, { user: currentUser, comment: sanitizedText, reviewType: selectedReviewType, key }, key);
       this.resetCommentFieldError();
       this.props.actions.toggleModal();
-      this.props.openSnackbar(snackbarMsg.REVIEW_SUBMIT_ON_SUCCESS);
+      let msg = keyToEdit ? snackbarMsg.REVIEW_UPDATE_ON_SUCESS : snackbarMsg.REVIEW_SUBMIT_ON_SUCCESS;
+      this.props.openSnackbar(msg);
     } else {
       this.showCommentFieldError();
     }
@@ -41,7 +40,7 @@ class ReviewModal extends React.Component {
   }
 
   resetComment() {
-    this.setState({ comment: '' });
+    this.props.actions.updateComment('');
   }
 
   resetCommentFieldError() {
@@ -54,14 +53,12 @@ class ReviewModal extends React.Component {
 
   render() {
 
-    const { comment, commentFieldErrorMsg } = this.state;
-
     return (
       <form className="review-modal" onSubmit={this.submitReview}>
         <TextField
-          errorText={commentFieldErrorMsg}
+          errorText={this.state.commentFieldErrorMsg}
           floatingLabelText="Enter comment"
-          value={comment}
+          value={this.props.modal.comment}
           onChange={this.onCommentChange}
           multiLine={true}
           rows={2}
@@ -71,6 +68,7 @@ class ReviewModal extends React.Component {
         <FlatButton label="Close" onTouchTap={this.props.actions.toggleModal} className="form-field-margin" />
       </form>
     );
+
   }
 }
 

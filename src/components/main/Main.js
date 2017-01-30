@@ -37,7 +37,7 @@ class Main extends React.Component {
         />
         <div className="content-container">
           <Wheel actions={actions} />
-          <Sidebar sessionDetails={sessionDetails} reviews={reviews} />
+          <Sidebar sessionDetails={sessionDetails} reviews={reviews} actions={actions} />
         </div>
       </div>
 

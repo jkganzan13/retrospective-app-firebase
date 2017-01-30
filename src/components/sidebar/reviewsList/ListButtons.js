@@ -12,8 +12,12 @@ class ListButtons extends React.Component{
 
   editReview() {
     const { reviewItem, sessionDetails } = this.props;
-    // let updatedReviewItem = Object.assign({} , reviewItem, { message: ''});
-    // dbWrite(`reviews/${sessionDetails.sessionId}`, updatedReviewItem, reviewItem.timestamp);
+    const { selectReviewType, toggleModal, updateComment, updateKeyToEdit } = this.props.actions;
+
+    selectReviewType(`EDIT REVIEW - ${reviewItem.reviewType}`);
+    updateComment(reviewItem.comment);
+    updateKeyToEdit(reviewItem.timestamp);
+    toggleModal();
   }
 
   deleteReview() {
@@ -22,6 +26,8 @@ class ListButtons extends React.Component{
   }
 
   render() {
+    const { reviewItem, sessionDetails } = this.props;
+
     return (
       <IconMenu iconButtonElement={<IconButton><NavigationMoreVert /></IconButton>} className="reviews-list-buttons">
         <MenuItem primaryText="Edit" onTouchTap={this.editReview} />

@@ -15,7 +15,9 @@ import {
   updateSessionId,
   updateIsLogin,
   selectReviewType,
-  updateCurrentUser
+  updateCurrentUser,
+  updateComment,
+  updateKeyToEdit
 } from '../actions/';
 import { dbListen } from '../helpers/firebase';
 import { bindActionCreators } from 'redux';
@@ -62,7 +64,6 @@ function mapStateToProps(state) {
     sessionDetails: state.sessionDetails,
     reviews: state.reviews
   };
-
   return props;
 }
 function mapDispatchToProps(dispatch) {
@@ -74,7 +75,9 @@ function mapDispatchToProps(dispatch) {
     updateSessionId,
     updateIsLogin,
     selectReviewType,
-    updateCurrentUser
+    updateCurrentUser,
+    updateComment,
+    updateKeyToEdit
   };
   const actionMap = { actions: bindActionCreators(actions, dispatch) };
   return actionMap;

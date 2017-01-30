@@ -9,7 +9,7 @@ const getBadge = (header, number) => (
   </Badge>
 );
 
-const ReviewsList = ({ reviews, sessionDetails }) => {
+const ReviewsList = ({ actions, reviews, sessionDetails }) => {
   return (
     <Paper className="reviews-list" zDepth={1}>
       <AppBar
@@ -37,7 +37,7 @@ const ReviewsList = ({ reviews, sessionDetails }) => {
                             </p>
                           }
                           secondaryTextLines={2}
-                          rightIconButton={<ListButtons reviewItem={reviewItem} sessionDetails={sessionDetails} />}
+                          rightIconButton={reviewItem.user === sessionDetails.currentUser && <ListButtons reviewItem={reviewItem} sessionDetails={sessionDetails} actions={actions} />}
                         />
                         <Divider inset={true} />
                       </div>

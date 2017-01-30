@@ -48,7 +48,6 @@ class Wheel extends React.Component {
   render() {
     return (
       <div className="wheel-container">
-
         <div className="wheel-content">
           <ul className="wheel">
             {

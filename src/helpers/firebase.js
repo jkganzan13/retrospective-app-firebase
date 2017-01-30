@@ -1,7 +1,7 @@
 import firebase from 'firebase';
 import { getTimestamp } from '../helpers/util';
 
-export const dbWrite = (reference, data = {}, key = getTimestamp()) => {
+export const dbWrite = (reference, data, key = getTimestamp()) => {
   const db = firebase.database().ref(reference);
   db.update({ [key]: data });
 };
@@ -36,4 +36,14 @@ export const dbListenAndDispatch = (reference, actionToDispatch) => {
 export const dbRemove = (reference) => {
   const db = firebase.database().ref(reference);
   db.remove();
+};
+
+export const dbUpdate = (reference, data, key = getTimestamp()) => {
+  const db = firebase.database().ref(`${reference}/${key}`);
+  db.once('value').then((review) => {
+    if (review.val()) {
+      data = {...review.val(), comment: data.comment}
+    }
+    dbWrite(reference, data, key);
+  });
 };

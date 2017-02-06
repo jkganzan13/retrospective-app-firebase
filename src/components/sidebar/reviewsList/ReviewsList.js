@@ -9,49 +9,47 @@ const getBadge = (header, number) => (
   </Badge>
 );
 
-const ReviewsList = ({ actions, reviews, sessionDetails }) => {
-  return (
-    <Paper className="reviews-list" zDepth={1}>
-      <AppBar
-        title="Review List"
-        className="appbar-on-tabs"
-        showMenuIconButton={false}
-        zDepth={0}
-      >
-      </AppBar>
-      <Tabs contentContainerClassName={'tabs'} >
-        {
-          _.keys(reviews).map((reviewType, i) => {
-            return (
-              <Tab label={getBadge(reviewType, _.size(reviews[reviewType]))} key={i}>
-                <List>
-                {
-                  reviews[reviewType].map((reviewItem, i) => {
-                    return (
-                      <div key={i}>
-                        <ListItem
-                          primaryText={reviewItem.user}
-                          secondaryText={
-                            <p className="review-comment">
-                              {reviewItem.comment}
-                            </p>
-                          }
-                          secondaryTextLines={2}
-                          rightIconButton={reviewItem.user === sessionDetails.currentUser && <ListButtons reviewItem={reviewItem} sessionDetails={sessionDetails} actions={actions} />}
-                        />
-                        <Divider inset={true} />
-                      </div>
-                    )
-                  })
-                }
-                </List>
-              </Tab>
-            )
-          })
-        }
-      </Tabs>
-    </Paper>
-  )
-};
+const ReviewsList = ({ actions, reviews, sessionDetails }) => (
+  <Paper className="reviews-list" zDepth={1}>
+    <AppBar
+      title="Review List"
+      className="appbar-on-tabs"
+      showMenuIconButton={false}
+      zDepth={0}
+    >
+    </AppBar>
+    <Tabs contentContainerClassName={'tabs'} >
+      {
+        _.keys(reviews).map((reviewType, i) => {
+          return (
+            <Tab label={getBadge(reviewType, _.size(reviews[reviewType]))} key={i}>
+              <List>
+              {
+                reviews[reviewType].map((reviewItem, i) => {
+                  return (
+                    <div key={i}>
+                      <ListItem
+                        primaryText={reviewItem.user}
+                        secondaryText={
+                          <p className="review-comment">
+                            {reviewItem.comment}
+                          </p>
+                        }
+                        secondaryTextLines={2}
+                        rightIconButton={reviewItem.user === sessionDetails.currentUser ? <ListButtons reviewItem={reviewItem} sessionDetails={sessionDetails} actions={actions} /> : undefined}
+                      />
+                      <Divider inset={true} />
+                    </div>
+                  )
+                })
+              }
+              </List>
+            </Tab>
+          )
+        })
+      }
+    </Tabs>
+  </Paper>
+);
 
 export default ReviewsList;

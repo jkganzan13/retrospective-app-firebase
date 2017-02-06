@@ -63,6 +63,7 @@ class ReviewModal extends React.Component {
           multiLine={true}
           rows={2}
           fullWidth={true}
+          autoFocus
         />
         <RaisedButton type="submit" label="Submit" primary={true} className="form-field-margin" />
         <FlatButton label="Close" onTouchTap={this.props.actions.toggleModal} className="form-field-margin" />

@@ -34,3 +34,9 @@ dist/
 
 # IDE/Editor data
 .idea/
+
+# Firebase
+/src/config/firebase.config.js
+.firebaserc
+database.rules.json
+firebase.json

@@ -13,6 +13,7 @@ class ReviewModal extends React.Component {
     };
     this.onCommentChange = this.onCommentChange.bind(this);
     this.submitReview = this.submitReview.bind(this);
+    this.onClose = this.onClose.bind(this);
   }
 
   onCommentChange(e) {
@@ -28,7 +29,7 @@ class ReviewModal extends React.Component {
 
     if (sanitizedText !== '') {
       let key = keyToEdit || getTimestamp();
-      dbUpdate(`reviews/${sessionId}`, { user: currentUser, comment: sanitizedText, reviewType: selectedReviewType, key }, key);
+      dbUpdate(`reviews/${sessionId}`, { user: currentUser, comment: sanitizedText, reviewType: selectedReviewType, timestamp: key }, key);
       this.resetCommentFieldError();
       this.props.actions.toggleModal();
       let msg = keyToEdit ? snackbarMsg.REVIEW_UPDATE_ON_SUCESS : snackbarMsg.REVIEW_SUBMIT_ON_SUCCESS;
@@ -41,6 +42,11 @@ class ReviewModal extends React.Component {
 
   resetComment() {
     this.props.actions.updateComment('');
+  }
+
+  onClose() {
+    this.resetComment();
+    this.props.actions.toggleModal();
   }
 
   resetCommentFieldError() {
@@ -66,7 +72,7 @@ class ReviewModal extends React.Component {
           autoFocus
         />
         <RaisedButton type="submit" label="Submit" primary={true} className="form-field-margin" />
-        <FlatButton label="Close" onTouchTap={this.props.actions.toggleModal} className="form-field-margin" />
+        <FlatButton label="Close" onTouchTap={this.onClose} className="form-field-margin" />
       </form>
     );
 

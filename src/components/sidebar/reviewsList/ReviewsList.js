@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash'
 import { AppBar, Badge, Divider, List, ListItem, Paper, Tab, Tabs} from 'material-ui';
-import ListButtons from './ListButtons';
+import ReviewsListItem from './ReviewsListItem';
 
 const getBadge = (header, number) => (
   <Badge  badgeContent={number}  secondary={true}>
@@ -25,23 +25,14 @@ const ReviewsList = ({ actions, reviews, sessionDetails }) => (
             <Tab label={getBadge(reviewType, _.size(reviews[reviewType]))} key={i}>
               <List>
               {
-                reviews[reviewType].map((reviewItem, i) => {
-                  return (
-                    <div key={i}>
-                      <ListItem
-                        primaryText={reviewItem.user}
-                        secondaryText={
-                          <p className="review-comment">
-                            {reviewItem.comment}
-                          </p>
-                        }
-                        secondaryTextLines={2}
-                        rightIconButton={reviewItem.user === sessionDetails.currentUser ? <ListButtons reviewItem={reviewItem} sessionDetails={sessionDetails} actions={actions} /> : undefined}
-                      />
-                      <Divider inset={true} />
-                    </div>
-                  )
-                })
+                reviews[reviewType].map((reviewItem, i) => (
+                    <ReviewsListItem
+                      key={i}
+                      actions={actions}
+                      reviewItem={reviewItem}
+                      sessionDetails={sessionDetails}
+                    />
+                ))
               }
               </List>
             </Tab>

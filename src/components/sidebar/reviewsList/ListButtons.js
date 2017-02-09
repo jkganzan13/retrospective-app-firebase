@@ -26,8 +26,6 @@ class ListButtons extends React.Component{
   }
 
   render() {
-    const { reviewItem, sessionDetails } = this.props;
-
     return (
       <IconMenu iconButtonElement={<IconButton><NavigationMoreVert /></IconButton>} className="reviews-list-buttons">
         <MenuItem primaryText="Edit" onTouchTap={this.editReview} />

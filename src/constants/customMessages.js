@@ -5,7 +5,7 @@ export const validationMsg = {
 };
 
 export const snackbarMsg = {
-  REVIEW_UPDATE_ON_SUCESS: 'Review successfully updated.',
+  REVIEW_UPDATE_ON_SUCCESS: 'Review successfully updated.',
   REVIEW_SUBMIT_ON_SUCCESS: 'Review successfully saved.',
   SESSION_ID_COPIED: 'Session ID copied.',
 };

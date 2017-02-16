@@ -2,8 +2,7 @@
 
 import React from 'react';
 import reviewTypes from '../../constants/reviewTypes';
-import _ from 'lodash';
-import { AppBar, Paper } from 'material-ui';
+import WheelSlice from './WheelSlice';
 
 class Wheel extends React.Component {
 
@@ -19,7 +18,8 @@ class Wheel extends React.Component {
   }
 
   onClickWheel(reviewType) {
-    const { selectReviewType, toggleModal } = this.props.actions;
+    const { selectReviewType, toggleModal, updateKeyToEdit } = this.props.actions;
+    updateKeyToEdit('');
     selectReviewType(reviewType);
     toggleModal();
   }
@@ -51,13 +51,15 @@ class Wheel extends React.Component {
         <div className="wheel-content">
           <ul className="wheel">
             {
-              this.slices.map((slice, i) => {
-                return (
-                  <li key={i} className="slice" style={this.getSliceStyle(i)} onClick={slice.fn}>
-                    <div className="slice-contents" style={this.getSliceContentStyle(slice)}>{_.replace(slice.name, '_', ' ')}</div>
-                  </li>
-                )
-              })
+              this.slices.map((slice, i) =>
+                <WheelSlice
+                  key={i}
+                  name={slice.name}
+                  onClick={slice.fn}
+                  sliceStyle={this.getSliceStyle(i)}
+                  sliceContentStyle={this.getSliceContentStyle(slice)}
+                />
+              )
             }
           </ul>
         </div>

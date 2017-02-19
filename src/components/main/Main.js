@@ -5,7 +5,7 @@ import AppBarButtons from './AppBarButtons';
 import AppBarMenu from './AppBarMenu';
 import { AppBar } from 'material-ui';
 import { appTitle } from '../../constants/app';
-import { snackbarMsg } from '../../constants/customMessages';
+import { snackbarMsg } from '../../constants/app';
 
 class Main extends React.Component {
   constructor(props) {
@@ -31,9 +31,23 @@ class Main extends React.Component {
       <div className="main-content">
         <AppBar
           title={appTitle}
-          iconElementLeft={<AppBarMenu actions={actions} sessionDetails={sessionDetails} onSessionIdCopy={this.onSessionIdCopy} logout={this.logout} />}
+          iconElementLeft={
+            <AppBarMenu
+              actions={actions}
+              sessionDetails={sessionDetails}
+              onSessionIdCopy={this.onSessionIdCopy}
+              logout={this.logout}
+            />
+          }
           iconStyleRight={{marginTop: 0}}
-          iconElementRight={<AppBarButtons actions={actions} sessionDetails={sessionDetails} onSessionIdCopy={this.onSessionIdCopy} logout={this.logout} />}
+          iconElementRight={
+            <AppBarButtons
+              actions={actions}
+              sessionDetails={sessionDetails}
+              onSessionIdCopy={this.onSessionIdCopy}
+              logout={this.logout}
+            />
+          }
         />
         <div className="content-container">
           <Wheel actions={actions} />

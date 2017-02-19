@@ -1,39 +1,26 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import LoginModal from './login/LoginModal'
 import ReviewModal from './review/ReviewModal'
 import Dialog from 'material-ui/Dialog';
-import { appTitle } from '../../constants/app';
 
-class AppModal extends React.Component {
-  constructor(props) {
-    super(props);
+const Modal = ({ children, isModalOpen, title }) => (
+  <Dialog
+    title={title}
+    modal={true}
+    open={isModalOpen}
+    contentClassName={'modal-content'}
+  >
+    {children}
+  </Dialog>
+);
 
-    this.state = {
-      tabValue: "join"
-    }
-  }
+Modal.displayName = 'ModalModal';
+Modal.propTypes = {
+  children: PropTypes.element.isRequired,
+  isModalOpen: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired
+};
+Modal.defaultProps = {};
 
-  render() {
-    const { isModalOpen, isLogin, selectedReviewType } = this.props.modal;
-
-    return (
-      <Dialog
-        title={isLogin ? appTitle : _.replace(selectedReviewType, '_', ' ')}
-        modal={true}
-        open={isModalOpen}
-        contentClassName={'modal-content'}
-      >
-        {
-          isLogin ? <LoginModal {...this.props} /> : <ReviewModal {...this.props} />
-        }
-      </Dialog>
-    );
-  }
-}
-
-AppModal.displayName = 'ModalAppModal';
-AppModal.propTypes = {};
-AppModal.defaultProps = {};
-
-export default AppModal;
+export default Modal;

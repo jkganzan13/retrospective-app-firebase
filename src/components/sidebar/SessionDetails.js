@@ -1,7 +1,7 @@
 import React from 'react';
 import { CommunicationVpnKey, ContentContentCopy, SocialPerson } from 'material-ui/svg-icons';
 import { AppBar, Avatar, IconButton, List, ListItem, Paper } from 'material-ui';
-import { snackbarMsg } from '../../constants/customMessages';
+import { snackbarMsg } from '../../constants/app';
 import { grey500 } from 'material-ui/styles/colors';
 import CopyToClipboard from 'react-copy-to-clipboard';
 

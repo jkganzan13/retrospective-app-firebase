@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatButton, RaisedButton, TextField } from 'material-ui';
 import { sanitizeText, getTimestamp } from '../../../helpers/util';
 import { dbUpdate } from '../../../helpers/firebase';
-import { snackbarMsg, validationMsg } from '../../../constants/customMessages';
+import { snackbarMsg, validationMsg } from '../../../constants/app';
 
 class ReviewModal extends React.Component {
 

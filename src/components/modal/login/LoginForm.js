@@ -1,9 +1,8 @@
 import React from 'react';
 import { TextField } from 'material-ui';
 import LoginButtons from './LoginButtons';
-
 import { isValidString } from '../../../helpers/util';
-import { validationMsg } from '../../../constants/customMessages';
+import { validationMsg } from '../../../constants/app';
 import { dbGetOnce, dbListen, dbWrite } from '../../../helpers/firebase';
 
 class LoginForm extends React.Component {
@@ -62,7 +61,7 @@ class LoginForm extends React.Component {
   }
 
   initializeSession(sessionKey, name) {
-    dbListen(`reviews/${sessionKey}`, this.props.actions.updateReviews);
+    dbListen(`reviews/${sessionKey}`, this.props.closeModal);
     this.updateRoomDetails(name.trim(), sessionKey);
   }
 
@@ -88,10 +87,10 @@ class LoginForm extends React.Component {
   }
 
   findSessionIdInDb(sessionId) {
-    this.toggleLoading();
+    this.toggleLoading(true);
     return dbGetOnce('sessions').then((sessions) => {
       let sessionsList = Object.keys(sessions.val());
-      this.toggleLoading();
+      this.toggleLoading(false);
       return (sessionsList.includes(sessionId)) ? sessionId : false;
     });
   }
@@ -120,8 +119,8 @@ class LoginForm extends React.Component {
     toggleModal();
   }
 
-  toggleLoading() {
-    this.setState({ loading: !this.state.loading })
+  toggleLoading(isLoading = !this.state.loading) {
+    this.setState({ loading: isLoading })
   }
 
   generateRandomKey(length) {

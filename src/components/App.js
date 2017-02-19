@@ -1,7 +1,9 @@
 import React from 'react';
-import AppModal from './modal/Modal';
+import Modal from './modal/Modal';
 import './app.css';
-import Main from './main/Main'
+import Main from './main/Main';
+import LoginModal from './modal/login/LoginModal';
+import { appTitle } from '../constants/app';
 import { Snackbar } from 'material-ui';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -13,10 +15,13 @@ class AppComponent extends React.Component {
 
     this.state = {
       isSnackbarOpen: false,
-      snackbarMessage: ''
+      snackbarMessage: '',
+      isModalOpen: true
     };
 
+    this.closeModal = this.closeModal.bind(this);
     this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
+    this.openModal = this.openModal.bind(this);
     this.openSnackbar = this.openSnackbar.bind(this);
   }
 
@@ -31,16 +36,34 @@ class AppComponent extends React.Component {
     });
   }
 
+  toggleModal(isOpen) {
+    this.setState({
+      isModalOpen: isOpen
+    });
+  }
+
+  closeModal() {
+    this.toggleModal(false);
+  }
+
+  openModal() {
+    this.toggleModal(true);
+  }
+
   render() {
 
-    const { isSnackbarOpen, snackbarMessage } = this.state;
+    const { isModalOpen, isSnackbarOpen, snackbarMessage } = this.state;
 
     return (
       <div className="index">
 
-        <AppModal {...this.props} openSnackbar={this.openSnackbar} />
+        <Modal
+          children={<LoginModal actions={this.props.actions} closeModal={this.closeModal} />}
+          isModalOpen={isModalOpen}
+          title={appTitle}
+        />
 
-        { this.props.modal.isLogin ? <div className="blackBg"></div> : <Main {...this.props} openSnackbar={this.openSnackbar} /> }
+        { isModalOpen ? <div className="blackBg"></div> : <Main {...this.props} openSnackbar={this.openSnackbar} openModal={this.openModal} /> }
 
         <Snackbar
           open={isSnackbarOpen}

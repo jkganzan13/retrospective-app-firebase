@@ -18,10 +18,12 @@ class Wheel extends React.Component {
   }
 
   onClickWheel(reviewType) {
-    const { selectReviewType, toggleModal, updateKeyToEdit } = this.props.actions;
+    const {selectReviewType, updateKeyToEdit} = this.props.actions;
+    const { openModal, setTitle } = this.props;
     updateKeyToEdit('');
     selectReviewType(reviewType);
-    toggleModal();
+    setTitle(reviewType);
+    openModal();
   }
 
   getSliceStyle(index) {

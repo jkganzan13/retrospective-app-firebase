@@ -22,6 +22,7 @@ class LoginForm extends React.Component {
     this.sessionHandleChange = this.sessionHandleChange.bind(this);
     this.createOnClick = this.createOnClick.bind(this);
     this.joinOnClick = this.joinOnClick.bind(this);
+    this.updateReviewsAndCloseModal = this.updateReviewsAndCloseModal.bind(this);
   }
 
   createOnClick(){
@@ -61,8 +62,13 @@ class LoginForm extends React.Component {
   }
 
   initializeSession(sessionKey, name) {
-    dbListen(`reviews/${sessionKey}`, this.props.closeModal);
+    dbListen(`reviews/${sessionKey}`, this.updateReviewsAndCloseModal);
     this.updateRoomDetails(name.trim(), sessionKey);
+  }
+
+  updateReviewsAndCloseModal(reviews) {
+    this.props.actions.updateReviews(reviews);
+    this.props.closeModal();
   }
 
   areFieldsValid(name, sessionId) {

@@ -31,7 +31,7 @@ class ReviewModal extends React.Component {
       let key = keyToEdit || getTimestamp();
       dbUpdate(`reviews/${sessionId}`, { user: currentUser, comment: sanitizedText, reviewType: selectedReviewType, timestamp: key }, key);
       this.resetCommentFieldError();
-      this.props.actions.toggleModal();
+      this.props.closeModal();
       let msg = keyToEdit ? snackbarMsg.REVIEW_UPDATE_ON_SUCCESS : snackbarMsg.REVIEW_SUBMIT_ON_SUCCESS;
       this.props.openSnackbar(msg);
     } else {
@@ -46,7 +46,7 @@ class ReviewModal extends React.Component {
 
   onClose() {
     this.resetComment();
-    this.props.actions.toggleModal();
+    this.props.closeModal();
   }
 
   resetCommentFieldError() {

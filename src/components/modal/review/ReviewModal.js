@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { FlatButton, RaisedButton, TextField } from 'material-ui';
 import { sanitizeText, getTimestamp } from '../../../helpers/util';
 import { dbUpdate } from '../../../helpers/firebase';
@@ -80,7 +80,13 @@ class ReviewModal extends React.Component {
 }
 
 ReviewModal.displayName = 'ModalReviewReviewModal';
-ReviewModal.propTypes = {};
+ReviewModal.propTypes = {
+  actions: PropTypes.object.isRequired,
+  modal: PropTypes.object.isRequired,
+  sessionDetails: PropTypes.object.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  openSnackbar: PropTypes.func.isRequired
+};
 ReviewModal.defaultProps = {};
 
 export default ReviewModal;

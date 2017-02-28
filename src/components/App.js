@@ -1,9 +1,11 @@
 import React from 'react';
 import Modal from './modal/Modal';
 import './app.css';
-import Main from './main/Main';
 import LoginModal from './modal/login/LoginModal';
-import { appTitle } from '../constants/app';
+import ReviewModal from './modal/review/ReviewModal';
+import ContentContainer from './main/Main';
+import { AppOverlay } from './app/index';
+import { appTitle, modalTypes, snackbarMsg } from '../constants/app';
 import { Snackbar } from 'material-ui';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -15,14 +17,15 @@ class AppComponent extends React.Component {
 
     this.state = {
       isSnackbarOpen: false,
-      snackbarMessage: '',
-      isModalOpen: true
+      snackbarMessage: ''
     };
 
     this.closeModal = this.closeModal.bind(this);
     this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
     this.openModal = this.openModal.bind(this);
     this.openSnackbar = this.openSnackbar.bind(this);
+    this.onSessionIdCopy = this.onSessionIdCopy.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   handleSnackbarClose() {
@@ -36,34 +39,49 @@ class AppComponent extends React.Component {
     });
   }
 
-  toggleModal(isOpen) {
-    this.setState({
-      isModalOpen: isOpen
-    });
-  }
-
   closeModal() {
-    this.toggleModal(false);
+    this.props.actions.toggleModal(false);
   }
 
   openModal() {
-    this.toggleModal(true);
+    this.props.actions.toggleModal(true);
+  }
+
+  onSessionIdCopy () {
+    this.openSnackbar(snackbarMsg.SESSION_ID_COPIED);
+  };
+
+  logout() {
+    this.props.actions.resetState();
   }
 
   render() {
 
-    const { isModalOpen, isSnackbarOpen, snackbarMessage } = this.state;
+    const { isSnackbarOpen, snackbarMessage } = this.state;
+    const { actions, modal, sessionDetails } = this.props;
 
     return (
       <div className="index">
 
-        <Modal
-          children={<LoginModal actions={this.props.actions} closeModal={this.closeModal} />}
-          isModalOpen={isModalOpen}
-          title={appTitle}
-        />
+        <Modal isModalOpen={modal.isModalOpen} title={appTitle}>
+          {
+            modal.modalType === modalTypes.LOGIN ?
+            <LoginModal actions={actions} /> :
+            <ReviewModal
+              actions={actions}
+              modal={modal}
+              closeModal={this.closeModal}
+              sessionDetails={sessionDetails}
+              openSnackbar={this.openSnackbar}
+            />
+          }
+        </Modal>
 
-        { isModalOpen ? <div className="blackBg"></div> : <Main {...this.props} openSnackbar={this.openSnackbar} openModal={this.openModal} /> }
+        {
+          modal.modalType === modalTypes.LOGIN ?
+          <AppOverlay /> :
+          <ContentContainer {...this.props} openSnackbar={this.openSnackbar} />
+        }
 
         <Snackbar
           open={isSnackbarOpen}

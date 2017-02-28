@@ -13,11 +13,12 @@ import {
   updateReviews,
   updateUsers,
   updateSessionId,
-  updateIsLogin,
-  selectReviewType,
+  updateModalType,
   updateCurrentUser,
   updateComment,
-  updateKeyToEdit
+  updateKeyToEdit,
+  updateModalTitle,
+  resetState
 } from '../actions/';
 import { dbListen } from '../helpers/firebase';
 import { bindActionCreators } from 'redux';
@@ -40,7 +41,8 @@ class App extends Component {
           actions={actions}
           modal={modal}
           sessionDetails={sessionDetails}
-          reviews={reviews}/>
+          reviews={reviews}
+        />
       </MuiThemeProvider>
     );
   }
@@ -73,11 +75,12 @@ function mapDispatchToProps(dispatch) {
     updateReviews,
     updateUsers,
     updateSessionId,
-    updateIsLogin,
-    selectReviewType,
+    updateModalType,
+    updateModalTitle,
     updateCurrentUser,
     updateComment,
-    updateKeyToEdit
+    updateKeyToEdit,
+    resetState
   };
   const actionMap = { actions: bindActionCreators(actions, dispatch) };
   return actionMap;

@@ -5,8 +5,7 @@ const LoginModal = (props) => <LoginForm {...props} />;
 
 LoginModal.displayName = 'ModalLoginModal';
 LoginModal.propTypes = {
-  actions: PropTypes.object.isRequired,
-  closeModal: PropTypes.func.isRequired
+  actions: PropTypes.object.isRequired
 };
 
 export default LoginModal;

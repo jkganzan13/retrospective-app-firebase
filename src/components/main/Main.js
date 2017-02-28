@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Wheel from '../wheel/Wheel';
 import Sidebar from '../sidebar/Sidebar';
-import AppBarButtons from './AppBarButtons';
-import AppBarMenu from './AppBarMenu';
-import Modal from '../modal/Modal';
-import ReviewModal from '../modal/review/ReviewModal';
+import AppBarButtons from '../app/AppBarButtons';
+import AppBarMenu from '../app/AppBarMenu';
 import { AppBar } from 'material-ui';
 import { appTitle } from '../../constants/app';
 import { snackbarMsg } from '../../constants/app';
@@ -42,9 +40,7 @@ class Main extends React.Component {
   }
 
   logout() {
-    const { toggleModal, updateIsLogin } = this.props.actions;
-    updateIsLogin(true);
-    toggleModal();
+    this.props.actions.resetState();
   }
 
   onSessionIdCopy () {
@@ -77,18 +73,6 @@ class Main extends React.Component {
         />
 
         <div className="content-container">
-
-          <Modal
-            children={
-              <ReviewModal
-                {...this.props}
-                closeModal={this.closeModal}
-              />
-            }
-            isModalOpen={this.state.isModalOpen}
-            title={this.state.title}
-          />
-
           <Wheel
             actions={actions}
             setTitle={this.setTitle}
@@ -104,7 +88,12 @@ class Main extends React.Component {
 }
 
 Main.displayName = 'MainMain';
-Main.propTypes = {};
+Main.propTypes = {
+  actions: PropTypes.object.isRequired,
+  modal: PropTypes.object.isRequired,
+  sessionDetails: PropTypes.object.isRequired,
+  reviews: PropTypes.object.isRequired
+};
 Main.defaultProps = {};
 
 export default Main;

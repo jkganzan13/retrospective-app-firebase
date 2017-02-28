@@ -1,16 +1,20 @@
-/* Define your initial state here.
- *
- * If you change the type from object to something else, do not forget to update
- * src/container/App.js accordingly.
- */
-import { TOGGLE_MODAL, UPDATE_COMMENT, UPDATE_IS_LOGIN, UPDATE_KEY_TO_EDIT, SELECT_REVIEW_TYPE } from '../actions/const';
+import {
+  TOGGLE_MODAL,
+  UPDATE_MODAL_TYPE,
+  UPDATE_COMMENT,
+  UPDATE_KEY_TO_EDIT,
+  SELECT_REVIEW_TYPE,
+  RESET_STATE,
+} from '../actions/const';
+import { modalTypes } from '../constants/app';
 
 const initialState = {
   isModalOpen: true,
   isLogin: true,
   selectedReviewType: '',
   comment: '',
-  keyToEdit: ''
+  keyToEdit: '',
+  modalType: modalTypes.LOGIN
 };
 
 function reducer(state = initialState, action) {
@@ -22,14 +26,14 @@ function reducer(state = initialState, action) {
         selectedReviewType: action.selectedReviewType
       });
 
-    case UPDATE_IS_LOGIN:
+    case UPDATE_MODAL_TYPE:
       return Object.assign({}, state, {
-        isLogin: action.isLogin
+        modalType: action.modalType
       });
 
     case TOGGLE_MODAL:
       return Object.assign({}, state, {
-        isModalOpen: !state.isModalOpen
+        isModalOpen: action.isModalOpen
       });
 
     case UPDATE_COMMENT:
@@ -41,6 +45,9 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, {
         keyToEdit: action.keyToEdit
       });
+
+    case RESET_STATE:
+      return Object.assign({}, state, initialState);
 
     default:
       return state;

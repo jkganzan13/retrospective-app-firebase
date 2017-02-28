@@ -12,3 +12,8 @@ export const snackbarMsg = {
   SESSION_ID_COPIED: 'Session ID copied.',
 };
 
+export const modalTypes = {
+  LOGIN: 'LOGIN',
+  REVIEW: 'REVIEW'
+};
+

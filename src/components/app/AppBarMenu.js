@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import { Divider, IconButton, IconMenu, MenuItem } from 'material-ui';
 import { CommunicationVpnKey, ImageLens, NavigationMenu, SocialPerson } from 'material-ui/svg-icons';
-import reviewTypes from '../../constants/reviewTypes';
+import { reviewTypes } from '../../constants';
 import CopyToClipboard from 'react-copy-to-clipboard';
-
 
 class AppBarMenu extends React.Component {
   constructor(props) {
@@ -16,7 +15,6 @@ class AppBarMenu extends React.Component {
   }
 
   render() {
-
     const { sessionId, currentUser } = this.props.sessionDetails;
 
     return (
@@ -43,8 +41,8 @@ class AppBarMenu extends React.Component {
   }
 }
 
-AppBarMenu.displayName = 'MainAppBarMenu';
-AppBarMenu.propTypes = {};
-AppBarMenu.defaultProps = {};
+AppBarMenu.propTypes = {
+  sessionDetails: PropTypes.object.isRequired
+};
 
 export default AppBarMenu;

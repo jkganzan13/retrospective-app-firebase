@@ -4,7 +4,7 @@
  * src/container/App.js accordingly.
  */
 import { RESET_STATE, UPDATE_REVIEWS } from '../actions/const';
-import reviewTypes from '../constants/reviewTypes';
+import { reviewTypes } from '../constants';
 
 const initialState = {
   [reviewTypes.START]: [],

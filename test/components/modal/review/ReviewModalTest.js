@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import ReviewModal from 'components/modal/review/ReviewModal.js';
+import ReviewModal from 'components/modal/review/ReviewForm.js';
 
 describe('<ReviewModal />', () => {
 
   let component;
   beforeEach(() => {
-    component = shallow(<ReviewModal />);
+    component = shallow(<ReviewForm />);
   });
 
   describe('when rendering the component', () => {

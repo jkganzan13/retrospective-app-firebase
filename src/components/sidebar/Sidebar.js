@@ -1,5 +1,4 @@
 import React from 'react';
-import SessionDetails from './SessionDetails';
 import ReviewsList from './reviewsList/ReviewsList';
 
 const Sidebar = ({ actions, reviews, sessionDetails }) => {

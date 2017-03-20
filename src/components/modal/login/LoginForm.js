@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { TextField } from 'material-ui';
 import LoginButtons from './LoginButtons';
 import { isValidString } from '../../../helpers/util';
-import { modalTypes, validationMsg } from '../../../constants/app';
+import { modalTypes, validationMsg } from '../../../constants';
 import { dbGetOnce, dbListen, dbWrite } from '../../../helpers/firebase';
 
 class LoginForm extends React.Component {
@@ -68,7 +68,7 @@ class LoginForm extends React.Component {
 
   updateReviewsAndCloseModal(reviews) {
     this.props.actions.updateReviews(reviews);
-    this.props.actions.toggleModal(false);
+    this.props.actions.hideModal();
   }
 
   areFieldsValid(name, sessionId) {
@@ -117,12 +117,11 @@ class LoginForm extends React.Component {
   }
 
   updateRoomDetails(name, key) {
-    const { updateSessionId, updateCurrentUser, updateModalType, toggleModal } = this.props.actions;
+    const { hideModal, updateSessionId, updateCurrentUser } = this.props.actions;
 
     updateSessionId(key);
     updateCurrentUser(name.trim());
-    toggleModal(false);
-    updateModalType(modalTypes.REVIEW);
+    hideModal();
   }
 
   toggleLoading(isLoading = !this.state.loading) {
@@ -169,10 +168,8 @@ class LoginForm extends React.Component {
   }
 }
 
-LoginForm.displayName = 'ModalLoginLoginForm';
 LoginForm.propTypes = {
   actions: PropTypes.object.isRequired
 };
-LoginForm.defaultProps = {};
 
 export default LoginForm;

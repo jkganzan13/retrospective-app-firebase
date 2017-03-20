@@ -1,39 +1,39 @@
 import {
-  TOGGLE_MODAL,
+  HIDE_MODAL,
+  SHOW_MODAL,
   UPDATE_MODAL_TYPE,
   UPDATE_COMMENT,
   UPDATE_KEY_TO_EDIT,
   SELECT_REVIEW_TYPE,
   RESET_STATE,
+  UPDATE_MODAL_TITLE,
 } from '../actions/const';
-import { modalTypes } from '../constants/app';
+import { appTitle, modalTypes } from '../constants';
 
 const initialState = {
   isModalOpen: true,
-  isLogin: true,
-  selectedReviewType: '',
   comment: '',
   keyToEdit: '',
-  modalType: modalTypes.LOGIN
+  modalType: modalTypes.LOGIN,
+  modalTitle: appTitle
 };
 
 function reducer(state = initialState, action) {
 
   switch (action.type) {
 
-    case SELECT_REVIEW_TYPE:
+    case HIDE_MODAL:
       return Object.assign({}, state, {
-        selectedReviewType: action.selectedReviewType
+        isModalOpen: false,
+        modalType: modalTypes.REVIEW
       });
 
-    case UPDATE_MODAL_TYPE:
+    case SHOW_MODAL:
       return Object.assign({}, state, {
-        modalType: action.modalType
-      });
-
-    case TOGGLE_MODAL:
-      return Object.assign({}, state, {
-        isModalOpen: action.isModalOpen
+        isModalOpen: true,
+        modalType: action.modalType,
+        modalTitle: action.modalTitle,
+        comment: action.comment
       });
 
     case UPDATE_COMMENT:
@@ -44,6 +44,11 @@ function reducer(state = initialState, action) {
     case UPDATE_KEY_TO_EDIT:
       return Object.assign({}, state, {
         keyToEdit: action.keyToEdit
+      });
+
+    case UPDATE_MODAL_TITLE:
+      return Object.assign({}, state, {
+        modalTitle: action.modalTitle
       });
 
     case RESET_STATE:

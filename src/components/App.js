@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Modal from './modal/Modal';
 import './app.css';
-import Main from './main/Main';
-import LoginModal from './modal/login/LoginModal';
-import { appTitle } from '../constants/app';
+import ContentContainer from './main/Main';
+import { AppOverlay } from './app/index';
+import { modalTypes, snackbarMsg } from '../constants';
 import { Snackbar } from 'material-ui';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -13,64 +13,43 @@ class AppComponent extends React.Component {
     super(props);
     injectTapEventPlugin();
 
-    this.state = {
-      isSnackbarOpen: false,
-      snackbarMessage: '',
-      isModalOpen: true
-    };
-
-    this.closeModal = this.closeModal.bind(this);
-    this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
-    this.openModal = this.openModal.bind(this);
-    this.openSnackbar = this.openSnackbar.bind(this);
+    this.onSessionIdCopy = this.onSessionIdCopy.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
-  handleSnackbarClose() {
-    this.setState({ isSnackbarOpen: false });
-  }
+  onSessionIdCopy () {
+    this.openSnackbar(snackbarMsg.SESSION_ID_COPIED);
+  };
 
-  openSnackbar(message) {
-    this.setState({
-      isSnackbarOpen: true,
-      snackbarMessage: message
-    });
-  }
-
-  toggleModal(isOpen) {
-    this.setState({
-      isModalOpen: isOpen
-    });
-  }
-
-  closeModal() {
-    this.toggleModal(false);
-  }
-
-  openModal() {
-    this.toggleModal(true);
+  logout() {
+    this.props.actions.resetState();
   }
 
   render() {
 
-    const { isModalOpen, isSnackbarOpen, snackbarMessage } = this.state;
+    const { actions, modal, sessionDetails, app } = this.props;
 
     return (
       <div className="index">
 
         <Modal
-          children={<LoginModal actions={this.props.actions} closeModal={this.closeModal} />}
-          isModalOpen={isModalOpen}
-          title={appTitle}
+          actions={actions}
+          modal={modal}
+          sessionDetails={sessionDetails}
         />
 
-        { isModalOpen ? <div className="blackBg"></div> : <Main {...this.props} openSnackbar={this.openSnackbar} openModal={this.openModal} /> }
+        {
+          modal.modalType === modalTypes.LOGIN ?
+          <AppOverlay /> :
+          <ContentContainer {...this.props} openSnackbar={this.openSnackbar} />
+        }
 
         <Snackbar
-          open={isSnackbarOpen}
-          message={snackbarMessage}
+          open={app.isSnackbarOpen}
+          message={app.snackbarMessage}
           autoHideDuration={5000}
-          onRequestClose={this.handleSnackbarClose}
-          className={'snackbar'}
+          onRequestClose={actions.hideSnackbar}
+          className='snackbar'
         />
 
       </div>
@@ -79,7 +58,12 @@ class AppComponent extends React.Component {
   }
 }
 
-AppComponent.defaultProps = {
+AppComponent.propTypes = {
+  actions: PropTypes.object.isRequired,
+  modal: PropTypes.object.isRequired,
+  sessionDetails: PropTypes.object.isRequired,
+  reviews: PropTypes.object.isRequired,
+  app: PropTypes.object.isRequired
 };
 
 export default AppComponent;

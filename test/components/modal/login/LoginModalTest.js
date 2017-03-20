@@ -3,10 +3,6 @@ import { shallow, mount } from 'enzyme';
 import firebase from 'firebase';
 import config from 'config'
 import * as helpers from 'helpers/firebase';
-import { Accordion, Panel } from 'react-bootstrap';
-import LoginModal from 'components/modal/login/LoginModal.js';
-import JoinForm from 'components/modal/login/JoinForm.js';
-import CreateForm from 'components/modal/login/CreateForm.js';
 
 import chai, { should, expect } from 'chai'
 import spies from 'chai-spies'
@@ -50,14 +46,14 @@ describe('<LoginModal />', () => {
     beforeEach(() => {
       mockProps = {
         actions: { updateRoomId: key => key },
-        toggleModal: () => {},
+        showModal: () => {},
         updateIsLogin: () => {}
       };
       mockEvent = {
         preventDefault: () => {}
       };
       chai.spy.on(mockProps.actions, 'updateRoomId');
-      chai.spy.on(mockProps, 'toggleModal');
+      chai.spy.on(mockProps, 'showModal');
       chai.spy.on(mockProps, 'updateIsLogin');
       chai.spy.on(mockEvent, 'preventDefault');
       chai.spy.on(helpers, 'dbWrite');
@@ -81,8 +77,8 @@ describe('<LoginModal />', () => {
       expect(mockProps.updateIsLogin).to.have.been.called.with(false);
     });
 
-    it('should call this.props.toggleModal', () => {
-      expect(mockProps.toggleModal).to.have.been.called();
+    it('should call this.props.showModal', () => {
+      expect(mockProps.showModal).to.have.been.called();
     });
 
   })

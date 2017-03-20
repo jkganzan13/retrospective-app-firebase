@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { FlatButton, RaisedButton, TextField } from 'material-ui';
 import { sanitizeText, getTimestamp } from '../../../helpers/util';
 import { dbUpdate } from '../../../helpers/firebase';
-import { snackbarMsg, validationMsg } from '../../../constants/app';
+import { snackbarMsg, validationMsg } from '../../../constants';
 
 class ReviewModal extends React.Component {
 
@@ -24,16 +24,16 @@ class ReviewModal extends React.Component {
     e.preventDefault();
 
     const { sessionId, currentUser } = this.props.sessionDetails;
-    const { comment, keyToEdit, selectedReviewType } = this.props.modal;
+    const { comment, keyToEdit, modalTitle } = this.props.modal;
     const sanitizedText = sanitizeText(comment);
 
     if (sanitizedText !== '') {
       let key = keyToEdit || getTimestamp();
-      dbUpdate(`reviews/${sessionId}`, { user: currentUser, comment: sanitizedText, reviewType: selectedReviewType, timestamp: key }, key);
+      dbUpdate(`reviews/${sessionId}`, { user: currentUser, comment: sanitizedText, reviewType: modalTitle, timestamp: key }, key);
       this.resetCommentFieldError();
-      this.props.closeModal();
+      this.props.actions.hideModal();
       let msg = keyToEdit ? snackbarMsg.REVIEW_UPDATE_ON_SUCCESS : snackbarMsg.REVIEW_SUBMIT_ON_SUCCESS;
-      this.props.openSnackbar(msg);
+      this.props.actions.triggerSnackbar(msg);
     } else {
       this.showCommentFieldError();
     }
@@ -46,7 +46,7 @@ class ReviewModal extends React.Component {
 
   onClose() {
     this.resetComment();
-    this.props.closeModal();
+    this.props.actions.hideModal();
   }
 
   resetCommentFieldError() {
@@ -80,7 +80,11 @@ class ReviewModal extends React.Component {
 }
 
 ReviewModal.displayName = 'ModalReviewReviewModal';
-ReviewModal.propTypes = {};
+ReviewModal.propTypes = {
+  actions: PropTypes.object.isRequired,
+  modal: PropTypes.object.isRequired,
+  sessionDetails: PropTypes.object.isRequired,
+};
 ReviewModal.defaultProps = {};
 
 export default ReviewModal;

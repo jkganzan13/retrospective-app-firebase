@@ -3,8 +3,8 @@
  * If you change the type from object to something else, do not forget to update
  * src/container/App.js accordingly.
  */
-import { UPDATE_REVIEWS } from '../actions/const';
-import reviewTypes from '../constants/reviewTypes';
+import { RESET_STATE, UPDATE_REVIEWS } from '../actions/const';
+import { reviewTypes } from '../constants';
 
 const initialState = {
   [reviewTypes.START]: [],
@@ -23,6 +23,9 @@ function reducer(state = initialState, action) {
     case UPDATE_REVIEWS: {
       return Object.assign({}, state, {...action.reviews})
     }
+
+    case RESET_STATE:
+      return Object.assign({}, state, initialState);
 
     default: {
       return state;

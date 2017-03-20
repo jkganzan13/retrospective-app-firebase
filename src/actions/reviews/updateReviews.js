@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { UPDATE_REVIEWS } from './../const';
-import reviewTypes from '../../constants/reviewTypes';
+import { reviewTypes } from '../../constants';
 
 
 const sortReviewsByType = (reviews) => {

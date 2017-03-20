@@ -1,26 +1,32 @@
 import React, { PropTypes } from 'react';
-import _ from 'lodash';
-import LoginModal from './login/LoginModal'
-import ReviewModal from './review/ReviewModal'
 import Dialog from 'material-ui/Dialog';
+import LoginForm from './login/LoginForm';
+import ReviewForm from './review/ReviewForm';
+import { modalTypes } from '../../constants';
 
-const Modal = ({ children, isModalOpen, title }) => (
+const getModalTitle = (modalType, title) => modalType === modalTypes.EDIT_REVIEW ? `EDIT REVIEW - ${title}` : title;
+
+const getModalBody = (props) => (
+  props.modal.modalType === modalTypes.LOGIN ?
+    <LoginForm actions={props.actions} /> :
+    <ReviewForm actions={props.actions} modal={props.modal} sessionDetails={props.sessionDetails} />
+);
+
+const Modal = (props) => (
   <Dialog
-    title={title}
+    title={getModalTitle(props.modal.modalType, props.modal.modalTitle)}
     modal={true}
-    open={isModalOpen}
+    open={props.modal.isModalOpen}
     contentClassName={'modal-content'}
   >
-    {children}
+    { getModalBody(props) }
   </Dialog>
 );
 
-Modal.displayName = 'ModalModal';
 Modal.propTypes = {
-  children: PropTypes.element.isRequired,
-  isModalOpen: PropTypes.bool.isRequired,
-  title: PropTypes.string.isRequired
+  actions: PropTypes.object.isRequired,
+  modal: PropTypes.object.isRequired,
+  sessionDetails: PropTypes.object.isRequired,
 };
-Modal.defaultProps = {};
 
 export default Modal;

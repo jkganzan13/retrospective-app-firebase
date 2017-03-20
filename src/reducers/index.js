@@ -8,13 +8,15 @@
  */
 /* Populated by react-webpack-redux:reducer */
 import { combineReducers } from 'redux';
+import app from '../reducers/app.js';
 import reviews from '../reducers/reviews.js';
 import sessionDetails from '../reducers/sessionDetails.js';
 import modal from '../reducers/modal.js';
 const reducers = {
   modal,
   sessionDetails,
-  reviews
+  reviews,
+  app
 };
 const combined = combineReducers(reducers);
 module.exports = combined;

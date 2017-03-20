@@ -1,7 +1,7 @@
 /** Modified version of https://github.com/brigade/react-simple-pie-chart **/
 
 import React from 'react';
-import reviewTypes from '../../constants/reviewTypes';
+import { modalTypes, reviewTypes } from '../../constants';
 import WheelSlice from './WheelSlice';
 
 class Wheel extends React.Component {
@@ -18,12 +18,9 @@ class Wheel extends React.Component {
   }
 
   onClickWheel(reviewType) {
-    const {selectReviewType, updateKeyToEdit} = this.props.actions;
-    const { openModal, setTitle } = this.props;
+    const { showModal, updateKeyToEdit } = this.props.actions;
     updateKeyToEdit('');
-    selectReviewType(reviewType);
-    setTitle(reviewType);
-    openModal();
+    showModal(modalTypes.REVIEW, reviewType);
   }
 
   getSliceStyle(index) {

@@ -1,54 +1,25 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Wheel from '../wheel/Wheel';
 import Sidebar from '../sidebar/Sidebar';
-import AppBarButtons from './AppBarButtons';
-import AppBarMenu from './AppBarMenu';
-import Modal from '../modal/Modal';
-import ReviewModal from '../modal/review/ReviewModal';
+import AppBarButtons from '../app/AppBarButtons';
+import AppBarMenu from '../app/AppBarMenu';
 import { AppBar } from 'material-ui';
-import { appTitle } from '../../constants/app';
-import { snackbarMsg } from '../../constants/app';
+import { appTitle, snackbarMsg } from '../../constants';
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isModalOpen: false,
-      title: ''
-    };
-
-    this.closeModal = this.closeModal.bind(this);
     this.logout = this.logout.bind(this);
     this.onSessionIdCopy = this.onSessionIdCopy.bind(this);
-    this.openModal = this.openModal.bind(this);
-    this.setTitle = this.setTitle.bind(this);
-  }
-
-  setTitle(title) {
-    this.setState({ title });
-  }
-
-  openModal() {
-    this.toggleModal(true);
-  }
-
-  closeModal() {
-    this.toggleModal(false);
-  }
-
-  toggleModal(isModalOpen) {
-    this.setState({ isModalOpen });
   }
 
   logout() {
-    const { toggleModal, updateIsLogin } = this.props.actions;
-    updateIsLogin(true);
-    toggleModal();
+    this.props.actions.resetState();
   }
 
   onSessionIdCopy () {
-    this.props.openSnackbar(snackbarMsg.SESSION_ID_COPIED);
+    this.props.actions.triggerSnackbar(snackbarMsg.SESSION_ID_COPIED);
   };
 
   render() {
@@ -77,24 +48,7 @@ class Main extends React.Component {
         />
 
         <div className="content-container">
-
-          <Modal
-            children={
-              <ReviewModal
-                {...this.props}
-                closeModal={this.closeModal}
-              />
-            }
-            isModalOpen={this.state.isModalOpen}
-            title={this.state.title}
-          />
-
-          <Wheel
-            actions={actions}
-            setTitle={this.setTitle}
-            openModal={this.openModal}
-            closeModal={this.closeModal}
-          />
+          <Wheel actions={actions} />
           <Sidebar sessionDetails={sessionDetails} reviews={reviews} actions={actions} />
         </div>
       </div>
@@ -103,8 +57,11 @@ class Main extends React.Component {
   }
 }
 
-Main.displayName = 'MainMain';
-Main.propTypes = {};
-Main.defaultProps = {};
+Main.propTypes = {
+  actions: PropTypes.object.isRequired,
+  modal: PropTypes.object.isRequired,
+  sessionDetails: PropTypes.object.isRequired,
+  reviews: PropTypes.object.isRequired
+};
 
 export default Main;

@@ -1,8 +1,5 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { CircularProgress, RaisedButton } from 'material-ui';
-
-import cssmodules from 'react-css-modules';
-import styles from './loginbuttons.cssmodule.sass';
 
 const LoginButtons = ({ showProgress, createOnClick }) => {
     return (
@@ -14,8 +11,9 @@ const LoginButtons = ({ showProgress, createOnClick }) => {
     );
 };
 
-LoginButtons.displayName = 'ModalLoginLoginButtons';
-LoginButtons.propTypes = {};
-LoginButtons.defaultProps = {};
+LoginButtons.propTypes = {
+  showProgress: PropTypes.bool.isRequired,
+  createOnClick: PropTypes.func.isRequired
+};
 
 export default LoginButtons;

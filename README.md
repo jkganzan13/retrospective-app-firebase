@@ -4,6 +4,9 @@ A sprint retrospective app following this process: [Start, Stop, Continue, More 
 
 ## Changelog
 
+### v1.11 (March 20, 2017)
+* Refactored code.
+
 ### v1.1 (January 30, 2017)
 * Added Edit and Delete buttons on Icon Menu on the Reviews List. Icon Menu button will only show on the review that you submitted.
 

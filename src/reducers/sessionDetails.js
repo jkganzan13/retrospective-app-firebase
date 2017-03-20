@@ -3,7 +3,7 @@
  * If you change the type from object to something else, do not forget to update
  * src/container/App.js accordingly.
  */
-import { UPDATE_CURRENT_USER, UPDATE_SESSION_ID, UPDATE_USERS } from '../actions/const';
+import { RESET_STATE, UPDATE_CURRENT_USER, UPDATE_SESSION_ID, UPDATE_USERS } from '../actions/const';
 
 const initialState = {
   users: [],
@@ -34,6 +34,9 @@ function reducer(state = initialState, action) {
         users: action.users
       })
     }
+
+    case RESET_STATE:
+      return Object.assign({}, state, initialState);
 
     default: {
       /* Return original state if no actions were consumed. */

@@ -2,6 +2,7 @@ import React from 'react';
 import { dbRemove, dbWrite } from '../../../helpers/firebase';
 import { IconButton, IconMenu, MenuItem } from 'material-ui';
 import { NavigationMoreVert } from 'material-ui/svg-icons';
+import { modalTypes } from '../../../constants'
 
 class ListButtons extends React.Component{
   constructor(props) {
@@ -11,13 +12,11 @@ class ListButtons extends React.Component{
   }
 
   editReview() {
-    const { reviewItem, sessionDetails } = this.props;
-    const { selectReviewType, toggleModal, updateComment, updateKeyToEdit } = this.props.actions;
+    const { reviewItem } = this.props;
+    const { showModal, updateKeyToEdit } = this.props.actions;
 
-    selectReviewType(`EDIT REVIEW - ${reviewItem.reviewType}`);
-    updateComment(reviewItem.comment);
+    showModal(modalTypes.EDIT_REVIEW, reviewItem.reviewType, reviewItem.comment);
     updateKeyToEdit(reviewItem.timestamp);
-    toggleModal();
   }
 
   deleteReview() {

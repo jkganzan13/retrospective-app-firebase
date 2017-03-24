@@ -13,7 +13,8 @@ import {
   updateCurrentUser,
   updateKeyToEdit,
   resetState,
-  triggerSnackbar
+  triggerSnackbar,
+  togglePresentationMode
 } from '../actions/';
 import { dbListen } from '../helpers/firebase';
 import { bindActionCreators } from 'redux';
@@ -49,7 +50,6 @@ App.propTypes = {
   modal: PropTypes.object.isRequired,
   sessionDetails: PropTypes.object.isRequired,
   reviews: PropTypes.object.isRequired,
-  snackbar: PropTypes.shape({}),
   app: PropTypes.shape({})
 };
 function mapStateToProps(state) {
@@ -74,7 +74,8 @@ function mapDispatchToProps(dispatch) {
     updateCurrentUser,
     updateKeyToEdit,
     resetState,
-    triggerSnackbar
+    triggerSnackbar,
+    togglePresentationMode
   };
   const actionMap = { actions: bindActionCreators(actions, dispatch) };
   return actionMap;

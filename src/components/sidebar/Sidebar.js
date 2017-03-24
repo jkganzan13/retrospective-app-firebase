@@ -1,10 +1,10 @@
 import React from 'react';
-import ReviewsList from './reviewsList/ReviewsList';
+import ReviewsContainer from './reviewsList/ReviewsContainer';
 
 const Sidebar = ({ actions, reviews, sessionDetails }) => {
   return (
     <div className="sidebar">
-        <ReviewsList reviews={reviews} sessionDetails={sessionDetails} actions={actions} />
+        <ReviewsContainer reviews={reviews} sessionDetails={sessionDetails} actions={actions} />
     </div>
   )
 };

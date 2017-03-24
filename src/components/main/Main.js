@@ -28,6 +28,7 @@ class Main extends React.Component {
       <div className="main-content">
         <AppBar
           title={appTitle}
+          titleStyle={{ marginLeft: '8px' }}
           iconElementLeft={
             <AppBarMenu
               actions={actions}

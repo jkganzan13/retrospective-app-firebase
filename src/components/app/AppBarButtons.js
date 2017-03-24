@@ -1,39 +1,25 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { FlatButton } from 'material-ui';
 import { CommunicationVpnKey, SocialPerson } from 'material-ui/svg-icons';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
-class AppBarButtons extends React.Component {
-  constructor(props) {
-    super(props);
+const AppBarButtons = ({ logout, onSessionIdCopy, sessionDetails }) => (
+  <div className="appbar-buttons">
+    <FlatButton disabled={true} label={sessionDetails.currentUser} icon={<SocialPerson />} />
+    <CopyToClipboard text={sessionDetails.sessionId} onCopy={onSessionIdCopy}>
+      <FlatButton label={sessionDetails.sessionId} icon={<CommunicationVpnKey />} />
+    </CopyToClipboard>
+    <FlatButton label="Log Out" onTouchTap={logout} />
+  </div>
+);
 
-  }
-
-
-
-  render() {
-
-    const { logout, onSessionIdCopy } = this.props;
-    const { sessionId, currentUser } = this.props.sessionDetails;
-
-    const copyIcon = (
-      <CopyToClipboard text={sessionId} onCopy={onSessionIdCopy}>
-        <FlatButton label={sessionId} icon={<CommunicationVpnKey />} />
-      </CopyToClipboard>
-    );
-
-    return (
-      <div className="appbar-buttons">
-        <FlatButton label={currentUser} icon={<SocialPerson />} />
-        {copyIcon}
-        <FlatButton label="Log Out" onTouchTap={logout} />
-      </div>
-    )
-  }
-}
-
-AppBarButtons.displayName = 'MainAppBarButtons';
-AppBarButtons.propTypes = {};
-AppBarButtons.defaultProps = {};
+AppBarButtons.propTypes = {
+  logout: PropTypes.func.isRequired,
+  onSessionIdCopy: PropTypes.func.isRequired,
+  sessionDetails: PropTypes.shape({
+    currentUser: PropTypes.string.isRequired,
+    sessionId: PropTypes.string.isRequired
+  }).isRequired
+};
 
 export default AppBarButtons;

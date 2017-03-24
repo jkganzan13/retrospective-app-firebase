@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import Modal from './modal/Modal';
 import './app.css';
 import ContentContainer from './main/Main';
+import PresentationMode from './presentation/PresentationMode';
 import { AppOverlay } from './app/index';
 import { modalTypes, snackbarMsg } from '../constants';
 import { Snackbar } from 'material-ui';
@@ -19,10 +20,24 @@ class AppComponent extends React.Component {
 
   onSessionIdCopy () {
     this.openSnackbar(snackbarMsg.SESSION_ID_COPIED);
-  };
+  }
 
   logout() {
     this.props.actions.resetState();
+  }
+
+  renderView() {
+    const { app, modal } = this.props;
+
+    if (modal.modalType === modalTypes.LOGIN) {
+      return <AppOverlay />
+    }
+
+    if (app.presentationMode) {
+      return <PresentationMode {...this.props} />;
+    }
+
+    return <ContentContainer {...this.props} openSnackbar={this.openSnackbar} />;
   }
 
   render() {
@@ -38,12 +53,6 @@ class AppComponent extends React.Component {
           sessionDetails={sessionDetails}
         />
 
-        {
-          modal.modalType === modalTypes.LOGIN ?
-          <AppOverlay /> :
-          <ContentContainer {...this.props} openSnackbar={this.openSnackbar} />
-        }
-
         <Snackbar
           open={app.isSnackbarOpen}
           message={app.snackbarMessage}
@@ -51,6 +60,8 @@ class AppComponent extends React.Component {
           onRequestClose={actions.hideSnackbar}
           className='snackbar'
         />
+
+        { this.renderView() }
 
       </div>
 

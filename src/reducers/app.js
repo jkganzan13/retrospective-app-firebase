@@ -1,15 +1,24 @@
-import { HIDE_SNACKBAR, TRIGGER_SNACKBAR } from '../actions/const';
+import { HIDE_SNACKBAR, TOGGLE_PRESENTATION_MODE, TRIGGER_SNACKBAR } from '../actions/const';
 
 const initialState = {
   isSnackbarOpen: false,
-  snackbarMessage: ''
+  snackbarMessage: '',
+  presentationMode: false
 };
 
 function reducer(state = initialState, action) {
   switch (action.type) {
 
     case HIDE_SNACKBAR:
-      return Object.assign({}, state, initialState);
+      return Object.assign({}, state, {
+        isSnackbarOpen: false,
+        snackbarMessage: '',
+      });
+
+    case TOGGLE_PRESENTATION_MODE:
+      return Object.assign({}, state, {
+        presentationMode: action.presentationMode
+      });
 
     case TRIGGER_SNACKBAR:
       return Object.assign({}, state, {

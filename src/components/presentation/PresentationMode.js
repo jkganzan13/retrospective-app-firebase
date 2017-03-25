@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import { appTitle, reviewTypes } from '../../constants';
 import { removeUnderscore } from '../../helpers/util';
-import ReviewsList from '../sidebar/reviewsList/ReviewsList';
-
+import { AppBarMain } from '../app/';
 import { AppBar, FlatButton, Tabs, Tab } from 'material-ui';
+import ReviewsList from '../sidebar/reviewsList/ReviewsList';
 import Loop from 'material-ui/svg-icons/av/loop';
 import Stop from 'material-ui/svg-icons/av/stop';
 import PlayArrow from 'material-ui/svg-icons/av/play-arrow';
@@ -39,11 +39,9 @@ const exitOnClick = (actions) => {
 
 const PresentationMode = ({ actions, reviews, sessionDetails }) => (
   <div className="presentation-container">
-    <AppBar
-      title={appTitle}
-      iconElementRight={<FlatButton label="Exit Presentation Mode" onTouchTap={exitOnClick.bind(this, actions)} />}
-      showMenuIconButton={false}
-      zDepth={0}
+    <AppBarMain
+      rightElement={<FlatButton label="Exit Presentation Mode" onTouchTap={exitOnClick.bind(this, actions)} />}
+      showLeftElement={false}
     />
     <Tabs>
       { reviewTabs.map(tab => renderTab(tab, actions, reviews, sessionDetails)) }

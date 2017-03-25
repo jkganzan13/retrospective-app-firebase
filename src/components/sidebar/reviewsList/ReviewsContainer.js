@@ -34,8 +34,7 @@ const ReviewsContainer = ({ actions, reviews, sessionDetails }) => (
       onRightIconButtonTouchTap={presentationIconClick.bind(this, actions)}
       showMenuIconButton={false}
       zDepth={0}
-    >
-    </AppBar>
+    />
     <Tabs contentContainerClassName={'tabs'} >
       {
         _.keys(reviewTypes).map((reviewType, i) => {

@@ -1,34 +1,22 @@
 import React, { PropTypes } from 'react';
-import { appTitle, reviewTypes } from '../../constants';
+import { reviewTabs } from '../../constants';
 import { removeUnderscore } from '../../helpers/util';
 import { AppBarMain } from '../app/';
-import { AppBar, FlatButton, Tabs, Tab } from 'material-ui';
+import { FlatButton, Tabs, Tab } from 'material-ui';
 import ReviewsList from '../sidebar/reviewsList/ReviewsList';
-import Loop from 'material-ui/svg-icons/av/loop';
-import Stop from 'material-ui/svg-icons/av/stop';
-import PlayArrow from 'material-ui/svg-icons/av/play-arrow';
-import TrendingDown from 'material-ui/svg-icons/action/trending-down';
-import TrendingUp from 'material-ui/svg-icons/action/trending-up';
 
-const reviewTabs = [
-  { icon: <PlayArrow />, reviewType: reviewTypes.START },
-  { icon: <Stop />, reviewType: reviewTypes.STOP },
-  { icon: <Loop />, reviewType: reviewTypes.CONTINUE },
-  { icon: <TrendingUp />, reviewType: reviewTypes.MORE_OF },
-  { icon: <TrendingDown />, reviewType: reviewTypes.LESS_OF },
-];
-
-const renderTab = (tab, actions, reviews, sessionDetails ) => (
+const renderTab = (tab, props) => (
   <Tab
     icon={tab.icon}
     label={removeUnderscore(tab.reviewType)}
     key={tab.reviewType}
+    value={tab.reviewType}
   >
     <ReviewsList
-      actions={actions}
-      reviews={reviews}
+      actions={props.actions}
+      reviews={props.reviews}
       reviewType={tab.reviewType}
-      sessionDetails={sessionDetails}
+      sessionDetails={props.sessionDetails}
     />
   </Tab>
 );
@@ -37,14 +25,21 @@ const exitOnClick = (actions) => {
   actions.togglePresentationMode(false);
 };
 
-const PresentationMode = ({ actions, reviews, sessionDetails }) => (
+const bottomTabStyle = {position: "fixed", bottom:"0"};
+
+const PresentationMode = (props) => (
   <div className="presentation-container">
     <AppBarMain
-      rightElement={<FlatButton label="Exit Presentation Mode" onTouchTap={exitOnClick.bind(this, actions)} />}
+      rightElement={<FlatButton label="Exit Presentation Mode" onTouchTap={exitOnClick.bind(this, props.actions)} />}
       showLeftElement={false}
+      disabled={props.bottom}
     />
-    <Tabs>
-      { reviewTabs.map(tab => renderTab(tab, actions, reviews, sessionDetails)) }
+    <Tabs
+      tabItemContainerStyle={props.bottom ? bottomTabStyle : null}
+      contentContainerClassName={props.bottom ? 'reviews-list-mobile' : null}
+      onChange={props.onTabChange}
+    >
+      { reviewTabs.map(tab => renderTab(tab, props)) }
     </Tabs>
   </div>
 );
@@ -52,7 +47,9 @@ const PresentationMode = ({ actions, reviews, sessionDetails }) => (
 PresentationMode.propTypes = {
   actions: PropTypes.object.isRequired,
   reviews: PropTypes.object.isRequired,
-  sessionDetails: PropTypes.object.isRequired
+  sessionDetails: PropTypes.object.isRequired,
+  bottom: PropTypes.bool,
+  onTabChange: PropTypes.func
 };
 
 export default PresentationMode;

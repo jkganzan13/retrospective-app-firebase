@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react';
-import _ from 'lodash';
 import { Divider, IconButton, IconMenu, MenuItem } from 'material-ui';
-import { CommunicationVpnKey, ImageLens, NavigationMenu, SocialPerson } from 'material-ui/svg-icons';
-import { reviewTypes } from '../../constants';
+import { CommunicationVpnKey, NavigationMenu, SocialPerson } from 'material-ui/svg-icons';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
 class AppBarMenu extends React.Component {
@@ -24,13 +22,7 @@ class AppBarMenu extends React.Component {
         targetOrigin={{horizontal: 'left', vertical: 'top'}}
         className="appbar-menu"
       >
-        <MenuItem primaryText={_.replace(reviewTypes.START, '_', ' ')} leftIcon={<ImageLens color="#468966" />} />
-        <MenuItem primaryText={_.replace(reviewTypes.MORE_OF, '_', ' ')} leftIcon={<ImageLens color="#FFF0A5" />} />
-        <MenuItem primaryText={_.replace(reviewTypes.LESS_OF, '_', ' ')} leftIcon={<ImageLens color="#FFB03B" />} />
-        <MenuItem primaryText={_.replace(reviewTypes.CONTINUE, '_', ' ')} leftIcon={<ImageLens color="#B64926" />} />
-        <MenuItem primaryText={_.replace(reviewTypes.STOP, '_', ' ')} leftIcon={<ImageLens color="#8E2800" />} />
-        <Divider />
-        <MenuItem primaryText={currentUser} leftIcon={<SocialPerson />} />
+        <MenuItem primaryText={currentUser} leftIcon={<SocialPerson />} disabled={true} />
         <CopyToClipboard text={sessionId} onCopy={this.props.onSessionIdCopy}>
           <MenuItem primaryText={sessionId} leftIcon={<CommunicationVpnKey />} />
         </CopyToClipboard>

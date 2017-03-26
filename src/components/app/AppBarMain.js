@@ -42,19 +42,21 @@ const getRightElement = ({ actions, sessionDetails, showRightElement, rightEleme
 };
 
 const AppBarMain = (props) => (
-  <AppBar
-    title={appTitle}
-    titleStyle={props.titleStyle}
-    iconElementLeft={getLeftElement(props)}
-    showMenuIconButton={props.showLeftElement}
-    iconStyleRight={{marginTop: 0}}
-    iconElementRight={getRightElement(props)}
-    zDepth={0}
-  />
+  props.disabled ? null :
+    <AppBar
+      title={appTitle}
+      titleStyle={props.titleStyle}
+      iconElementLeft={getLeftElement(props)}
+      showMenuIconButton={props.showLeftElement}
+      iconStyleRight={{marginTop: 0}}
+      iconElementRight={getRightElement(props)}
+      zDepth={0}
+    />
 );
 
 AppBarMain.propTypes = {
   actions: PropTypes.object,
+  disabled: PropTypes.bool,
   leftElement: PropTypes.element,
   rightElement: PropTypes.element,
   sessionDetails: PropTypes.object,
@@ -64,6 +66,7 @@ AppBarMain.propTypes = {
 };
 
 AppBarMain.defaultProps = {
+  disabled: false,
   showLeftElement: true,
   showRightElement: true,
 };

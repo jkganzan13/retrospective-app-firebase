@@ -1,3 +1,10 @@
+import React from 'react';
+import Loop from 'material-ui/svg-icons/av/loop';
+import Stop from 'material-ui/svg-icons/av/stop';
+import PlayArrow from 'material-ui/svg-icons/av/play-arrow';
+import TrendingDown from 'material-ui/svg-icons/action/trending-down';
+import TrendingUp from 'material-ui/svg-icons/action/trending-up';
+
 export const appTitle = "Sprint Retro";
 
 export const validationMsg = {
@@ -25,4 +32,12 @@ export const reviewTypes = {
   MORE_OF: 'MORE_OF',
   LESS_OF: 'LESS_OF'
 };
+
+export const reviewTabs = [
+  { icon: <PlayArrow />, reviewType: reviewTypes.START },
+  { icon: <Stop />, reviewType: reviewTypes.STOP },
+  { icon: <Loop />, reviewType: reviewTypes.CONTINUE },
+  { icon: <TrendingUp />, reviewType: reviewTypes.MORE_OF },
+  { icon: <TrendingDown />, reviewType: reviewTypes.LESS_OF }
+];
 

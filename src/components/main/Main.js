@@ -1,20 +1,24 @@
 import React, { PropTypes } from 'react';
+import MediaQuery from 'react-responsive';
 import Wheel from '../wheel/Wheel';
 import Sidebar from '../sidebar/Sidebar';
+import MobileView from '../mobile/MobileView';
 import { AppBarMain } from '../app/';
 
-const Main = ({ sessionDetails, reviews, actions }) => (
+const Main = (props) => (
   <div className="main-content">
     <AppBarMain
-      actions={actions}
-      sessionDetails={sessionDetails}
+      actions={props.actions}
+      sessionDetails={props.sessionDetails}
       titleStyle={{ marginLeft: '8px' }}
     />
 
-    <div className="content-container">
-      <Wheel actions={actions} />
-      <Sidebar sessionDetails={sessionDetails} reviews={reviews} actions={actions} />
-    </div>
+    <MobileView {...props} />
+
+    <MediaQuery className="content-container" minWidth={536}>
+      <Wheel actions={props.actions} />
+      <Sidebar {...props} />
+    </MediaQuery>
   </div>
 );
 

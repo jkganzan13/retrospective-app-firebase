@@ -2,7 +2,9 @@ import React, { PropTypes } from 'react';
 import { FlatButton, RaisedButton, TextField } from 'material-ui';
 import { sanitizeText, getTimestamp } from '../../../helpers/util';
 import { dbUpdate } from '../../../helpers/firebase';
-import { snackbarMsg, validationMsg } from '../../../constants';
+import { mobileWidth, snackbarMsg, validationMsg } from '../../../constants';
+import MediaQuery from 'react-responsive';
+import ReviewButtons from './ReviewButtons';
 
 class ReviewModal extends React.Component {
 
@@ -57,8 +59,8 @@ class ReviewModal extends React.Component {
     this.setState({ commentFieldErrorMsg: validationMsg.ERROR });
   }
 
-  render() {
 
+  render() {
     return (
       <form className="review-modal" onSubmit={this.submitReview}>
         <TextField
@@ -71,11 +73,9 @@ class ReviewModal extends React.Component {
           fullWidth={true}
           autoFocus
         />
-        <RaisedButton type="submit" label="Submit" primary={true} className="form-field-margin" />
-        <FlatButton label="Close" onTouchTap={this.onClose} className="form-field-margin" />
+        <ReviewButtons closeOnClick={this.onClose} />
       </form>
     );
-
   }
 }
 

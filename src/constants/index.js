@@ -7,6 +7,8 @@ import TrendingUp from 'material-ui/svg-icons/action/trending-up';
 
 export const appTitle = "Sprint Retro";
 
+export const mobileWidth = 535;
+
 export const validationMsg = {
   ERROR: 'This field is required.',
   SESSION_ID_NOT_FOUND: 'Session ID not found. Please try again.',

@@ -3,6 +3,7 @@ body {
   padding: 0;
   font-size: 14px;
   height: 100%;
+  min-height: 100%;
 }
 
 ul {
@@ -110,8 +111,11 @@ ul {
 .slice-contents:hover { opacity: 1; }
 
 .modal-content {
-  width: 90% !important;
   max-width: 480px !important;
+}
+
+.modal-content-body {
+  min-height:230px;
 }
 
 .snackbar {
@@ -119,16 +123,11 @@ ul {
 }
 
 .login-button-container {
-  margin-top: 14px;
-  height: 36px;
+  margin-top: 16px;
 }
 
 .login-button-container .raised-button {
   vertical-align: top;
-}
-
-.login-button-container div:not(:first-child) {
-  margin-left: 16px;
 }
 
 .login-button-container .circular-progress {
@@ -202,7 +201,6 @@ ul {
   position: absolute;
   right: 12px;
   bottom: 84px;
-  z-index: 9999;
 }
 
 @media only screen and (max-width: 960px) and (min-height: 422px) {
@@ -225,10 +223,6 @@ ul {
   .content-container {
     flex-direction: column;
     align-items: center;
-  }
-  .sidebar {
-  }
-  .wheel-container {
   }
   .sidebar, .wheel-container {
     margin-top: 2.5%;

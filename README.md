@@ -4,6 +4,10 @@ A sprint retrospective app following this process: [Start, Stop, Continue, More 
 
 ## Changelog
 
+### v1.3 (April 8, 2017)
+* Added mobile support.
+* Added favicon from https://www.freefavicon.com.
+
 ### v1.2 (March 25, 2017)
 * Added Presentation mode button on Reviews toolbar.
 

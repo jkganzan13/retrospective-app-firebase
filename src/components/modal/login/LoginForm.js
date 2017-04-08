@@ -2,8 +2,9 @@ import React, { PropTypes } from 'react';
 import { TextField } from 'material-ui';
 import LoginButtons from './LoginButtons';
 import { isValidString } from '../../../helpers/util';
-import { modalTypes, validationMsg } from '../../../constants';
+import { mobileWidth, validationMsg } from '../../../constants';
 import { dbGetOnce, dbListen, dbWrite } from '../../../helpers/firebase';
+import MediaQuery from 'react-responsive';
 
 class LoginForm extends React.Component {
 

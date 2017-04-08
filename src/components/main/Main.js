@@ -1,62 +1,26 @@
 import React, { PropTypes } from 'react';
+import MediaQuery from 'react-responsive';
 import Wheel from '../wheel/Wheel';
 import Sidebar from '../sidebar/Sidebar';
-import AppBarButtons from '../app/AppBarButtons';
-import AppBarMenu from '../app/AppBarMenu';
-import { AppBar } from 'material-ui';
-import { appTitle, snackbarMsg } from '../../constants';
+import MobileView from '../mobile/MobileView';
+import { AppBarMain } from '../app/';
 
-class Main extends React.Component {
-  constructor(props) {
-    super(props);
+const Main = (props) => (
+  <div className="main-content">
+    <AppBarMain
+      actions={props.actions}
+      sessionDetails={props.sessionDetails}
+      titleStyle={{ marginLeft: '8px' }}
+    />
 
-    this.logout = this.logout.bind(this);
-    this.onSessionIdCopy = this.onSessionIdCopy.bind(this);
-  }
+    <MobileView {...props} />
 
-  logout() {
-    this.props.actions.resetState();
-  }
-
-  onSessionIdCopy () {
-    this.props.actions.triggerSnackbar(snackbarMsg.SESSION_ID_COPIED);
-  };
-
-  render() {
-    const { sessionDetails, reviews, actions } = this.props;
-    return (
-      <div className="main-content">
-        <AppBar
-          title={appTitle}
-          titleStyle={{ marginLeft: '8px' }}
-          iconElementLeft={
-            <AppBarMenu
-              actions={actions}
-              sessionDetails={sessionDetails}
-              onSessionIdCopy={this.onSessionIdCopy}
-              logout={this.logout}
-            />
-          }
-          iconStyleRight={{marginTop: 0}}
-          iconElementRight={
-            <AppBarButtons
-              actions={actions}
-              sessionDetails={sessionDetails}
-              onSessionIdCopy={this.onSessionIdCopy}
-              logout={this.logout}
-            />
-          }
-        />
-
-        <div className="content-container">
-          <Wheel actions={actions} />
-          <Sidebar sessionDetails={sessionDetails} reviews={reviews} actions={actions} />
-        </div>
-      </div>
-
-    );
-  }
-}
+    <MediaQuery className="content-container" minWidth={536}>
+      <Wheel actions={props.actions} />
+      <Sidebar {...props} />
+    </MediaQuery>
+  </div>
+);
 
 Main.propTypes = {
   actions: PropTypes.object.isRequired,

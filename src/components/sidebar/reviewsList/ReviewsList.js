@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { List } from 'material-ui';
 import ReviewsListItem from './ReviewsListItem';
 
-const ReviewsList = ({ actions, reviews, reviewType, sessionDetails }) => (
+const ReviewsList = ({ actions, reviews, reviewType, sessionDetails, listClassName }) => (
   <List>
     {
       reviews[reviewType].map((reviewItem, i) => (

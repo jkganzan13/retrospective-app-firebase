@@ -20,11 +20,11 @@ const mobileStyles = {
     transform: 'translate(0, 0)'
   },
   bodyStyle: {
-    minHeight: '100vh',
+    minHeight: window.innerHeight+'px'
   },
   style: {
     paddingTop: 0,
-    height: '100vh'
+    height: window.innerHeight+'px'
   },
   titleStyle: {
     textAlign: 'center'

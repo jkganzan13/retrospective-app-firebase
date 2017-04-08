@@ -70,6 +70,7 @@ class ReviewModal extends React.Component {
           onChange={this.onCommentChange}
           multiLine={true}
           rows={2}
+          rowsMax={6}
           fullWidth={true}
           autoFocus
         />

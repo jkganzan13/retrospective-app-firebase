@@ -14,7 +14,9 @@ import {
   updateKeyToEdit,
   resetState,
   triggerSnackbar,
-  togglePresentationMode
+  togglePresentationMode,
+  toggleDrawer,
+  selectReview
 } from '../actions/';
 import { dbListen } from '../helpers/firebase';
 import { bindActionCreators } from 'redux';
@@ -23,7 +25,6 @@ import firebase from 'firebase';
 import config from 'config';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Main from '../components/App';
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -38,13 +39,11 @@ class App extends Component {
           modal={modal}
           sessionDetails={sessionDetails}
           reviews={reviews}
-          app={app}
-        />
+          app={app}/>
       </MuiThemeProvider>
     );
   }
 }
-
 App.propTypes = {
   actions: PropTypes.object.isRequired,
   modal: PropTypes.object.isRequired,
@@ -61,7 +60,6 @@ function mapStateToProps(state) {
   };
   return props;
 }
-
 function mapDispatchToProps(dispatch) {
   const actions = {
     hideModal,
@@ -75,7 +73,9 @@ function mapDispatchToProps(dispatch) {
     updateKeyToEdit,
     resetState,
     triggerSnackbar,
-    togglePresentationMode
+    togglePresentationMode,
+    toggleDrawer,
+    selectReview,
   };
   const actionMap = { actions: bindActionCreators(actions, dispatch) };
   return actionMap;

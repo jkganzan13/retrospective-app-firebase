@@ -47,3 +47,19 @@ export const dbUpdate = (reference, data, key = getTimestamp()) => {
     dbWrite(reference, data, key);
   });
 };
+
+export const addReviewActionPoint = (sessionId, key, data) => {
+  const id = 'AP' + getTimestamp();
+  dbWrite(`reviews/${sessionId}/${key}/actionPoints`, data, id);
+};
+
+const getRef = ref => firebase.database().ref(ref);
+
+export const updateReviewActionPoint = async (sessionId, key, data, actionPointId) => {
+  const ref = `reviews/${sessionId}/${key}/actionPoints`;
+  const actionPoint = await getRef(ref).once('value');
+  if(actionPoint.val()) {
+    data = { ...actionPoint.val(), actionPoint: data.actionPoint };
+  }
+  dbWrite(ref, data, actionPointId);
+};

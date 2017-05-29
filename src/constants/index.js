@@ -16,6 +16,8 @@ export const validationMsg = {
 };
 
 export const snackbarMsg = {
+  ACTION_POINT_SAVED: 'Action Point successfully saved. View in Presentation Mode.',
+  ACTION_POINT_UPDATED: 'Action Point successfully updated.',
   REVIEW_UPDATE_ON_SUCCESS: 'Review successfully updated.',
   REVIEW_SUBMIT_ON_SUCCESS: 'Review successfully saved.',
   SESSION_ID_COPIED: 'Session ID copied.',
@@ -24,7 +26,9 @@ export const snackbarMsg = {
 export const modalTypes = {
   LOGIN: 'LOGIN',
   REVIEW: 'REVIEW',
-  EDIT_REVIEW: 'EDIT_REVIEW'
+  EDIT_REVIEW: 'EDIT_REVIEW',
+  ADD_ACTION_POINT: 'ADD_ACTION_POINT',
+  EDIT_ACTION_POINT: 'EDIT_ACTION_POINT',
 };
 
 export const reviewTypes = {

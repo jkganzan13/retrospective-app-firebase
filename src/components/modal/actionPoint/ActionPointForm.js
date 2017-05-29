@@ -1,39 +1,53 @@
 import React, { PropTypes } from 'react';
 import { TextField } from 'material-ui';
 import { sanitizeText, getTimestamp } from '../../../helpers/util';
-import { dbUpdate } from '../../../helpers/firebase';
+import { addReviewActionPoint } from '../../../helpers/firebase';
 import { snackbarMsg, validationMsg } from '../../../constants';
-import ReviewButtons from './ReviewButtons';
+import ReviewButtons from '../review/ReviewButtons';
 
 class ReviewModal extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
-      commentFieldErrorMsg: ''
+      commentFieldErrorMsg: '',
+      userValue: '',
     };
-    this.onCommentChange = this.onCommentChange.bind(this);
-    this.submitReview = this.submitReview.bind(this);
+
     this.onClose = this.onClose.bind(this);
+    this.onCommentChange = this.onCommentChange.bind(this);
+    this.onUserValueChange = this.onUserValueChange.bind(this);
+    this.submitActionPoint = this.submitActionPoint.bind(this);
   }
 
   onCommentChange(e) {
     this.props.actions.updateComment(e.target.value);
   }
 
-  submitReview(e) {
+  onUserValueChange(e) {
+    this.setState({
+      userValue: e.target.value
+    });
+  }
+
+  submitActionPoint(e) {
     e.preventDefault();
 
     const { sessionId, currentUser } = this.props.sessionDetails;
-    const { comment, keyToEdit, modalTitle } = this.props.modal;
+    const { comment } = this.props.modal;
+    const { selectedReview } = this.props.reviews;
     const sanitizedText = sanitizeText(comment);
 
     if (sanitizedText !== '') {
-      let key = keyToEdit || getTimestamp();
-      dbUpdate(`reviews/${sessionId}`, { user: currentUser, comment: sanitizedText, reviewType: modalTitle, timestamp: key }, key);
+      const actionPointData = {
+        actionable: sanitizedText,
+        actionableBy: this.state.userValue,
+      };
+      addReviewActionPoint(sessionId, selectedReview.timestamp, actionPointData);
       this.resetCommentFieldError();
       this.props.actions.hideModal();
-      let msg = keyToEdit ? snackbarMsg.REVIEW_UPDATE_ON_SUCCESS : snackbarMsg.REVIEW_SUBMIT_ON_SUCCESS;
+      let msg = snackbarMsg.ACTION_POINT_SAVED;
       this.props.actions.triggerSnackbar(msg);
     } else {
       this.showCommentFieldError();
@@ -61,17 +75,23 @@ class ReviewModal extends React.Component {
 
   render() {
     return (
-      <form className="review-modal" onSubmit={this.submitReview}>
+      <form className="action-point-modal" onSubmit={this.submitActionPoint}>
         <TextField
           errorText={this.state.commentFieldErrorMsg}
-          floatingLabelText="Enter comment"
+          floatingLabelText="Actionable By"
+          onChange={this.onUserValueChange}
+          value={this.state.userValue}
+          fullWidth={true}
+          autoFocus
+        />
+        <TextField
+          errorText={this.state.commentFieldErrorMsg}
+          floatingLabelText="Action Point"
           value={this.props.modal.comment}
           onChange={this.onCommentChange}
           multiLine={true}
           rows={2}
           rowsMax={6}
-          fullWidth={true}
-          autoFocus
         />
         <ReviewButtons closeOnClick={this.onClose} />
       </form>
@@ -79,11 +99,11 @@ class ReviewModal extends React.Component {
   }
 }
 
-ReviewModal.displayName = 'ModalReviewReviewModal';
 ReviewModal.propTypes = {
   actions: PropTypes.object.isRequired,
   modal: PropTypes.object.isRequired,
   sessionDetails: PropTypes.object.isRequired,
+  reviews: PropTypes.object.isRequired,
 };
 ReviewModal.defaultProps = {};
 

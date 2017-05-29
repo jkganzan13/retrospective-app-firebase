@@ -24,6 +24,7 @@ const Main = (props) => (
 
 Main.propTypes = {
   actions: PropTypes.object.isRequired,
+  app: PropTypes.object.isRequired,
   modal: PropTypes.object.isRequired,
   sessionDetails: PropTypes.object.isRequired,
   reviews: PropTypes.object.isRequired

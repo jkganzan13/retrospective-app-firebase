@@ -2,17 +2,40 @@ import React, { PropTypes } from 'react';
 import { Divider, ListItem } from 'material-ui';
 import ListButtons from './ListButtons';
 
-const ReviewsListItem = ({ actions, reviewItem, sessionDetails }) => (
+const isReviewer = (reviewItem, sessionDetails) => reviewItem.user === sessionDetails.currentUser;
+const isPresentationMode = app => app.presentationMode;
+
+const getListButtons = (actions, app, reviewItem, sessionDetails) => {
+  return isReviewer(reviewItem, sessionDetails) && !isPresentationMode(app) ?
+    <ListButtons
+      reviewItem={reviewItem}
+      sessionDetails={sessionDetails}
+      actions={actions}
+    /> : null;
+};
+
+const getOnClickEvent = (actions, app, reviewItem) => {
+  const onClick = () => {
+    actions.selectReview(reviewItem);
+    actions.toggleDrawer();
+  };
+  return isPresentationMode(app) ? onClick : () => actions.selectReview(reviewItem);
+};
+
+const getSecondaryText = comment => (
+  <p className="review-comment">
+    {comment}
+  </p>
+);
+
+const ReviewsListItem = ({ actions, app, reviewItem, sessionDetails }) => (
   <div>
     <ListItem
       primaryText={reviewItem.user}
-      secondaryText={
-        <p className="review-comment">
-          {reviewItem.comment}
-        </p>
-      }
+      secondaryText={getSecondaryText(reviewItem.comment)}
       secondaryTextLines={2}
-      rightIconButton={reviewItem.user === sessionDetails.currentUser ? <ListButtons reviewItem={reviewItem} sessionDetails={sessionDetails} actions={actions} /> : null}
+      rightIconButton={getListButtons(actions, app, reviewItem, sessionDetails)}
+      onClick={getOnClickEvent(actions, app, reviewItem)}
     />
     <Divider inset={true} />
   </div>
@@ -20,6 +43,7 @@ const ReviewsListItem = ({ actions, reviewItem, sessionDetails }) => (
 
 ReviewsListItem.propTypes = {
   actions: PropTypes.object.isRequired,
+  app: PropTypes.object.isRequired,
   reviewItem: PropTypes.object.isRequired,
   sessionDetails: PropTypes.object.isRequired
 };

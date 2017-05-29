@@ -1,10 +1,15 @@
 import React from 'react';
 import ReviewsContainer from './reviewsList/ReviewsContainer';
 
-const Sidebar = ({ actions, reviews, sessionDetails }) => {
+const Sidebar = ({ app, actions, reviews, sessionDetails }) => {
   return (
     <div className="sidebar">
-        <ReviewsContainer reviews={reviews} sessionDetails={sessionDetails} actions={actions} />
+        <ReviewsContainer
+          app={app}
+          reviews={reviews}
+          sessionDetails={sessionDetails}
+          actions={actions}
+        />
     </div>
   )
 };

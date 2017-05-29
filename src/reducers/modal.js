@@ -18,6 +18,10 @@ const initialState = {
   modalTitle: appTitle
 };
 
+//TODO: review:{} => review.comment, review.key
+//TODO: actionPoint:{} => ap.id, ap.actionedBy, ap.action
+//TODO: set selected review
+
 function reducer(state = initialState, action) {
 
   switch (action.type) {

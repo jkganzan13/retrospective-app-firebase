@@ -4,6 +4,7 @@ import { removeUnderscore } from '../../helpers/util';
 import { AppBarMain } from '../app/';
 import { FlatButton, Tabs, Tab } from 'material-ui';
 import ReviewsList from '../sidebar/reviewsList/ReviewsList';
+import ActionPanel from '../actionPanel/ActionPanel';
 
 const renderTab = (tab, props) => (
   <Tab
@@ -14,6 +15,7 @@ const renderTab = (tab, props) => (
   >
     <ReviewsList
       actions={props.actions}
+      app={props.app}
       reviews={props.reviews}
       reviewType={tab.reviewType}
       sessionDetails={props.sessionDetails}
@@ -33,6 +35,10 @@ const PresentationMode = (props) => (
       rightElement={<FlatButton label="Exit Presentation Mode" onTouchTap={exitOnClick.bind(this, props.actions)} />}
       showLeftElement={false}
       disabled={props.bottom}
+    />
+    <ActionPanel
+      selectedReview={props.reviews.selectedReview}
+      open={props.app.isDrawerOpen}
     />
     <Tabs
       tabItemContainerStyle={props.bottom ? bottomTabStyle : null}

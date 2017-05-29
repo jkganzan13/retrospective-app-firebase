@@ -25,7 +25,7 @@ const presentationModeIcon = (
   </IconButton>
 );
 
-const ReviewsContainer = ({ actions, reviews, sessionDetails }) => (
+const ReviewsContainer = ({ actions, app, reviews, sessionDetails }) => (
   <Paper className="reviews-list" zDepth={1}>
     <AppBar
       title="Review List"
@@ -42,6 +42,7 @@ const ReviewsContainer = ({ actions, reviews, sessionDetails }) => (
             <Tab label={getBadge(reviewType, _.size(reviews[reviewType]))} key={i}>
               <ReviewsList
                 actions={actions}
+                app={app}
                 reviews={reviews}
                 reviewType={reviewType}
                 sessionDetails={sessionDetails}
@@ -56,6 +57,7 @@ const ReviewsContainer = ({ actions, reviews, sessionDetails }) => (
 
 ReviewsContainer.propTypes = {
   actions: PropTypes.object.isRequired,
+  app: PropTypes.object.isRequired,
   reviews: PropTypes.object.isRequired,
   sessionDetails: PropTypes.object.isRequired
 };

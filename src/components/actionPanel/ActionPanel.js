@@ -2,31 +2,38 @@ import React, { PropTypes } from 'react';
 import Avatar from 'material-ui/Avatar';
 import {
   Card,
-  CardActions,
   CardHeader,
-  CardTitle,
   CardText,
 } from 'material-ui/Card';
+import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
-import FlatButton from 'material-ui/FlatButton';
+import Clear from 'material-ui/svg-icons/content/clear';
+import ActionPanelForm from './ActionPanelForm';
 
-const getAvatarInitial = (name) => <Avatar>{name[0].toUpperCase()}</Avatar>;
+//TODO: add action point on presentation mode
+//TODO: remove action points from list item
+//TODO: add text field on action point drawer
+//TODO: reset form on customer change
+//TODO: edit action points
+//TODO: delete action points
+
+const CloseBtn = <Clear/>;
+
+const getAvatarInitial = name => <Avatar>{name[0].toUpperCase()}</Avatar>;
 
 const getActionCards = (actionPoint, id) => (
-  <Card key={id}>
+  <Card key={id} className="action-block__card">
     <CardHeader
       title={actionPoint.actionableBy}
-      subtitle="Name"
+      subtitle='Actionable By'
       avatar={getAvatarInitial(actionPoint.actionableBy)}
+      openIcon={CloseBtn}
+      closeIcon={CloseBtn}
+      showExpandableButton={true}
     />
-    {/*<CardTitle title="Card title" subtitle="Card subtitle" />*/}
     <CardText>
       {actionPoint.actionable}
     </CardText>
-    {/*<CardActions>*/}
-      {/*<FlatButton label="Action1" />*/}
-      {/*<FlatButton label="Action2" />*/}
-    {/*</CardActions>*/}
   </Card>
 );
 
@@ -43,7 +50,11 @@ const ActionPanel = (props) => (
     width={300}
     openSecondary={true}
     open={props.open}
+    containerClassName="action-block"
   >
+    <h4 className="action-block__header">Action Points</h4>
+    <ActionPanelForm/>
+    <Divider />
     {getActionPoints(props.selectedReview.actionPoints)}
   </Drawer>
 );

@@ -38,11 +38,12 @@ const PresentationMode = (props) => (
     />
     <ActionPanel
       selectedReview={props.reviews.selectedReview}
-      open={props.app.isDrawerOpen}
+      open={true}
     />
     <Tabs
       tabItemContainerStyle={props.bottom ? bottomTabStyle : null}
       contentContainerClassName={props.bottom ? 'reviews-list-mobile' : null}
+      className="presentation-tabs"
       onChange={props.onTabChange}
     >
       { reviewTabs.map(tab => renderTab(tab, props)) }

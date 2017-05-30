@@ -12,13 +12,13 @@ class ListButtons extends React.Component{
     this.addActionPoint = this.addActionPoint.bind(this);
   }
 
-  addActionPoint() {
-    const { reviewItem } = this.props;
-    const { showModal, updateKeyToEdit } = this.props.actions;
-
-    const modalTitle = `Add action point for ${reviewItem.user}'s review`;
-    showModal(modalTypes.ADD_ACTION_POINT, modalTitle);
-  }
+  // addActionPoint() {
+  //   const { reviewItem } = this.props;
+  //   const { showModal, updateKeyToEdit } = this.props.actions;
+  //
+  //   const modalTitle = `Add action point for ${reviewItem.user}'s review`;
+  //   showModal(modalTypes.ADD_ACTION_POINT, modalTitle);
+  // }
 
   editReview() {
     const { reviewItem } = this.props;
@@ -36,7 +36,6 @@ class ListButtons extends React.Component{
   render() {
     return (
       <IconMenu iconButtonElement={<IconButton><NavigationMoreVert /></IconButton>} className="reviews-list-buttons">
-        <MenuItem primaryText="Add Action Point" onTouchTap={this.addActionPoint} />
         <MenuItem primaryText="Edit Review" onTouchTap={this.editReview} />
         <MenuItem primaryText="Delete Review" onTouchTap={this.deleteReview} />
       </IconMenu>

@@ -9,7 +9,6 @@ class ListButtons extends React.Component{
     super(props);
     this.editReview = this.editReview.bind(this);
     this.deleteReview = this.deleteReview.bind(this);
-    this.addActionPoint = this.addActionPoint.bind(this);
   }
 
   // addActionPoint() {

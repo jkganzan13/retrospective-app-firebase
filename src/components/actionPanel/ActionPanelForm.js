@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 import { RaisedButton, TextField } from 'material-ui';
-// import { sanitizeText, getTimestamp } from '../../../helpers/util';
-// import { addReviewActionPoint } from '../../../helpers/firebase';
-// import { snackbarMsg, validationMsg } from '../../../constants';
+import { sanitizeText } from '../../helpers/util';
+import { addReviewActionPoint } from '../../helpers/firebase';
+import { snackbarMsg, validationMsg } from '../../constants';
 
 class ActionPanelForm extends React.Component {
 
@@ -34,24 +34,21 @@ class ActionPanelForm extends React.Component {
 
   submitActionPoint(e) {
     e.preventDefault();
-    // const { sessionId, currentUser } = this.props.sessionDetails;
-    // const { comment } = this.props.modal;
-    // const { selectedReview } = this.props.reviews;
-    // const sanitizedText = sanitizeText(comment);
-    //
-    // if (sanitizedText !== '') {
-    //   const actionPointData = {
-    //     actionable: sanitizedText,
-    //     actionableBy: this.state.userValue,
-    //   };
-    //   addReviewActionPoint(sessionId, selectedReview.timestamp, actionPointData);
-    //   this.props.actions.hideModal();
-    //   let msg = snackbarMsg.ACTION_POINT_SAVED;
-    //   this.props.actions.triggerSnackbar(msg);
-    // } else {
-    //   this.showCommentFieldError();
-    // }
-    console.log('submitted', this.state)
+    const { sessionId } = this.props.sessionDetails;
+    const { selectedReview } = this.props.reviews;
+    const sanitizedText = sanitizeText(this.state.commentValue);
+
+    if (sanitizedText !== '') {
+      const actionPointData = {
+        actionable: sanitizedText,
+        actionableBy: this.state.userValue,
+      };
+      addReviewActionPoint(sessionId, selectedReview.timestamp, actionPointData);
+      let msg = snackbarMsg.ACTION_POINT_SAVED;
+      this.props.actions.triggerSnackbar(msg);
+    } else {
+      this.showCommentFieldError();
+    }
     this.resetComment();
   }
 
@@ -120,10 +117,9 @@ class ActionPanelForm extends React.Component {
 }
 
 ActionPanelForm.propTypes = {
-  // actions: PropTypes.object.isRequired,
-  // modal: PropTypes.object.isRequired,
-  // sessionDetails: PropTypes.object.isRequired,
-  // reviews: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired,
+  sessionDetails: PropTypes.object.isRequired,
+  reviews: PropTypes.object.isRequired,
 };
 ActionPanelForm.defaultProps = {};
 

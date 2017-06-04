@@ -37,8 +37,10 @@ const PresentationMode = (props) => (
       disabled={props.bottom}
     />
     <ActionPanel
-      selectedReview={props.reviews.selectedReview}
       open={true}
+      actions={props.actions}
+      reviews={props.reviews}
+      sessionDetails={props.sessionDetails}
     />
     <Tabs
       tabItemContainerStyle={props.bottom ? bottomTabStyle : null}

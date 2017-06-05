@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
   RESET_STATE,
   SELECT_REVIEW,
@@ -16,6 +17,20 @@ const initialState = {
   }
 };
 
+const sortReviewsByType = (reviews) => {
+  return Object.keys(reviewTypes).reduce((acc, reviewType) => {
+    acc[reviewType] = _.filter(reviews, ['reviewType', reviewType]);
+    return acc;
+  }, {});
+};
+
+const updateSelectedReview = (selectedReview, reviews) => {
+  if(selectedReview.timestamp) {
+    return _.find(reviews, review => review.timestamp === selectedReview.timestamp);
+  }
+  return selectedReview;
+};
+
 function reducer(state = initialState, action) {
   switch (action.type) {
 
@@ -28,7 +43,11 @@ function reducer(state = initialState, action) {
       });
 
     case UPDATE_REVIEWS:
-      return Object.assign({}, state, {...action.reviews});
+      const sortedReviews = sortReviewsByType(action.reviews);
+      return Object.assign({}, state, {
+          ...sortedReviews,
+        selectedReview: updateSelectedReview(state.selectedReview, action.reviews)
+      });
 
     default: {
       return state;

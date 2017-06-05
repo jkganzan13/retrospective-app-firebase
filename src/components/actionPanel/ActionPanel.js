@@ -10,7 +10,6 @@ import Drawer from 'material-ui/Drawer';
 import Clear from 'material-ui/svg-icons/content/clear';
 import ActionPanelForm from './ActionPanelForm';
 
-//TODO: update selected review with latest data on reducer level after saving
 //TODO: remove action points from list item
 //TODO: add text field on action point drawer
 //TODO: reset form on customer change
@@ -58,7 +57,7 @@ const ActionPanel = (props) => (
       sessionDetails={props.sessionDetails}
       reviews={props.reviews}
     />
-    <Divider />
+    <Divider className="action-block__divider" />
     {getActionPoints(props.reviews.selectedReview.actionPoints)}
   </Drawer>
 );

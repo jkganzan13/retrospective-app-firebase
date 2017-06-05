@@ -4,20 +4,13 @@ import { IconButton, IconMenu, MenuItem } from 'material-ui';
 import { NavigationMoreVert } from 'material-ui/svg-icons';
 import { modalTypes } from '../../../constants'
 
+// TODO: refactor this
 class ListButtons extends React.Component{
   constructor(props) {
     super(props);
     this.editReview = this.editReview.bind(this);
     this.deleteReview = this.deleteReview.bind(this);
   }
-
-  // addActionPoint() {
-  //   const { reviewItem } = this.props;
-  //   const { showModal, updateKeyToEdit } = this.props.actions;
-  //
-  //   const modalTitle = `Add action point for ${reviewItem.user}'s review`;
-  //   showModal(modalTypes.ADD_ACTION_POINT, modalTitle);
-  // }
 
   editReview() {
     const { reviewItem } = this.props;

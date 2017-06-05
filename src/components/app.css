@@ -206,12 +206,13 @@ ul {
 .action-block {
   padding: 16px;
   top: 64px !important;
+  height: calc(100% - 64px) !important;
 }
 
 .action-block__card:not(:last-child),
 .action-block__form,
-.action-block__header {
-  margin-bottom: 16px;
+.action-block__divider {
+  margin-bottom: 16px !important;
 }
 
 .presentation-tabs {

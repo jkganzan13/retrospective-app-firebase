@@ -23,17 +23,6 @@ const getModalBody = (props) => {
           sessionDetails={props.sessionDetails}
         />
       );
-
-    case modalTypes.ADD_ACTION_POINT:
-    case modalTypes.EDIT_ACTION_POINT:
-      return (
-        <ActionPointForm
-          actions={props.actions}
-          modal={props.modal}
-          sessionDetails={props.sessionDetails}
-          reviews={props.reviews}
-        />
-      );
   }
 };
 

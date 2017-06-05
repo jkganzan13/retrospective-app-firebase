@@ -2,6 +2,7 @@ import _ from 'lodash';
 import {
   RESET_STATE,
   SELECT_REVIEW,
+  TOGGLE_PRESENTATION_MODE,
   UPDATE_REVIEWS,
 } from '../actions/const';
 import { reviewTypes } from '../constants';
@@ -42,6 +43,10 @@ function reducer(state = initialState, action) {
         selectedReview: action.review
       });
 
+    case TOGGLE_PRESENTATION_MODE:
+      return Object.assign({}, state, {
+        selectedReview: initialState.selectedReview
+      });
     case UPDATE_REVIEWS:
       const sortedReviews = sortReviewsByType(action.reviews);
       return Object.assign({}, state, {

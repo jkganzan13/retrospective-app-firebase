@@ -28,8 +28,15 @@ const getSecondaryText = comment => (
   </p>
 );
 
-const ReviewsListItem = ({ actions, app, reviewItem, sessionDetails }) => (
-  <div>
+const highlightRow = (reviewItem, selectedReview) => {
+  if(reviewItem.timestamp === selectedReview.timestamp) {
+    return 'reviews__item--highlighted';
+  }
+  return 'reviews__item';
+};
+
+const ReviewsListItem = ({ actions, app, reviewItem, sessionDetails, selectedReview }) => (
+  <div className={highlightRow(reviewItem, selectedReview)}>
     <ListItem
       primaryText={reviewItem.user}
       secondaryText={getSecondaryText(reviewItem.comment)}
@@ -45,7 +52,8 @@ ReviewsListItem.propTypes = {
   actions: PropTypes.object.isRequired,
   app: PropTypes.object.isRequired,
   reviewItem: PropTypes.object.isRequired,
-  sessionDetails: PropTypes.object.isRequired
+  sessionDetails: PropTypes.object.isRequired,
+  selectedReview: PropTypes.object.isRequired,
 };
 
 export default ReviewsListItem;

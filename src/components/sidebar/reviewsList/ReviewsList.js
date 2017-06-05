@@ -3,7 +3,7 @@ import { List } from 'material-ui';
 import ReviewsListItem from './ReviewsListItem';
 
 const ReviewsList = ({ actions, app, reviews, reviewType, sessionDetails, listClassName }) => (
-  <List>
+  <List className="reviews__container">
     {
       reviews[reviewType].map((reviewItem, i) => (
         <ReviewsListItem
@@ -12,6 +12,7 @@ const ReviewsList = ({ actions, app, reviews, reviewType, sessionDetails, listCl
           app={app}
           reviewItem={reviewItem}
           sessionDetails={sessionDetails}
+          selectedReview={reviews.selectedReview}
         />
       ))
     }

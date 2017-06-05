@@ -32,7 +32,7 @@ const bottomTabStyle = {position: "fixed", bottom:"0"};
 const PresentationMode = (props) => (
   <div className="presentation-container">
     <AppBarMain
-      rightElement={<FlatButton label="Exit Presentation Mode" onTouchTap={exitOnClick.bind(this, props.actions)} />}
+      rightElement={<FlatButton className="presentation-container__exit" label="Exit Presentation Mode" onTouchTap={exitOnClick.bind(this, props.actions)} />}
       showLeftElement={false}
       disabled={props.bottom}
     />

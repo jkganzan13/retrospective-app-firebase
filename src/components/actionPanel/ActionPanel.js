@@ -10,11 +10,7 @@ import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
 import Clear from 'material-ui/svg-icons/content/clear';
 import ActionPanelForm from './ActionPanelForm';
-
-//TODO: FIX UI
-//TODO: stretch divider (adjust padding)
-//TODO: show drawer when a review is selected
-//TODO: highlight selected review
+import { errorMsg } from '../../constants';
 
 const onCloseClick = (sessionId, reviewKey, actionKey) => {
   dbRemove(`reviews/${sessionId}/${reviewKey}/actionPoints/${actionKey}`);
@@ -40,13 +36,40 @@ const getActionCards = (actionPoint, id, reviewKey, sessionId) => (
   </Card>
 );
 
-const getActionPoints = ({ timestamp, actionPoints = {} }, sessionId) => {
+const getActionsContainer = ({ timestamp, actionPoints = {} }, sessionId) => {
   const actionableIds = Object.keys(actionPoints);
   if (!actionableIds.length) {
     return null;
   }
-  return actionableIds.map(id => getActionCards(actionPoints[id], id, timestamp, sessionId));
+  return (
+    <div className="action-block__cards-container">
+      {actionableIds.map(id => getActionCards(actionPoints[id], id, timestamp, sessionId))}
+    </div>
+  );
 };
+
+const renderDrawerBody = (props) => {
+  return (
+    <div className="action-block__body">
+      <div className="action-block__form-container">
+        <h4 className="action-block__header">Action Points</h4>
+        <ActionPanelForm
+          actions={props.actions}
+          sessionDetails={props.sessionDetails}
+          reviews={props.reviews}
+        />
+      </div>
+      <Divider />
+      {getActionsContainer(props.reviews.selectedReview, props.sessionDetails.sessionId)}
+    </div>
+  );
+};
+
+const renderError = () => (
+  <div className="action-block__error">
+    <span>{errorMsg.NO_SELECTED_REVIEW}</span>
+  </div>
+);
 
 const ActionPanel = (props) => (
   <Drawer
@@ -55,14 +78,7 @@ const ActionPanel = (props) => (
     open={props.open}
     containerClassName="action-block"
   >
-    <h4 className="action-block__header">Action Points</h4>
-    <ActionPanelForm
-      actions={props.actions}
-      sessionDetails={props.sessionDetails}
-      reviews={props.reviews}
-    />
-    <Divider className="action-block__divider" />
-    {getActionPoints(props.reviews.selectedReview, props.sessionDetails.sessionId)}
+    { props.reviews.selectedReview.timestamp ? renderDrawerBody(props) : renderError(props) }
   </Drawer>
 );
 

@@ -27,8 +27,6 @@ export const modalTypes = {
   LOGIN: 'LOGIN',
   REVIEW: 'REVIEW',
   EDIT_REVIEW: 'EDIT_REVIEW',
-  ADD_ACTION_POINT: 'ADD_ACTION_POINT',
-  EDIT_ACTION_POINT: 'EDIT_ACTION_POINT',
 };
 
 export const reviewTypes = {
@@ -47,3 +45,6 @@ export const reviewTabs = [
   { icon: <TrendingDown />, reviewType: reviewTypes.LESS_OF }
 ];
 
+export const errorMsg = {
+  NO_SELECTED_REVIEW: 'Please select review to add action point.'
+};

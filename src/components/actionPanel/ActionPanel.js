@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { dbRemove } from '../../helpers/firebase';
 import Avatar from 'material-ui/Avatar';
 import {
   Card,
@@ -10,24 +11,27 @@ import Drawer from 'material-ui/Drawer';
 import Clear from 'material-ui/svg-icons/content/clear';
 import ActionPanelForm from './ActionPanelForm';
 
-//TODO: remove action points from list item
-//TODO: add text field on action point drawer
-//TODO: reset form on customer change
-//TODO: edit action points
-//TODO: delete action points
+//TODO: FIX UI
+//TODO: stretch divider (adjust padding)
+//TODO: show drawer when a review is selected
+//TODO: highlight selected review
 
-const CloseBtn = <Clear/>;
-
+const onCloseClick = (sessionId, reviewKey, actionKey) => {
+  dbRemove(`reviews/${sessionId}/${reviewKey}/actionPoints/${actionKey}`);
+};
+const getCloseBtn = (sessionId, reviewKey, actionKey) => (
+  <Clear onClick={() => onCloseClick(sessionId, reviewKey, actionKey)} />
+);
 const getAvatarInitial = name => <Avatar>{name[0].toUpperCase()}</Avatar>;
 
-const getActionCards = (actionPoint, id) => (
+const getActionCards = (actionPoint, id, reviewKey, sessionId) => (
   <Card key={id} className="action-block__card">
     <CardHeader
       title={actionPoint.actionableBy}
       subtitle='Actionable By'
       avatar={getAvatarInitial(actionPoint.actionableBy)}
-      openIcon={CloseBtn}
-      closeIcon={CloseBtn}
+      openIcon={getCloseBtn(sessionId, reviewKey, id)}
+      closeIcon={getCloseBtn(sessionId, reviewKey, id)}
       showExpandableButton={true}
     />
     <CardText>
@@ -36,12 +40,12 @@ const getActionCards = (actionPoint, id) => (
   </Card>
 );
 
-const getActionPoints = (actionPoints = {}) => {
+const getActionPoints = ({ timestamp, actionPoints = {} }, sessionId) => {
   const actionableIds = Object.keys(actionPoints);
   if (!actionableIds.length) {
     return null;
   }
-  return actionableIds.map(id => getActionCards(actionPoints[id], id));
+  return actionableIds.map(id => getActionCards(actionPoints[id], id, timestamp, sessionId));
 };
 
 const ActionPanel = (props) => (
@@ -58,7 +62,7 @@ const ActionPanel = (props) => (
       reviews={props.reviews}
     />
     <Divider className="action-block__divider" />
-    {getActionPoints(props.reviews.selectedReview.actionPoints)}
+    {getActionPoints(props.reviews.selectedReview, props.sessionDetails.sessionId)}
   </Drawer>
 );
 

@@ -13,7 +13,7 @@ const initialState = {
   [reviewTypes.MORE_OF]: [],
   [reviewTypes.LESS_OF]: [],
   selectedReview: {
-    actionTypes: []
+    actionPoints: []
   }
 };
 

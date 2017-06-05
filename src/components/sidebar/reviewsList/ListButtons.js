@@ -1,5 +1,5 @@
 import React from 'react';
-import { dbRemove, dbWrite } from '../../../helpers/firebase';
+import { dbRemove } from '../../../helpers/firebase';
 import { IconButton, IconMenu, MenuItem } from 'material-ui';
 import { NavigationMoreVert } from 'material-ui/svg-icons';
 import { modalTypes } from '../../../constants'

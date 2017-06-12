@@ -4,6 +4,9 @@ A sprint retrospective app following this process: [Start, Stop, Continue, More 
 
 ## Changelog
 
+### v1.4 (June 12, 2017)
+* Added ability to add notes/action points in Presentation mode.
+
 ### v1.3 (April 8, 2017)
 * Added mobile support.
 * Added favicon from https://www.freefavicon.com.

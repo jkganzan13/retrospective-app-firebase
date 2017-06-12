@@ -148,7 +148,7 @@ ul {
 }
 
 .reviews-list .tabs {
-  overflow-y: scroll;
+  overflow-y: auto;
   height: calc(100% - 48px);
   min-height: 368px;
 }
@@ -201,6 +201,56 @@ ul {
   position: absolute;
   right: 12px;
   bottom: 84px;
+}
+
+.action-block {
+  overflow: hidden !important;
+}
+
+.action-block__body,
+.action-block__error {
+  width:100%;
+  height:100%;
+}
+
+.action-block__error span {
+  position: absolute;
+  top: 40%;
+  left: 10%;
+}
+
+.reviews__container {
+  padding:0 !important;
+}
+
+.action-block__cards-container {
+  height: calc(100% - 219px);
+  overflow: auto;
+}
+
+.action-block__cards-container,
+.action-block__form-container {
+  padding: 16px 16px;
+}
+
+.action-block__card:not(:last-child) {
+  margin-bottom: 16px !important;
+}
+
+.presentation-container .app-bar {
+  width: calc(100% - 300px) !important;
+}
+
+.presentation-tabs .reviews__item--highlighted {
+  background-color: #FFAAA5;
+}
+
+.presentation-container__exit {
+  margin-top: 14px !important;
+}
+
+.presentation-tabs {
+  width: calc(100% - 300px);
 }
 
 @media only screen and (max-width: 960px) and (min-height: 422px) {

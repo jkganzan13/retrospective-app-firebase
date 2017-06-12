@@ -8,11 +8,22 @@ import { removeUnderscore } from '../../helpers/util';
 
 const getModalTitle = (modalType, title) => modalType === modalTypes.EDIT_REVIEW ? `EDIT REVIEW - ${title}` : title;
 
-const getModalBody = (props) => (
-  props.modal.modalType === modalTypes.LOGIN ?
-    <LoginForm actions={props.actions} /> :
-    <ReviewForm actions={props.actions} modal={props.modal} sessionDetails={props.sessionDetails} />
-);
+const getModalBody = (props) => {
+  switch (props.modal.modalType) {
+    case modalTypes.LOGIN:
+      return <LoginForm actions={props.actions} />;
+
+    case modalTypes.REVIEW:
+    case modalTypes.EDIT_REVIEW:
+      return (
+        <ReviewForm
+          actions={props.actions}
+          modal={props.modal}
+          sessionDetails={props.sessionDetails}
+        />
+      );
+  }
+};
 
 const mobileStyles = {
   contentStyle: {
@@ -58,6 +69,7 @@ Modal.propTypes = {
   actions: PropTypes.object.isRequired,
   modal: PropTypes.object.isRequired,
   sessionDetails: PropTypes.object.isRequired,
+  reviews: PropTypes.object.isRequired,
 };
 
 export default Modal;

@@ -42,7 +42,13 @@ class AppComponent extends React.Component {
 
   render() {
 
-    const { actions, modal, sessionDetails, app } = this.props;
+    const {
+      actions,
+      app,
+      modal,
+      sessionDetails,
+      reviews,
+    } = this.props;
 
     return (
       <div className="index">
@@ -51,6 +57,7 @@ class AppComponent extends React.Component {
           actions={actions}
           modal={modal}
           sessionDetails={sessionDetails}
+          reviews={reviews}
         />
 
         <Snackbar

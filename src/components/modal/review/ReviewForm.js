@@ -1,9 +1,8 @@
 import React, { PropTypes } from 'react';
-import { FlatButton, RaisedButton, TextField } from 'material-ui';
+import { TextField } from 'material-ui';
 import { sanitizeText, getTimestamp } from '../../../helpers/util';
 import { dbUpdate } from '../../../helpers/firebase';
-import { mobileWidth, snackbarMsg, validationMsg } from '../../../constants';
-import MediaQuery from 'react-responsive';
+import { snackbarMsg, validationMsg } from '../../../constants';
 import ReviewButtons from './ReviewButtons';
 
 class ReviewModal extends React.Component {

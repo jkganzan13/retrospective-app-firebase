@@ -25,6 +25,7 @@ const renderDefault = (createOnClick, showProgress) => (
       disabled={showProgress}
       className="raised-button"
       onTouchTap={createOnClick}
+      style={joinBtnStyle}
     />
     { showProgress && <CircularProgress size={30} className="circular-progress" /> }
   </div>

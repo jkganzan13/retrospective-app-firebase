@@ -44,6 +44,7 @@ const getRightElement = ({ actions, sessionDetails, showRightElement, rightEleme
 const AppBarMain = (props) => (
   props.disabled ? null :
     <AppBar
+      className="app-bar"
       title={appTitle}
       titleStyle={props.titleStyle}
       iconElementLeft={getLeftElement(props)}

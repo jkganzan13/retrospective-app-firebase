@@ -1,9 +1,15 @@
-import { HIDE_SNACKBAR, TOGGLE_PRESENTATION_MODE, TRIGGER_SNACKBAR } from '../actions/const';
+import {
+  HIDE_SNACKBAR,
+  TOGGLE_DRAWER,
+  TOGGLE_PRESENTATION_MODE,
+  TRIGGER_SNACKBAR,
+} from '../actions/const';
 
 const initialState = {
   isSnackbarOpen: false,
   snackbarMessage: '',
-  presentationMode: false
+  presentationMode: false,
+  isDrawerOpen: false,
 };
 
 function reducer(state = initialState, action) {
@@ -13,6 +19,11 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, {
         isSnackbarOpen: false,
         snackbarMessage: '',
+      });
+
+    case TOGGLE_DRAWER:
+      return Object.assign({}, state, {
+        isDrawerOpen: !state.isDrawerOpen
       });
 
     case TOGGLE_PRESENTATION_MODE:

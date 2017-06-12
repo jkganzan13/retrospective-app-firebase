@@ -1,38 +1,30 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { dbRemove } from '../../../helpers/firebase';
 import { IconButton, IconMenu, MenuItem } from 'material-ui';
 import { NavigationMoreVert } from 'material-ui/svg-icons';
-import { modalTypes } from '../../../constants'
+import { modalTypes, snackbarMsg } from '../../../constants'
 
-// TODO: refactor this
-class ListButtons extends React.Component{
-  constructor(props) {
-    super(props);
-    this.editReview = this.editReview.bind(this);
-    this.deleteReview = this.deleteReview.bind(this);
-  }
+const editReview = ({ reviewItem, actions }) => {
+  actions.showModal(modalTypes.EDIT_REVIEW, reviewItem.reviewType, reviewItem.comment);
+  actions.updateKeyToEdit(reviewItem.timestamp);
+};
 
-  editReview() {
-    const { reviewItem } = this.props;
-    const { showModal, updateKeyToEdit } = this.props.actions
+const deleteReview = ({ reviewItem, sessionDetails, actions }) => {
+  dbRemove(`reviews/${sessionDetails.sessionId}/${reviewItem.timestamp}`);
+  actions.triggerSnackbar(snackbarMsg.REVIEW_DELETE_ON_SUCCESS);
+};
 
-    showModal(modalTypes.EDIT_REVIEW, reviewItem.reviewType, reviewItem.comment);
-    updateKeyToEdit(reviewItem.timestamp);
-  }
+const ListButtons = (props) => (
+  <IconMenu iconButtonElement={<IconButton><NavigationMoreVert /></IconButton>} className="reviews-list-buttons">
+    <MenuItem primaryText="Edit Review" onTouchTap={() => editReview(props)} />
+    <MenuItem primaryText="Delete Review" onTouchTap={() => deleteReview(props)} />
+  </IconMenu>
+);
 
-  deleteReview() {
-    const { reviewItem, sessionDetails } = this.props;
-    dbRemove(`reviews/${sessionDetails.sessionId}/${reviewItem.timestamp}`);
-  }
-
-  render() {
-    return (
-      <IconMenu iconButtonElement={<IconButton><NavigationMoreVert /></IconButton>} className="reviews-list-buttons">
-        <MenuItem primaryText="Edit Review" onTouchTap={this.editReview} />
-        <MenuItem primaryText="Delete Review" onTouchTap={this.deleteReview} />
-      </IconMenu>
-    )
-  }
-}
+ListButtons.propTypes = {
+  reviewItem: PropTypes.object.isRequired,
+  sessionDetails: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired,
+};
 
 export default ListButtons;

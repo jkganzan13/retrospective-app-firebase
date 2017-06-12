@@ -121,6 +121,5 @@ ActionPanelForm.propTypes = {
   sessionDetails: PropTypes.object.isRequired,
   reviews: PropTypes.object.isRequired,
 };
-ActionPanelForm.defaultProps = {};
 
 export default ActionPanelForm;

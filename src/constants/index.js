@@ -16,8 +16,9 @@ export const validationMsg = {
 };
 
 export const snackbarMsg = {
-  ACTION_POINT_SAVED: 'Action Point successfully saved. View in Presentation Mode.',
+  ACTION_POINT_SAVED: 'Action Point successfully saved.',
   ACTION_POINT_UPDATED: 'Action Point successfully updated.',
+  REVIEW_DELETE_ON_SUCCESS: 'Review successfully deleted.',
   REVIEW_UPDATE_ON_SUCCESS: 'Review successfully updated.',
   REVIEW_SUBMIT_ON_SUCCESS: 'Review successfully saved.',
   SESSION_ID_COPIED: 'Session ID copied.',
@@ -46,5 +47,5 @@ export const reviewTabs = [
 ];
 
 export const errorMsg = {
-  NO_SELECTED_REVIEW: 'Please select review to add action point.'
+  NO_SELECTED_REVIEW: 'Please select review to add action points.'
 };

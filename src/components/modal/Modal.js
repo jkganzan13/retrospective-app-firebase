@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import Dialog from 'material-ui/Dialog';
 import LoginForm from './login/LoginForm';
 import ReviewForm from './review/ReviewForm';
-import ActionPointForm from './actionPoint/ActionPointForm';
 import MediaQuery from 'react-responsive';
 import { mobileWidth, modalTypes } from '../../constants';
 import { removeUnderscore } from '../../helpers/util';

@@ -25,7 +25,7 @@ const sortReviewsByType = (reviews) => {
   }, {});
 };
 
-const updateSelectedReview = (selectedReview, reviews) => {
+const updateSelectedReview = (selectedReview = {}, reviews) => {
   if(selectedReview.timestamp) {
     return _.find(reviews, review => review.timestamp === selectedReview.timestamp);
   }

@@ -53,7 +53,11 @@ ReviewsListItem.propTypes = {
   app: PropTypes.object.isRequired,
   reviewItem: PropTypes.object.isRequired,
   sessionDetails: PropTypes.object.isRequired,
-  selectedReview: PropTypes.object.isRequired,
+  selectedReview: PropTypes.object,
+};
+
+ReviewsListItem.defaultProps = {
+  selectedReview: {},
 };
 
 export default ReviewsListItem;

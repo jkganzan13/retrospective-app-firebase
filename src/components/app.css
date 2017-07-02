@@ -306,4 +306,32 @@ ul {
   }
 }
 
+.appbar-buttons__fullscreen > div {
+  height: 36px;
+  display: inline-block;
+  vertical-align: middle;
+}
 
+.main-content__body {
+  height: calc(100% - 64px);
+  width: 100%;
+}
+
+.reviews {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.reviews__lane {
+  flex-basis: 100%;
+}
+
+.reviews__card-container {
+  width: 75%;
+  margin: auto;
+}
+
+.reviews__header {
+  text-align: center;
+}

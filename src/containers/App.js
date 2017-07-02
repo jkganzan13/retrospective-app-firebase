@@ -25,6 +25,10 @@ import firebase from 'firebase';
 import config from 'config';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Main from '../components/App';
+import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContext } from 'react-dnd';
+import _ from 'lodash';
+
 class App extends Component {
   constructor(props) {
     super(props);

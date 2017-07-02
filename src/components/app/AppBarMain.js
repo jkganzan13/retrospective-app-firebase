@@ -26,6 +26,7 @@ const getRightElement = ({ actions, sessionDetails, showRightElement, rightEleme
   if(showRightElement && actions && sessionDetails) {
     return (
       <AppBarButtons
+        togglePresentationMode={actions.togglePresentationMode}
         actions={actions}
         sessionDetails={sessionDetails}
         onSessionIdCopy={actions.triggerSnackbar.bind(this, snackbarMsg.SESSION_ID_COPIED)}

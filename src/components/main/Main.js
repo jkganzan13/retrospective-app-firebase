@@ -3,6 +3,7 @@ import MediaQuery from 'react-responsive';
 import Wheel from '../wheel/Wheel';
 import Sidebar from '../sidebar/Sidebar';
 import MobileView from '../mobile/MobileView';
+import Reviews from '../reviews'
 import { AppBarMain } from '../app/';
 
 const Main = (props) => (
@@ -12,13 +13,9 @@ const Main = (props) => (
       sessionDetails={props.sessionDetails}
       titleStyle={{ marginLeft: '8px' }}
     />
-
-    <MobileView {...props} />
-
-    <MediaQuery className="content-container" minWidth={536}>
-      <Wheel actions={props.actions} />
-      <Sidebar {...props} />
-    </MediaQuery>
+    <div className="main-content__body">
+      <Reviews {...props} />
+    </div>
   </div>
 );
 

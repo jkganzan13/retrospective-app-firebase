@@ -14,7 +14,7 @@ A sprint retrospective app following this process: [Start, Stop, Continue, More 
 ### v1.2 (March 25, 2017)
 * Added Presentation mode button on Reviews toolbar.
 
-### v1.11 (March 20, 2017)
+### v1.1.1 (March 20, 2017)
 * Refactored code.
 
 ### v1.1 (January 30, 2017)

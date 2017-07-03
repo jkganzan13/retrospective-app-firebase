@@ -15,6 +15,8 @@ const Reviews = (props) => (
           key={i}
           reviewType={type}
           reviews={props.reviews[type]}
+          sessionDetails={props.sessionDetails}
+          actions={props.actions}
         />
       ))
     }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
+import ReviewButtons from './ReviewButtons';
 import { DragSource, DropTarget } from 'react-dnd';
 import _ from 'lodash';
 import {
@@ -85,22 +86,42 @@ const collectDragSource = (connect, monitor) => ({
   isDragging: monitor.isDragging(),
 });
 
-class ReviewCard extends Component {
+const CardHeaderIcon = ({ review, actions, sessionDetails }) => {
+  return (review.user === sessionDetails.currentUser) ?
+    <ReviewButtons
+      reviewItem={review}
+      actions={actions}
+      sessionId={sessionDetails.sessionId}
+    /> : null
+};
 
-  render() {
+const ReviewCard = (props) => {
     const {
+      actions,
+      sessionDetails,
       review,
       isDragging,
       connectDragSource,
       connectDropTarget
-    } = this.props;
+    } = props;
     const opacity = isDragging ? 0 : 1;
+
+    const headerIcon = (
+      <CardHeaderIcon
+        actions={actions}
+        sessionDetails={sessionDetails}
+        review={review}
+      />
+    );
 
     return connectDragSource(connectDropTarget(
       <div className="reviews__card" style={{ ...style, opacity }}>
         <Card>
           <CardHeader
             title={review.user}
+            openIcon={headerIcon}
+            closeIcon={headerIcon}
+            showExpandableButton={true}
           />
           <CardText>
             {review.comment}
@@ -108,8 +129,7 @@ class ReviewCard extends Component {
         </Card>
       </div>,
     ));
-  }
-}
+};
 
 ReviewCard.propTypes = {
   connectDragSource: PropTypes.func.isRequired,
@@ -118,10 +138,13 @@ ReviewCard.propTypes = {
   isDragging: PropTypes.bool.isRequired,
   review: PropTypes.object.isRequired,
   moveCard: PropTypes.func.isRequired,
+  sessionDetails: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired,
 };
 
-const decorators = _.flow(
+const DragAndDrop = _.flow(
   DropTarget(types.CARD, cardTarget, collectDropTarget),
   DragSource(types.CARD, cardSource, collectDragSource)
 );
-export default decorators(ReviewCard);
+
+export default DragAndDrop(ReviewCard);

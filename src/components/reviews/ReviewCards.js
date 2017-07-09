@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import ReviewButtons from './ReviewButtons';
+import { dndTypes } from '../../constants';
 import { DragSource, DropTarget } from 'react-dnd';
 import _ from 'lodash';
 import {
@@ -21,70 +21,35 @@ const cardSource = {
   beginDrag(props) {
     return {
       id: props.review.timestamp,
-      index: props.index,
+      originalIndex: props.findCard(props.review.timestamp).index,
     };
   },
-};
 
-const types = {
-  CARD: 'card',
+  endDrag(props, monitor) {
+    const { id: droppedId, originalIndex } = monitor.getItem();
+    const didDrop = monitor.didDrop();
+
+    if (!didDrop) {
+      props.moveCard(droppedId, originalIndex);
+    }
+  },
 };
 
 const cardTarget = {
-  hover(props, monitor, component) {
-    const dragIndex = monitor.getItem().index;
-    const hoverIndex = props.index;
+  canDrop() {
+    return false;
+  },
 
-    // Don't replace items with themselves
-    if (dragIndex === hoverIndex) {
-      return;
+  hover(props, monitor) {
+    const { id: draggedId } = monitor.getItem();
+    const overId = props.review.timestamp;
+
+    if (draggedId !== overId) {
+      const { index: overIndex } = props.findCard(overId);
+      props.moveCard(draggedId, overIndex);
     }
-
-    // Determine rectangle on screen
-    const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
-
-    // Get vertical middle
-    const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-
-    // Determine mouse position
-    const clientOffset = monitor.getClientOffset();
-
-    // Get pixels to the top
-    const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-
-    // Only perform the move when the mouse has crossed half of the items height
-    // When dragging downwards, only move when the cursor is below 50%
-    // When dragging upwards, only move when the cursor is above 50%
-
-    // Dragging downwards
-    if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-      return;
-    }
-
-    // Dragging upwards
-    if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-      return;
-    }
-
-    // Time to actually perform the action
-    props.moveCard(dragIndex, hoverIndex);
-
-    // Note: we're mutating the monitor item here!
-    // Generally it's better to avoid mutations,
-    // but it's good here for the sake of performance
-    // to avoid expensive index searches.
-    monitor.getItem().index = hoverIndex;
   },
 };
-
-const collectDropTarget = connect => ({
-  connectDropTarget: connect.dropTarget(),
-});
-
-const collectDragSource = (connect, monitor) => ({
-  connectDragSource: connect.dragSource(),
-  isDragging: monitor.isDragging(),
-});
 
 const CardHeaderIcon = ({ review, actions, sessionDetails }) => {
   return (review.user === sessionDetails.currentUser) ?
@@ -143,8 +108,13 @@ ReviewCard.propTypes = {
 };
 
 const DragAndDrop = _.flow(
-  DropTarget(types.CARD, cardTarget, collectDropTarget),
-  DragSource(types.CARD, cardSource, collectDragSource)
+  DropTarget(dndTypes.CARD, cardTarget, connect => ({
+    connectDropTarget: connect.dropTarget(),
+  })),
+  DragSource(dndTypes.CARD, cardSource, (connect, monitor) => ({
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging(),
+  }))
 );
 
 export default DragAndDrop(ReviewCard);

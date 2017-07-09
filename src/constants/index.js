@@ -49,3 +49,7 @@ export const reviewTabs = [
 export const errorMsg = {
   NO_SELECTED_REVIEW: 'Please select review to add action points.'
 };
+
+export const dndTypes = {
+  CARD: 'card',
+};

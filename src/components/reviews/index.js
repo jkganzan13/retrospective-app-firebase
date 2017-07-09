@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
 import ReviewLane from './ReviewLane';
 import { reviewTypes } from '../../constants';
 
@@ -31,4 +29,4 @@ Reviews.propTypes = {
   reviews: PropTypes.object.isRequired
 };
 
-export default DragDropContext(HTML5Backend)(Reviews);
+export default Reviews;

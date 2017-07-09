@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import update from 'react/lib/update';
 import Card from './ReviewCards';
-import { modalTypes } from '../../constants';
+import { dndTypes, modalTypes } from '../../constants';
 import { FlatButton } from 'material-ui';
 import { ContentAdd } from 'material-ui/svg-icons';
+import { DropTarget, DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 const style = {
   width:216,
@@ -28,19 +30,24 @@ const AddReviewBtn = ({ onClick }) => (
   </div>
 );
 
-const ReviewCardContainer = ({ moveCard, reviews, sessionDetails, actions }) => (
+const ReviewCardContainer = ({ moveCard, reviews, sessionDetails, actions, findCard, connectDropTarget }) => connectDropTarget(
   <div className="reviews__card-container">
     {
-      reviews.map((review, i) => (
-        <Card
-          key={review.timestamp}
-          index={i}
-          review={review}
-          moveCard={moveCard}
-          sessionDetails={sessionDetails}
-          actions={actions}
-        />
-      ))
+      reviews.map((review, i) => {
+        console.log(reviews)
+        if(!review) return null;
+        return (
+          <Card
+            key={review.timestamp}
+            index={i}
+            review={review}
+            moveCard={moveCard}
+            findCard={findCard}
+            sessionDetails={sessionDetails}
+            actions={actions}
+          />
+        )
+      })
     }
   </div>
 );
@@ -55,6 +62,7 @@ class ReviewLane extends Component {
 
     this.moveCard = this.moveCard.bind(this);
     this.addReviewHandler = this.addReviewHandler.bind(this);
+    this.findCard = this.findCard.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -63,18 +71,29 @@ class ReviewLane extends Component {
     });
   }
 
-  moveCard(dragIndex, hoverIndex) {
-    const { reviews } = this.state;
-    const dragCard = reviews[dragIndex];
-
+  moveCard(timestamp, atIndex) {
+    const { review, index } = this.findCard(timestamp);
+    if (!review) return;
     this.setState(update(this.state, {
       reviews: {
         $splice: [
-          [dragIndex, 1],
-          [hoverIndex, 0, dragCard],
+          [index, 1],
+          [atIndex, 0, review],
         ],
       },
     }));
+  }
+
+  findCard(timestamp) {
+    const { reviews } = this.state;
+    const review = reviews.filter(r => {
+      return r && r.timestamp === timestamp
+    })[0];
+
+    return {
+      review,
+      index: reviews.indexOf(review),
+    };
   }
 
   addReviewHandler() {
@@ -84,7 +103,7 @@ class ReviewLane extends Component {
   }
 
   render() {
-    const { actions, reviewType, sessionDetails } = this.props;
+    const { actions, reviewType, sessionDetails, connectDropTarget } = this.props;
 
     return (
       <div className="reviews__lane" style={style}>
@@ -95,6 +114,8 @@ class ReviewLane extends Component {
           reviews={this.state.reviews}
           sessionDetails={sessionDetails}
           actions={actions}
+          findCard={this.findCard}
+          connectDropTarget={connectDropTarget}
         />
       </div>
     );
@@ -108,4 +129,13 @@ ReviewLane.propTypes = {
   sessionDetails: PropTypes.object.isRequired,
 };
 
-export default ReviewLane;
+const cardTarget = {
+  drop() {
+  },
+};
+
+const DropTargetLane = DropTarget(dndTypes.CARD, cardTarget, connect => ({
+  connectDropTarget: connect.dropTarget(),
+}))(ReviewLane);
+
+export default DragDropContext(HTML5Backend)(DropTargetLane);
